@@ -18,9 +18,9 @@
 
 ## 4. Base preset assets
 
-- [ ] 4.1 Add the `base` template tree for the npm-workspaces monorepo with `apps/web`, `apps/site`, `apps/api`, shared packages, and workspace `package.json` manifests
-- [ ] 4.2 Add npm-workspaces config, env examples, root README, project-level READMEs for apps and packages, and minimal starter files for `React + Vite`, `Astro`, and `Node + Hono`
-- [ ] 4.3 Add preset metadata that declares placeholder keys, npm support, and post-generation rules
+- [x] 4.1 Add the `base` template tree for the npm-workspaces monorepo with `apps/web`, `apps/site`, `apps/api`, shared packages, and workspace `package.json` manifests
+- [x] 4.2 Add npm-workspaces config, env examples, root README, project-level READMEs for apps and packages, and minimal starter files for `React + Vite`, `Astro`, and `Node + Hono`
+- [x] 4.3 Add preset metadata that declares placeholder keys, npm support, and post-generation rules
 
 ## 5. Post-setup and verification
 

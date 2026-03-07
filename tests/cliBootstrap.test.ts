@@ -104,6 +104,9 @@ describe('bootstrap modules', () => {
         'packageName',
         'displayName',
         'targetDirectory',
+        'webPackageName',
+        'sitePackageName',
+        'apiPackageName',
       ],
       postGeneration: {
         installDependencies: true,

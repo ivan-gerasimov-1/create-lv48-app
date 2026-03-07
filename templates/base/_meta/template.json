@@ -8,7 +8,10 @@
     "projectName",
     "packageName",
     "displayName",
-    "targetDirectory"
+    "targetDirectory",
+    "webPackageName",
+    "sitePackageName",
+    "apiPackageName"
   ],
   "postGeneration": {
     "installDependencies": true,
