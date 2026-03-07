@@ -1,7 +1,7 @@
 ## 1. CLI package bootstrap
 
-- [ ] 1.1 Create the `create-lv48-app` package manifest, bin entrypoint, TypeScript config, and test runner setup
-- [ ] 1.2 Add the initial source module skeleton for `cli`, `prompts`, `generate`, `presets`, `transforms`, and `utils`
+- [x] 1.1 Create the `create-lv48-app` package manifest, bin entrypoint, TypeScript config, and test runner setup
+- [x] 1.2 Add the initial source module skeleton for `cli`, `prompts`, `generate`, `presets`, `transforms`, and `utils`
 
 ## 2. Input and preset resolution
 

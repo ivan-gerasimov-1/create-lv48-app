@@ -1,0 +1,29 @@
+{
+  "name": "create-lv48-app",
+  "version": "0.1.0",
+  "description": "Opinionated initializer for TS-first SaaS projects.",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "create-lv48-app": "./bin/create-lv48-app.js"
+  },
+  "files": [
+    "bin",
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "24.6.1",
+    "typescript": "5.9.3",
+    "vitest": "3.2.4"
+  }
+}
