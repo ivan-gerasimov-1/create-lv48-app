@@ -28,10 +28,10 @@ CLI должен:
 
 Система должна:
 
-- создавать baseline SaaS-монорепу по одной команде
+- создавать baseline SaaS-монорепу на основе npm workspaces по одной команде
 - поддерживать preset-based architecture
 - минимизировать ручной setup
-- встраивать docs в generated project
+- встраивать README-инструкции в generated project
 - быть основой для дальнейшей реализации через OpenSpec
 
 ## 3. High-level architecture
@@ -79,7 +79,6 @@ create-lv48-app/
       packageJson.ts
       placeholders.ts
       renameSpecialFiles.ts
-      docs.ts
       env.ts
     utils/
       fs.ts
@@ -113,7 +112,7 @@ create-lv48-app/
 
 - иметь собственную template structure
 - иметь собственные metadata/rules
-- иметь собственный набор docs/guardrails при необходимости
+- иметь собственные README assets и инструкции при необходимости
 - не зависеть от хаотичной матрицы feature flags
 
 ## 6. Template structure requirements
@@ -127,22 +126,49 @@ templates/base/
   _meta/
     template.json
   apps/
-    app/
+    web/
+      package.json
+      README.md
+      index.html
+      vite.config.ts
+      src/
+        main.tsx
+        App.tsx
     site/
+      package.json
+      README.md
+      astro.config.mjs
+      src/
+        pages/
+          index.astro
     api/
+      package.json
+      README.md
+      src/
+        index.ts
   packages/
     config/
+      package.json
+      README.md
+      src/
+        index.ts
     ui/
+      package.json
+      README.md
+      src/
+        index.ts
     types/
+      package.json
+      README.md
+      src/
+        index.ts
     utils/
-  docs/
-    PRD.md
-    SRD.md
-    guardrails.md
+      package.json
+      README.md
+      src/
+        index.ts
   README.md
   package.json.tpl
-  pnpm-workspace.yaml
-  turbo.json
   _gitignore
   .env.example
 ```
@@ -173,12 +199,10 @@ CLI должен уметь спрашивать:
 
 - project name
 - target directory
-- preset
-- package manager
 - install dependencies? (`yes/no`)
 - initialize git? (`yes/no`)
 
-В phase 1 часть значений может иметь default и не спрашиваться при non-interactive запуске.
+В phase 1 preset `base` применяется по умолчанию без отдельного prompt; часть значений может иметь default и не спрашиваться при non-interactive запуске.
 
 ### 7.3 Non-interactive support
 
@@ -200,7 +224,7 @@ CLI должен уметь спрашивать:
 
 - `{{projectName}}`
 - `{{packageName}}`
-- `{{appName}}`
+- `{{webName}}`
 - `{{siteName}}`
 - `{{apiName}}`
 
@@ -221,6 +245,7 @@ CLI должен уметь спрашивать:
 - root `package.json`
 - workspace package names
 - metadata fields
+- workspace `package.json` scripts and names
 
 Нужно избегать хрупкого string replace там, где можно работать через parse/write.
 
@@ -232,39 +257,79 @@ Generated project phase 1 должен содержать:
 
 ```txt
 apps/
-  app/
+  web/
+    package.json
+    README.md
+    index.html
+    vite.config.ts
+    src/
+      main.tsx
+      App.tsx
   site/
+    package.json
+    README.md
+    astro.config.mjs
+    src/
+      pages/
+        index.astro
   api/
+    package.json
+    README.md
+    src/
+      index.ts
 
 packages/
   config/
+    package.json
+    README.md
+    src/
+      index.ts
   ui/
+    package.json
+    README.md
+    src/
+      index.ts
   types/
+    package.json
+    README.md
+    src/
+      index.ts
   utils/
+    package.json
+    README.md
+    src/
+      index.ts
 
-docs/
-  PRD.md
-  SRD.md
-  guardrails.md
+package.json
+README.md
 ```
 
 ### 9.2 Baseline generated documents
 
-Generated docs должны быть согласованы с generated structure.
+Generated README files должны быть согласованы с generated structure и setup path.
 
-### 9.3 Package manager assumption
+### 9.3 Baseline stack verification
 
-Phase 1 default package manager:
+Smoke verification для phase 1 должна подтверждать не только наличие starter files, но и то, что:
 
-- `pnpm`
+- `apps/web` содержит ожидаемый Vite + React entry pattern (`index.html`, `src/main.tsx`, `src/App.tsx`, `vite.config.ts`)
+- `apps/site` содержит ожидаемый Astro entry pattern (`astro.config.mjs`, `src/pages/index.astro`)
+- `apps/api` содержит ожидаемый минимальный Hono entry pattern (`src/index.ts` с Hono app bootstrap)
+- shared packages содержат ожидаемый минимальный entry pattern (`src/index.ts`)
 
-CLI может запускаться через npm/npx, но output project должен по умолчанию быть рассчитан на pnpm monorepo workflow.
+### 9.4 Package manager assumption
+
+Phase 1 package manager:
+
+- `npm`
+
+CLI может запускаться через npm/npx, а output project должен быть рассчитан на монорепо на основе npm workspaces.
 
 ## 10. Post-setup requirements
 
 ### 10.1 Dependency installation
 
-Если пользователь согласен, CLI должен выполнять установку зависимостей через выбранный package manager.
+Если пользователь согласен, CLI должен выполнять установку зависимостей через `npm install`.
 
 ### 10.2 Git initialization
 
@@ -279,8 +344,8 @@ CLI может запускаться через npm/npx, но output project д
 После генерации CLI должен вывести:
 
 - что создано
-- какой preset был выбран
-- какой package manager ожидается
+- что применён baseline preset `base`
+- что проект использует `npm`
 - были ли установлены зависимости
 - был ли инициализирован git
 - какие команды выполнить дальше
@@ -318,7 +383,7 @@ CLI может запускаться через npm/npx, но output project д
 - новую template directory
 - новый preset metadata file
 - optional preset-specific transforms
-- optional preset-specific docs
+- optional preset-specific README instructions
 
 Без переписывания всего генератора.
 
@@ -326,11 +391,11 @@ CLI может запускаться через npm/npx, но output project д
 
 Сгенерированный проект должен содержать:
 
-- архитектурные документы
-- стартовый README
-- guardrails / conventions
+- root README
+- project-level README files для generated apps и packages
+- инструкции, согласованные с generated structure и setup path
 
-Эти документы должны быть versioned template-assets, а не только строками, зашитыми в код генератора.
+Эти README assets должны быть versioned template-assets, а не только строками, зашитыми в код генератора.
 
 ## 14. Implementation constraints
 
@@ -385,7 +450,7 @@ Initializer не должен:
 
 ### 17.1 Template drift
 
-Docs, guardrails и реальная структура template могут начать расходиться.
+README instructions и реальная структура template могут начать расходиться.
 
 ### 17.2 Preset sprawl
 
@@ -410,18 +475,19 @@ Docs, guardrails и реальная структура template могут на
 3. `convex-realtime` добавлять как отдельный preset, а не как флаг.
 4. Templates хранить внутри пакета на старте.
 5. Минимизировать количество обязательных вопросов пользователю.
-6. Generated docs должны лежать рядом с generated code.
+6. Root и project-level README должны лежать рядом с generated code.
 7. Структурные transforms предпочтительнее строковых хаков.
-8. Package manager по умолчанию — `pnpm`.
-9. Ошибки должны быть понятными и не маскироваться.
-10. Генератор должен создавать baseline, а не пытаться генерировать весь мир.
+8. Package manager phase 1 — `npm`.
+9. Baseline phase 1 опирается только на npm workspaces.
+10. Ошибки должны быть понятными и не маскироваться.
+11. Генератор должен создавать baseline, а не пытаться генерировать весь мир.
 
 ## 19. Suggested next implementation step
 
 Следующий практический шаг после этих документов:
 
 - спроектировать структуру самого CLI-репозитория
-- сделать `base` template
+- сделать `base` template с workspace manifests и starter files для `web/site/api`
 - реализовать prompts + copy + transforms + post-setup
 - проверить end-to-end сценарий `npm init …`
 - после стабилизации добавить preset `convex-realtime`

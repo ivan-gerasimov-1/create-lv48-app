@@ -20,11 +20,11 @@ npx create-lv48-app
 
 На первом этапе initializer должен создавать baseline-проект для TS-first SaaS:
 
-- `app` — product app на React + Vite
+- `web` — product web app на React + Vite
 - `site` — public site на Astro
 - `api` — backend на Node + Hono
 - shared packages для `config`, `ui`, `types`, `utils`
-- docs, guardrails и стартовый README
+- root README и README внутри сгенерированных apps/packages с инструкциями
 
 На следующем этапе должен появиться отдельный preset для Convex / realtime-first приложений.
 
@@ -33,11 +33,11 @@ npx create-lv48-app
 Сейчас старт нового проекта требует ручной сборки одних и тех же вещей:
 
 - создание монорепы
-- настройка workspace tooling
-- раскладка `app` / `site` / `api`
+- настройка монорепы на основе npm workspaces
+- раскладка `web` / `site` / `api`
 - перенос общих config-файлов
 - перенос архитектурных документов
-- повторение одинаковых guardrails
+- повторение одинаковых conventions
 - ручное выравнивание структуры под выбранную архитектуру
 
 Это замедляет старт, плодит шум и повышает шанс ранних структурных ошибок.
@@ -102,7 +102,7 @@ Initializer должен создавать понятный проект, а н
 
 ### 6.4 Architecture encoded in files
 
-Архитектурные решения должны быть зашиты в generated structure, docs и config, а не жить только в README или в голове автора.
+Архитектурные решения должны быть зашиты в generated structure, README-инструкции и config, а не жить только в голове автора.
 
 ### 6.5 Presets over toggle explosion
 
@@ -117,10 +117,10 @@ Initializer должен:
 - создавать проект из baseline preset
 - работать как `npm init …` и `npx create-…`
 - спрашивать минимально необходимую информацию
-- генерировать монорепу
+- генерировать монорепу на основе npm workspaces
 - копировать template files
 - подставлять project-specific значения
-- генерировать docs
+- генерировать root README и project-level README для apps/packages
 - опционально устанавливать зависимости
 - опционально выполнять `git init`
 - печатать понятные next steps
@@ -151,20 +151,18 @@ Initializer должен поддержать второй preset:
 
 1. выбирает или подтверждает имя проекта
 2. выбирает директорию
-3. выбирает preset
-4. выбирает package manager или принимает default
-5. решает, устанавливать ли зависимости
-6. решает, делать ли `git init`
-7. получает сгенерированный проект
-8. получает summary и next steps
+3. решает, устанавливать ли зависимости
+4. решает, делать ли `git init`
+5. получает сгенерированный проект
+6. получает summary и next steps
 
 ### 8.2 Phase 1 expected default flow
 
 Минимальный baseline flow:
 
 - project name
-- preset = `base`
-- package manager = `pnpm` по умолчанию
+- preset = `base` по умолчанию без отдельного prompt
+- package manager = `npm`
 - install dependencies = optional
 - git init = optional
 
@@ -187,7 +185,7 @@ Initializer должен поддержать второй preset:
 - поддерживать placeholder replacement
 - корректно переименовывать служебные файлы (`_gitignore` → `.gitignore` и подобные)
 - корректно обновлять `package.json`
-- генерировать workspace-конфигурацию
+- генерировать workspace-конфигурацию на основе root `package.json` с `workspaces`
 
 ### 9.3 Presets
 
@@ -212,19 +210,22 @@ Initializer должен поддержать второй preset:
 
 Phase 1 scaffold должен включать:
 
-- `apps/app`
+- `apps/web`
 - `apps/site`
 - `apps/api`
 - `packages/config`
 - `packages/ui`
 - `packages/types`
 - `packages/utils`
+- `package.json` для root workspace, каждого app и каждого package
+- минимальные starter files для `React + Vite`, `Astro` и `Node + Hono`
 
 ### 9.6 Generated documentation
 
 Initializer должен генерировать или копировать в проект:
 
 - `README.md`
+- `README.md` внутри сгенерированных приложений и пакетов
 
 ### 9.7 Post-generation actions
 
@@ -249,11 +250,11 @@ Initializer должен уметь:
 
 Baseline SaaS-проект с архитектурой:
 
-- React + Vite product app
+- React + Vite product web app
 - Astro public site
 - Node backend
 - shared packages
-- docs and guardrails
+- root README и project-level README с инструкциями для apps/packages
 
 ### 10.2 Future Convex preset
 
@@ -264,7 +265,7 @@ Baseline SaaS-проект с архитектурой:
 - data layer assumptions
 - backend responsibilities
 - auth integration shape
-- generated docs and guardrails
+- generated README instructions
 - runtime structure
 
 Convex preset не должен быть “галочкой сверху” поверх base, если архитектурно это уже другой фундамент.
@@ -303,7 +304,7 @@ Initializer должен быть:
 
 - initializer станет слишком универсальным и сложным
 - presets начнут течь друг в друга
-- template drift между docs и actual files
+- template drift между README-инструкциями и actual files
 - generated project будет выглядеть слишком “демо-шаблонно”
 - CLI будет сложно обновлять вместе с шаблонами
 - Convex preset будет недооценён как отдельная архитектура
@@ -315,6 +316,6 @@ Initializer должен быть:
 - новый проект создаётся одной командой
 - baseline-проект готов к дальнейшей работе без ручного пересоздания структуры
 - generated files отражают архитектурные правила
-- generated docs совпадают с generated structure
+- generated README-инструкции совпадают с generated structure
 - добавление второго preset не ломает первый
 - после генерации можно сразу переходить к OpenSpec-этапу и реализации
