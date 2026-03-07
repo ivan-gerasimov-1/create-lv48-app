@@ -9,7 +9,7 @@ export async function runCli() {
   const prompts = createPromptController();
   const presets = createPresetRegistry();
   const transforms = createTransformPipeline();
-  const generation = createGenerationRunner();
+  const generation = createGenerationRunner(transforms);
   const answers = await prompts.collectAnswers();
   const preset = presets.getDefaultPreset();
 

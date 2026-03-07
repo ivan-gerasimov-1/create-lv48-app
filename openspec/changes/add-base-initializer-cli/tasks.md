@@ -11,10 +11,10 @@
 
 ## 3. Scaffold generation pipeline
 
-- [ ] 3.1 Implement preflight target-directory conflict checks and write tracking for reversible generation
-- [ ] 3.2 Implement recursive template copy with special-file rename handling
-- [ ] 3.3 Implement centralized placeholder interpolation for text assets
-- [ ] 3.4 Implement structural JSON transforms for root and workspace package metadata
+- [x] 3.1 Implement preflight target-directory conflict checks and write tracking for reversible generation
+- [x] 3.2 Implement recursive template copy with special-file rename handling
+- [x] 3.3 Implement centralized placeholder interpolation for text assets
+- [x] 3.4 Implement structural JSON transforms for root and workspace package metadata
 
 ## 4. Base preset assets
 
