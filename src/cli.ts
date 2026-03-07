@@ -10,11 +10,13 @@ export async function runCli() {
   const presets = createPresetRegistry();
   const transforms = createTransformPipeline();
   const generation = createGenerationRunner();
+  const answers = await prompts.collectAnswers();
+  const preset = presets.getDefaultPreset();
 
-  logger.info('create-lv48-app bootstrap is ready.');
+  logger.info(`create-lv48-app will scaffold ${answers.projectName} with ${preset.id}.`);
   logger.debug({
-    prompts,
-    presets,
+    answers,
+    preset,
     transforms,
     generation,
   });

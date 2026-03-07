@@ -5,9 +5,9 @@
 
 ## 2. Input and preset resolution
 
-- [ ] 2.1 Implement the answer model plus project-name, package-name, and target-directory validation
-- [ ] 2.2 Implement the interactive prompt flow for phase 1 defaults and optional post-setup choices without package-manager or preset prompts
-- [ ] 2.3 Implement the preset registry and metadata loader for the `base` preset
+- [x] 2.1 Implement the answer model plus project-name, package-name, and target-directory validation
+- [x] 2.2 Implement the interactive prompt flow for phase 1 defaults and optional post-setup choices without package-manager or preset prompts
+- [x] 2.3 Implement the preset registry and metadata loader for the `base` preset
 
 ## 3. Scaffold generation pipeline
 

@@ -1,0 +1,65 @@
+import path from 'node:path';
+
+import type { ValidationResult } from './types.js';
+
+const PROJECT_NAME_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+export function validateProjectName(input: string): ValidationResult<string> {
+  const value = input.trim();
+
+  if (value.length === 0) {
+    return {
+      ok: false,
+      reason: 'Project name is required.',
+    };
+  }
+
+  if (!PROJECT_NAME_PATTERN.test(value)) {
+    return {
+      ok: false,
+      reason:
+        'Project name must use lowercase letters, numbers, and single hyphens only.',
+    };
+  }
+
+  return {
+    ok: true,
+    value,
+  };
+}
+
+export function validatePackageName(input: string): ValidationResult<string> {
+  return validateProjectName(input);
+}
+
+export function validateTargetDirectory(input: string): ValidationResult<string> {
+  const trimmedValue = input.trim();
+
+  if (trimmedValue.length === 0) {
+    return {
+      ok: false,
+      reason: 'Target directory is required.',
+    };
+  }
+
+  const normalizedValue = path.normalize(trimmedValue);
+
+  if (path.isAbsolute(normalizedValue)) {
+    return {
+      ok: false,
+      reason: 'Target directory must be relative to the current working directory.',
+    };
+  }
+
+  if (normalizedValue === '..' || normalizedValue.startsWith(`..${path.sep}`)) {
+    return {
+      ok: false,
+      reason: 'Target directory must stay within the current working directory.',
+    };
+  }
+
+  return {
+    ok: true,
+    value: normalizedValue,
+  };
+}
