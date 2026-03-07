@@ -1,0 +1,20 @@
+{
+  "id": "base",
+  "displayName": "Base SaaS Monorepo",
+  "description": "Baseline npm-workspaces monorepo for TS-first SaaS projects.",
+  "packageManagers": ["npm"],
+  "templateDirectory": "templates/base",
+  "placeholderKeys": [
+    "projectName",
+    "packageName",
+    "displayName",
+    "targetDirectory",
+    "webPackageName",
+    "sitePackageName",
+    "apiPackageName"
+  ],
+  "postGeneration": {
+    "installDependencies": true,
+    "initializeGit": true
+  }
+}
