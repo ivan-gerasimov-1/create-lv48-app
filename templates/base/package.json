@@ -11,7 +11,7 @@
     "dev:web": "npm run dev --workspace @{{packageName}}/web",
     "dev:site": "npm run dev --workspace @{{packageName}}/site",
     "dev:api": "npm run dev --workspace @{{packageName}}/api",
-    "build": "npm run build --workspaces",
+    "build": "npm run build --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
     "test": "npm run test --workspaces --if-present"
   }

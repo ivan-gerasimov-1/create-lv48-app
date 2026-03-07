@@ -387,8 +387,17 @@ describe('bootstrap modules', () => {
     await expect(readUtf8File(path.join(targetRoot, 'package.json'))).resolves.toContain(
       '"workspaces"',
     );
+    await expect(readUtf8File(path.join(targetRoot, 'package.json'))).resolves.toContain(
+      '"build": "npm run build --workspaces --if-present"',
+    );
     await expect(readUtf8File(path.join(targetRoot, 'apps/web/index.html'))).resolves.toContain(
       '/src/main.tsx',
+    );
+    await expect(readUtf8File(path.join(targetRoot, 'apps/web/package.json'))).resolves.toContain(
+      '"react"',
+    );
+    await expect(readUtf8File(path.join(targetRoot, 'apps/web/package.json'))).resolves.toContain(
+      '"vite"',
     );
     await expect(readUtf8File(path.join(targetRoot, 'apps/web/src/main.tsx'))).resolves.toContain(
       "ReactDOM.createRoot",
@@ -399,9 +408,15 @@ describe('bootstrap modules', () => {
     await expect(
       readUtf8File(path.join(targetRoot, 'apps/site/astro.config.mjs')),
     ).resolves.toContain('defineConfig');
+    await expect(readUtf8File(path.join(targetRoot, 'apps/site/package.json'))).resolves.toContain(
+      '"astro"',
+    );
     await expect(
       readUtf8File(path.join(targetRoot, 'apps/site/src/pages/index.astro')),
     ).resolves.toContain('Astro starter site');
+    await expect(readUtf8File(path.join(targetRoot, 'apps/api/package.json'))).resolves.toContain(
+      '"hono"',
+    );
     await expect(readUtf8File(path.join(targetRoot, 'apps/api/src/index.ts'))).resolves.toContain(
       "new Hono()",
     );
