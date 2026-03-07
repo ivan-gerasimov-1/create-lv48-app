@@ -317,6 +317,60 @@ describe('bootstrap modules', () => {
     ]);
   });
 
+  it('preserves an existing empty target directory when rollback runs', async () => {
+    const rootDirectory = await mkdtemp(path.join(os.tmpdir(), 'lv48-existing-target-'));
+    const targetRoot = path.join(rootDirectory, 'existing-target');
+
+    cleanupPaths.push(rootDirectory);
+    await mkdir(targetRoot, { recursive: true });
+    await mkdir(path.join(rootDirectory, 'fixture'), { recursive: true });
+    await writeFile(path.join(rootDirectory, 'fixture', 'README.md'), '# {{displayName}}\n', 'utf8');
+    await writeFile(path.join(rootDirectory, 'fixture', 'package.json'), '{invalid-json}\n', 'utf8');
+
+    const runner = createGenerationRunner(createTransformPipeline());
+
+    await expect(
+      runner.scaffold({
+        cwd: rootDirectory,
+        templateBaseDirectory: rootDirectory,
+        targetRoot,
+        answers: {
+          projectName: 'demo-app',
+          packageName: 'demo-app',
+          displayName: 'Demo App',
+          targetDirectory: 'existing-target',
+          packageManager: 'npm',
+          presetId: 'base',
+          installDependencies: true,
+          initializeGit: true,
+        },
+        preset: {
+          id: 'base',
+          displayName: 'Fixture',
+          description: 'Fixture',
+          packageManagers: ['npm'],
+          templateDirectory: 'fixture',
+          placeholderKeys: ['projectName', 'packageName', 'displayName', 'targetDirectory'],
+          postGeneration: {
+            installDependencies: true,
+            initializeGit: true,
+          },
+        },
+        placeholders: {
+          projectName: 'demo-app',
+          packageName: 'demo-app',
+          displayName: 'Demo App',
+          targetDirectory: 'existing-target',
+        },
+      }),
+    ).rejects.toThrow();
+
+    await expect(listRelativeFiles(rootDirectory)).resolves.toEqual([
+      'fixture/README.md',
+      'fixture/package.json',
+    ]);
+  });
+
   it('runs optional post-setup actions and reports failures without hiding scaffold success', async () => {
     const executed: string[] = [];
     const executor = createPostSetupExecutor(async (command, args, cwd) => {

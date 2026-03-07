@@ -83,8 +83,11 @@ async function scaffoldTemplate(
       const destinationRelativePath = transformPipeline.mapDestinationPath(relativeFile);
       const destinationPath = path.join(context.targetRoot, destinationRelativePath);
       const destinationDirectory = path.dirname(destinationPath);
+      const destinationDirectoryWasCreated = createdDirectories.includes(destinationDirectory);
+      const isPreexistingTargetRoot =
+        destinationDirectory === context.targetRoot && targetRootExisted;
 
-      if (!createdDirectories.includes(destinationDirectory)) {
+      if (!destinationDirectoryWasCreated && !isPreexistingTargetRoot) {
         await mkdir(destinationDirectory, { recursive: true });
         createdDirectories.push(destinationDirectory);
       }
