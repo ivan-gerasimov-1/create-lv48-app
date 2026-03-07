@@ -1,6 +1,6 @@
 ---
 name: feature-plan
-description: Runs the full feature planning workflow step by step: define requirements and user stories, clarify missing details, create a technical plan, generate implementation tasks, and analyze consistency and coverage across all artifacts.
+description: Runs the full feature planning workflow step by step — define requirements and user stories, clarify missing details, create a technical plan, generate implementation tasks, and analyze consistency and coverage across all artifacts.
 ---
 
 Run the following skills in sequence.
