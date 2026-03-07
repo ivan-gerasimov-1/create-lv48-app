@@ -5,6 +5,7 @@ export type PlaceholderValues = Record<string, string>;
 
 export type GenerationContext = {
   cwd: string;
+  templateBaseDirectory: string;
   targetRoot: string;
   answers: PromptAnswers;
   preset: PresetMetadata;

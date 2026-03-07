@@ -54,8 +54,13 @@ async function scaffoldTemplate(
   context: GenerationContext,
   transformPipeline: TransformPipeline,
 ): Promise<GenerationRecord> {
-  const templateRoot = path.resolve(context.cwd, context.preset.templateDirectory);
-  const relativeFiles = await listRelativeFiles(templateRoot);
+  const templateRoot = path.resolve(
+    context.templateBaseDirectory,
+    context.preset.templateDirectory,
+  );
+  const relativeFiles = (await listRelativeFiles(templateRoot)).filter(
+    (relativeFile) => !relativeFile.startsWith('_meta/'),
+  );
   const createdDirectories: string[] = [];
   const createdFiles: string[] = [];
 

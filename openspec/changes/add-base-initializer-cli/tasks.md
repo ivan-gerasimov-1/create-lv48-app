@@ -24,8 +24,8 @@
 
 ## 5. Post-setup and verification
 
-- [ ] 5.1 Implement optional dependency installation with clear failure reporting
-- [ ] 5.2 Implement optional git initialization and final summary output
-- [ ] 5.3 Add unit tests for validation, preset resolution, transforms, and post-setup decisions
-- [ ] 5.4 Add a smoke test that scaffolds the `base` preset and verifies the generated tree, workspace manifests, expected entry patterns for Vite React, Astro, Hono, and shared packages, README assets for apps/packages, npm-workspaces setup files, and special-file renames
-- [ ] 5.5 Run the affected test/build commands and fix any verification gaps
+- [x] 5.1 Implement optional dependency installation with clear failure reporting
+- [x] 5.2 Implement optional git initialization and final summary output
+- [x] 5.3 Add unit tests for validation, preset resolution, transforms, and post-setup decisions
+- [x] 5.4 Add a smoke test that scaffolds the `base` preset and verifies the generated tree, workspace manifests, expected entry patterns for Vite React, Astro, Hono, and shared packages, README assets for apps/packages, npm-workspaces setup files, and special-file renames
+- [x] 5.5 Run the affected test/build commands and fix any verification gaps
