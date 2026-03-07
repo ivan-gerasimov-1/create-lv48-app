@@ -142,6 +142,12 @@ describe('bootstrap modules', () => {
     });
   });
 
+  it('publishes template assets with the package for runtime scaffold access', async () => {
+    const packageManifest = await readUtf8File(path.join(process.cwd(), 'package.json'));
+
+    expect(packageManifest).toContain('"templates"');
+  });
+
   it('checks target directory conflicts before generation', async () => {
     const rootDirectory = await mkdtemp(path.join(os.tmpdir(), 'lv48-preflight-'));
     const targetRoot = path.join(rootDirectory, 'existing-target');

@@ -10,7 +10,8 @@
   },
   "files": [
     "bin",
-    "dist"
+    "dist",
+    "templates"
   ],
   "engines": {
     "node": ">=20.0.0"
