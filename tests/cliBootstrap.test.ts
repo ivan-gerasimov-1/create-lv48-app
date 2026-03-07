@@ -264,6 +264,59 @@ describe('bootstrap modules', () => {
     ).resolves.toContain('"name": "@demo-app/sample"');
   });
 
+  it('rolls back created scaffold paths when generation fails before handoff', async () => {
+    const rootDirectory = await mkdtemp(path.join(os.tmpdir(), 'lv48-rollback-'));
+    const targetRoot = path.join(rootDirectory, 'broken-app');
+
+    cleanupPaths.push(rootDirectory);
+    await mkdir(path.join(rootDirectory, 'fixture'), { recursive: true });
+    await writeFile(path.join(rootDirectory, 'fixture', 'README.md'), '# {{displayName}}\n', 'utf8');
+    await writeFile(path.join(rootDirectory, 'fixture', 'package.json'), '{invalid-json}\n', 'utf8');
+
+    const runner = createGenerationRunner(createTransformPipeline());
+
+    await expect(
+      runner.scaffold({
+        cwd: rootDirectory,
+        templateBaseDirectory: rootDirectory,
+        targetRoot,
+        answers: {
+          projectName: 'demo-app',
+          packageName: 'demo-app',
+          displayName: 'Demo App',
+          targetDirectory: 'broken-app',
+          packageManager: 'npm',
+          presetId: 'base',
+          installDependencies: true,
+          initializeGit: true,
+        },
+        preset: {
+          id: 'base',
+          displayName: 'Fixture',
+          description: 'Fixture',
+          packageManagers: ['npm'],
+          templateDirectory: 'fixture',
+          placeholderKeys: ['projectName', 'packageName', 'displayName', 'targetDirectory'],
+          postGeneration: {
+            installDependencies: true,
+            initializeGit: true,
+          },
+        },
+        placeholders: {
+          projectName: 'demo-app',
+          packageName: 'demo-app',
+          displayName: 'Demo App',
+          targetDirectory: 'broken-app',
+        },
+      }),
+    ).rejects.toThrow();
+
+    await expect(listRelativeFiles(rootDirectory)).resolves.toEqual([
+      'fixture/README.md',
+      'fixture/package.json',
+    ]);
+  });
+
   it('runs optional post-setup actions and reports failures without hiding scaffold success', async () => {
     const executed: string[] = [];
     const executor = createPostSetupExecutor(async (command, args, cwd) => {

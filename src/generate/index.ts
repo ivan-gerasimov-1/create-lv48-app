@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { cp, mkdir, readdir } from 'node:fs/promises';
+import { mkdir, readdir } from 'node:fs/promises';
 
 import type {
   DirectoryPreflightResult,
@@ -7,7 +7,13 @@ import type {
   GenerationRecord,
   GenerationRunner,
 } from './types.js';
-import { listRelativeFiles, pathExists, readUtf8File, writeUtf8File } from '../utils/fs.js';
+import {
+  listRelativeFiles,
+  pathExists,
+  readUtf8File,
+  removePaths,
+  writeUtf8File,
+} from '../utils/fs.js';
 import type { TransformPipeline } from '../transforms/index.js';
 
 export function createGenerationRunner(
@@ -61,32 +67,41 @@ async function scaffoldTemplate(
   const relativeFiles = (await listRelativeFiles(templateRoot)).filter(
     (relativeFile) => !relativeFile.startsWith('_meta/'),
   );
+  const targetRootExisted = await pathExists(context.targetRoot);
   const createdDirectories: string[] = [];
   const createdFiles: string[] = [];
 
   await mkdir(context.targetRoot, { recursive: true });
-  createdDirectories.push(context.targetRoot);
 
-  for (const relativeFile of relativeFiles) {
-    const sourcePath = path.join(templateRoot, relativeFile);
-    const destinationRelativePath = transformPipeline.mapDestinationPath(relativeFile);
-    const destinationPath = path.join(context.targetRoot, destinationRelativePath);
-    const destinationDirectory = path.dirname(destinationPath);
+  if (!targetRootExisted) {
+    createdDirectories.push(context.targetRoot);
+  }
 
-    if (!createdDirectories.includes(destinationDirectory)) {
-      await mkdir(destinationDirectory, { recursive: true });
-      createdDirectories.push(destinationDirectory);
+  try {
+    for (const relativeFile of relativeFiles) {
+      const sourcePath = path.join(templateRoot, relativeFile);
+      const destinationRelativePath = transformPipeline.mapDestinationPath(relativeFile);
+      const destinationPath = path.join(context.targetRoot, destinationRelativePath);
+      const destinationDirectory = path.dirname(destinationPath);
+
+      if (!createdDirectories.includes(destinationDirectory)) {
+        await mkdir(destinationDirectory, { recursive: true });
+        createdDirectories.push(destinationDirectory);
+      }
+
+      const fileContents = await readUtf8File(sourcePath);
+      const transformedContents = transformPipeline.transformTextFile(
+        destinationRelativePath,
+        fileContents,
+        context,
+      );
+
+      await writeUtf8File(destinationPath, transformedContents);
+      createdFiles.push(destinationPath);
     }
-
-    const fileContents = await readUtf8File(sourcePath);
-    const transformedContents = transformPipeline.transformTextFile(
-      destinationRelativePath,
-      fileContents,
-      context,
-    );
-
-    await writeUtf8File(destinationPath, transformedContents);
-    createdFiles.push(destinationPath);
+  } catch (error) {
+    await removePaths([...createdFiles, ...createdDirectories]);
+    throw error;
   }
 
   return {

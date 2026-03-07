@@ -29,3 +29,7 @@
 - [x] 5.3 Add unit tests for validation, preset resolution, transforms, and post-setup decisions
 - [x] 5.4 Add a smoke test that scaffolds the `base` preset and verifies the generated tree, workspace manifests, expected entry patterns for Vite React, Astro, Hono, and shared packages, README assets for apps/packages, npm-workspaces setup files, and special-file renames
 - [x] 5.5 Run the affected test/build commands and fix any verification gaps
+
+## 6. Verification Fixes
+
+- [x] 6.1 Add scaffold rollback cleanup for generation failures before handoff and cover it with a regression test
