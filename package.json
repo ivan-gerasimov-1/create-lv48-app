@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "description": "Opinionated initializer for TS-first SaaS projects.",
   "license": "MIT",
-  "private": true,
   "type": "module",
   "bin": {
     "create-lv48-app": "./bin/create-lv48-app.js"
