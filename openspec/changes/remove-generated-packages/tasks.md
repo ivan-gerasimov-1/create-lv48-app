@@ -17,5 +17,5 @@
 
 ## 4. Verification
 
-- [ ] 4.1 Run the affected test suite for scaffold generation and fix any regressions.
-- [ ] 4.2 Run build/typecheck for `create-lv48-app` after the scaffold simplification and capture any follow-up fixes if needed.
+- [x] 4.1 Run the affected test suite for scaffold generation and fix any regressions.
+- [x] 4.2 Run build/typecheck for `create-lv48-app` after the scaffold simplification and capture any follow-up fixes if needed.
