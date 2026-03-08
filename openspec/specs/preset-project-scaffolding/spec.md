@@ -6,11 +6,11 @@ Define the canonical baseline scaffold produced by the `base` preset, including 
 ## Requirements
 
 ### Requirement: Base preset generates the baseline project structure
-The system SHALL provide a `base` preset that generates a baseline monorepo on top of npm workspaces containing `apps/web`, `apps/site`, `apps/api`, `packages/config`, `packages/ui`, `packages/types`, `packages/utils`, root workspace configuration, workspace package manifests, and starter README assets.
+The system SHALL provide a `base` preset that generates a baseline monorepo on top of npm workspaces containing `apps/web`, `apps/site`, `apps/api`, an empty reserved `packages/` directory, root workspace configuration, workspace package manifests for generated apps, and starter README assets.
 
 #### Scenario: Phase 1 baseline scaffold is generated
 - **WHEN** the user confirms generation in the phase 1 flow
-- **THEN** the generated project contains the baseline apps, shared packages, workspace config files, workspace package manifests, and starter README assets defined by the `base` preset
+- **THEN** the generated project contains the baseline apps, the reserved `packages/` directory, workspace config files, workspace package manifests for generated apps, and starter README assets defined by the `base` preset
 
 ### Requirement: Preset generation applies placeholder interpolation consistently
 The system SHALL replace centralized placeholder keys in template assets with project-specific values, including project naming, package naming, display naming, and starter metadata values used by the preset.
@@ -31,7 +31,7 @@ The system SHALL rename special template files such as `_gitignore` to their run
 - **THEN** the system writes valid JSON with the resolved package names and metadata fields
 
 ### Requirement: Base preset includes minimal stack-specific starter files
-The system SHALL generate minimal starter files that match the promised baseline stack: `React + Vite` for `apps/web`, `Astro` for `apps/site`, `Node + Hono` for `apps/api`, and minimal `src/index.ts` entrypoints for shared packages.
+The system SHALL generate minimal starter files that match the promised baseline stack: `React + Vite` for `apps/web`, `Astro` for `apps/site`, and `Node + Hono` for `apps/api`.
 
 #### Scenario: User inspects generated web app files
 - **WHEN** scaffold generation completes for the `base` preset
@@ -57,20 +57,16 @@ The system SHALL generate minimal starter files that match the promised baseline
 - **WHEN** the phase 1 smoke test inspects `apps/api`
 - **THEN** it verifies the generated files match the expected minimal Hono entry pattern, including `src/index.ts` bootstrapping the Hono app, instead of only checking file presence
 
-#### Scenario: User inspects generated shared packages
+#### Scenario: User inspects reserved packages directory
 - **WHEN** scaffold generation completes for the `base` preset
-- **THEN** each generated shared package contains its own `package.json`, `README.md`, and minimal `src/index.ts` entrypoint
-
-#### Scenario: Smoke verification checks shared package entrypoints
-- **WHEN** the phase 1 smoke test inspects generated shared packages
-- **THEN** it verifies each package entrypoint matches the expected minimal `src/index.ts` pattern instead of only checking file presence
+- **THEN** the generated project contains an empty `packages/` directory reserved for future shared workspaces, without marker files in that directory
 
 ### Requirement: Preset output includes the baseline README instructions
-The system SHALL generate a starter README set that includes the root `README.md` and project-level `README.md` files for generated applications and shared packages, and those documents SHALL remain consistent with the generated baseline project structure and setup path.
+The system SHALL generate a starter README set that includes the root `README.md` and project-level `README.md` files for generated applications, and those documents SHALL remain consistent with the generated baseline project structure and setup path.
 
 #### Scenario: User inspects generated documentation
 - **WHEN** scaffold generation completes for the `base` preset
-- **THEN** the generated project contains the README set and the instructions describe the same apps, packages, and setup path that the scaffold created
+- **THEN** the generated project contains the README set and the instructions describe the same apps, reserved `packages/` directory, and setup path that the scaffold created
 
 #### Scenario: User inspects root tooling files
 - **WHEN** scaffold generation completes for the `base` preset

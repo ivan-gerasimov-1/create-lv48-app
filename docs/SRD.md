@@ -147,31 +147,13 @@ templates/base/
       src/
         index.ts
   packages/
-    config/
-      package.json
-      README.md
-      src/
-        index.ts
-    ui/
-      package.json
-      README.md
-      src/
-        index.ts
-    types/
-      package.json
-      README.md
-      src/
-        index.ts
-    utils/
-      package.json
-      README.md
-      src/
-        index.ts
   README.md
   package.json.tpl
   _gitignore
   .env.example
 ```
+
+`packages/` должен существовать в scaffold как пустая директория без marker-файлов, зарезервированная для будущих shared workspaces.
 
 ### 6.2 Template metadata requirements
 
@@ -315,7 +297,7 @@ Smoke verification для phase 1 должна подтверждать не т�
 - `apps/web` содержит ожидаемый Vite + React entry pattern (`index.html`, `src/main.tsx`, `src/App.tsx`, `vite.config.ts`)
 - `apps/site` содержит ожидаемый Astro entry pattern (`astro.config.mjs`, `src/pages/index.astro`)
 - `apps/api` содержит ожидаемый минимальный Hono entry pattern (`src/index.ts` с Hono app bootstrap)
-- shared packages содержат ожидаемый минимальный entry pattern (`src/index.ts`)
+- `packages/` создаётся как пустая зарезервированная директория без дополнительных файлов
 
 ### 9.4 Package manager assumption
 
