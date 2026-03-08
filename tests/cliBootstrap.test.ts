@@ -211,6 +211,9 @@ describe('bootstrap modules', () => {
     expect(workflowContents).toContain('id-token: write');
     expect(workflowContents).toContain('npm run release:check');
     expect(workflowContents).toContain('npm publish --provenance --access public');
+    await expect(readUtf8File(path.join(process.cwd(), 'package.json'))).resolves.toContain(
+      '"release:validate-workflow": "node ./scripts/validatePublishWorkflow.mjs"',
+    );
   });
 
   it('creates isolated directories for packed-artifact smoke verification', async () => {

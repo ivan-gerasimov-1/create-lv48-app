@@ -16,5 +16,5 @@
 
 ## 4. Release documentation and final verification
 
-- [ ] 4.1 Document the release workflow, including local pre-publish checks, required GitHub Actions trusted publishing/OIDC setup, and the final GitHub Actions-driven `npm publish` path
-- [ ] 4.2 Run the affected build and test commands plus the release-check workflow, then validate the GitHub Actions config statically and fix any verification gaps before handoff
+- [x] 4.1 Document the release workflow, including local pre-publish checks, required GitHub Actions trusted publishing/OIDC setup, and the final GitHub Actions-driven `npm publish` path
+- [x] 4.2 Run the affected build and test commands plus the release-check workflow, then validate the GitHub Actions config statically and fix any verification gaps before handoff

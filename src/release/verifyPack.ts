@@ -4,6 +4,7 @@ import type { PackedFile, ReleaseVerificationResult } from './types.js';
 
 const EXPECTED_PACKED_FILES = [
   'LICENSE',
+  'README.md',
   'bin/create-lv48-app.js',
   'dist/cli.d.ts',
   'dist/cli.js',
@@ -22,7 +23,14 @@ const EXPECTED_PACKED_FILES = [
   'templates/base/package.json',
 ].sort();
 
-const ALLOWED_TOP_LEVEL_DIRECTORIES = new Set(['bin', 'dist', 'package.json', 'templates', 'LICENSE']);
+const ALLOWED_TOP_LEVEL_DIRECTORIES = new Set([
+  'bin',
+  'dist',
+  'package.json',
+  'templates',
+  'LICENSE',
+  'README.md',
+]);
 
 export function getExpectedPackedFiles(): string[] {
   return [...EXPECTED_PACKED_FILES];
