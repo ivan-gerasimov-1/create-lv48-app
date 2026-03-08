@@ -1,6 +1,6 @@
 {
   "name": "create-lv48-app",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Opinionated initializer for TS-first SaaS projects.",
   "license": "MIT",
   "type": "module",

@@ -20,7 +20,7 @@ npx create-lv48-app
 
 На первом этапе initializer должен создавать baseline-проект для TS-first SaaS:
 
-- `web` — product web app на React + Vite
+- `web` — product web app на React + Vite с Tailwind CSS v4 и shadcn-ready baseline
 - `site` — public site на Astro
 - `api` — backend на Node + Hono
 - пустую зарезервированную директорию `packages/` для будущих shared workspaces
@@ -217,7 +217,7 @@ Phase 1 scaffold должен включать:
 - `apps/api`
 - пустую зарезервированную директорию `packages/` для будущих shared workspaces
 - `package.json` для root workspace и каждого app
-- минимальные starter files для `React + Vite`, `Astro` и `Node + Hono`
+- минимальные starter files для `React + Vite + Tailwind CSS v4` с shadcn-ready wiring, `Astro` и `Node + Hono`
 
 ### 9.6 Generated documentation
 
@@ -259,7 +259,7 @@ Initializer должен уметь:
 
 Baseline SaaS-проект с архитектурой:
 
-- React + Vite product web app
+- React + Vite product web app с Tailwind CSS v4 и shadcn-ready baseline
 - Astro public site
 - Node backend
 - пустой зарезервированный контейнер `packages/` для будущих shared packages
