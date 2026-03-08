@@ -6,6 +6,10 @@ import type {
   PostSetupExecutor,
 } from './types.js';
 
+const INITIALIZE_GIT_WITH_MAIN_ARGS = ['init', '--initial-branch=main'];
+const INITIALIZE_GIT_FALLBACK_ARGS = ['init'];
+const SET_GIT_HEAD_TO_MAIN_ARGS = ['symbolic-ref', 'HEAD', 'refs/heads/main'];
+
 export function createPostSetupExecutor(
   commandExecutor: CommandExecutor = executeCommand,
 ): PostSetupExecutor {
@@ -30,7 +34,7 @@ export function createPostSetupExecutor(
           name: 'initializeGit',
           detail: 'git init',
           run() {
-            return commandExecutor('git', ['init'], targetRoot);
+            return initializeGitRepository(commandExecutor, targetRoot);
           },
         }),
       );
@@ -76,12 +80,53 @@ async function runOptionalAction(options: {
   }
 }
 
+async function initializeGitRepository(
+  commandExecutor: CommandExecutor,
+  cwd: string,
+): Promise<void> {
+  try {
+    await commandExecutor('git', INITIALIZE_GIT_WITH_MAIN_ARGS, cwd);
+  } catch (error) {
+    if (!isUnsupportedInitialBranchError(error)) {
+      throw error;
+    }
+
+    await commandExecutor('git', INITIALIZE_GIT_FALLBACK_ARGS, cwd);
+    await commandExecutor('git', SET_GIT_HEAD_TO_MAIN_ARGS, cwd);
+  }
+}
+
+function isUnsupportedInitialBranchError(error: unknown): boolean {
+  if (!(error instanceof Error)) {
+    return false;
+  }
+
+  const message = error.message.toLowerCase();
+
+  return (
+    message.includes('initial-branch') &&
+    (message.includes('unknown option') ||
+      message.includes('unknown switch') ||
+      message.includes('unrecognized option') ||
+      message.includes('invalid option'))
+  );
+}
+
 function executeCommand(command: string, args: string[], cwd: string): Promise<void> {
   return new Promise((resolve, reject) => {
     const child = spawn(command, args, {
       cwd,
-      stdio: 'inherit',
+      stdio: ['inherit', 'inherit', 'pipe'],
     });
+    let stderrOutput = '';
+
+    if (child.stderr) {
+      child.stderr.setEncoding('utf8');
+      child.stderr.on('data', (chunk) => {
+        stderrOutput += chunk;
+        process.stderr.write(chunk);
+      });
+    }
 
     child.on('error', (error) => {
       reject(error);
@@ -93,7 +138,11 @@ function executeCommand(command: string, args: string[], cwd: string): Promise<v
         return;
       }
 
-      reject(new Error(`${command} exited with code ${exitCode ?? 'unknown'}`));
+      const message = stderrOutput.trim();
+
+      reject(
+        new Error(message.length > 0 ? message : `${command} exited with code ${exitCode ?? 'unknown'}`),
+      );
     });
   });
 }
