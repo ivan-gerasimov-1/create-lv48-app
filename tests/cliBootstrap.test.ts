@@ -174,7 +174,7 @@ describe('bootstrap modules', () => {
       url: 'https://github.com/ivan-gerasimov-1/create-lv48-app/issues',
     });
     expect(parsedManifest.bin).toEqual({
-      'create-lv48-app': './bin/create-lv48-app.js',
+      'create-lv48-app': 'bin/create-lv48-app.js',
     });
     expect(packageManifest).toContain('"templates"');
     await expect(readUtf8File(path.join(process.cwd(), 'LICENSE'))).resolves.toContain('MIT License');
