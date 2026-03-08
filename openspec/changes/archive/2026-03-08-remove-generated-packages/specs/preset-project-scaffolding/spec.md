@@ -1,9 +1,4 @@
-# preset-project-scaffolding Specification
-
-## Purpose
-Define the canonical baseline scaffold produced by the `base` preset, including generated structure, file transforms, starter assets, and metadata-driven generation behavior.
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Base preset generates the baseline project structure
 The system SHALL provide a `base` preset that generates a baseline monorepo on top of npm workspaces containing `apps/web`, `apps/site`, `apps/api`, an empty reserved `packages/` directory, root workspace configuration, workspace package manifests for generated apps, and starter README assets.
@@ -11,24 +6,6 @@ The system SHALL provide a `base` preset that generates a baseline monorepo on t
 #### Scenario: Phase 1 baseline scaffold is generated
 - **WHEN** the user confirms generation in the phase 1 flow
 - **THEN** the generated project contains the baseline apps, the reserved `packages/` directory, workspace config files, workspace package manifests for generated apps, and starter README assets defined by the `base` preset
-
-### Requirement: Preset generation applies placeholder interpolation consistently
-The system SHALL replace centralized placeholder keys in template assets with project-specific values, including project naming, package naming, display naming, and starter metadata values used by the preset.
-
-#### Scenario: Template file contains project placeholders
-- **WHEN** a template file contains placeholders for project-specific metadata
-- **THEN** the generated file contains the resolved values for the new project instead of the raw placeholder tokens
-
-### Requirement: Preset generation handles special-file and JSON transforms safely
-The system SHALL rename special template files such as `_gitignore` to their runtime names during generation, and it SHALL apply structural JSON updates to generated metadata files instead of relying only on blind string replacement.
-
-#### Scenario: Template includes a special file placeholder name
-- **WHEN** the base preset contains `_gitignore`
-- **THEN** the generated project contains `.gitignore` with the intended contents
-
-#### Scenario: Generated package metadata requires project-specific values
-- **WHEN** root or workspace `package.json` files need project-specific metadata
-- **THEN** the system writes valid JSON with the resolved package names and metadata fields
 
 ### Requirement: Base preset includes minimal stack-specific starter files
 The system SHALL generate minimal starter files that match the promised baseline stack: `React + Vite` for `apps/web`, `Astro` for `apps/site`, and `Node + Hono` for `apps/api`.
@@ -71,10 +48,3 @@ The system SHALL generate a starter README set that includes the root `README.md
 #### Scenario: User inspects root tooling files
 - **WHEN** scaffold generation completes for the `base` preset
 - **THEN** the generated project uses npm-workspaces root configuration appropriate for the baseline scaffold
-
-### Requirement: Preset behavior is driven by explicit preset metadata
-The system SHALL resolve scaffolding behavior from explicit preset metadata that declares the preset identity, supported package-manager values, placeholder keys, and any optional post-generation rules.
-
-#### Scenario: CLI resolves default preset metadata before generation
-- **WHEN** the phase 1 generation flow starts
-- **THEN** the system loads the `base` preset metadata before generation and uses it to determine which template assets and placeholder values are valid for the scaffold

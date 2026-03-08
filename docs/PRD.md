@@ -23,8 +23,8 @@ npx create-lv48-app
 - `web` — product web app на React + Vite
 - `site` — public site на Astro
 - `api` — backend на Node + Hono
-- shared packages для `config`, `ui`, `types`, `utils`
-- root README и README внутри сгенерированных apps/packages с инструкциями
+- пустую зарезервированную директорию `packages/` для будущих shared workspaces
+- root README и README внутри сгенерированных apps с инструкциями
 
 На следующем этапе должен появиться отдельный preset для Convex / realtime-first приложений.
 
@@ -120,7 +120,7 @@ Initializer должен:
 - генерировать монорепу на основе npm workspaces
 - копировать template files
 - подставлять project-specific значения
-- генерировать root README и project-level README для apps/packages
+- генерировать root README и project-level README для apps
 - опционально устанавливать зависимости
 - опционально выполнять `git init`
 - печатать понятные next steps
@@ -213,11 +213,8 @@ Phase 1 scaffold должен включать:
 - `apps/web`
 - `apps/site`
 - `apps/api`
-- `packages/config`
-- `packages/ui`
-- `packages/types`
-- `packages/utils`
-- `package.json` для root workspace, каждого app и каждого package
+- пустую зарезервированную директорию `packages/` для будущих shared workspaces
+- `package.json` для root workspace и каждого app
 - минимальные starter files для `React + Vite`, `Astro` и `Node + Hono`
 
 ### 9.6 Generated documentation
@@ -225,7 +222,7 @@ Phase 1 scaffold должен включать:
 Initializer должен генерировать или копировать в проект:
 
 - `README.md`
-- `README.md` внутри сгенерированных приложений и пакетов
+- `README.md` внутри сгенерированных приложений
 
 ### 9.7 Post-generation actions
 
@@ -253,8 +250,8 @@ Baseline SaaS-проект с архитектурой:
 - React + Vite product web app
 - Astro public site
 - Node backend
-- shared packages
-- root README и project-level README с инструкциями для apps/packages
+- пустой зарезервированный контейнер `packages/` для будущих shared packages
+- root README и project-level README с инструкциями для apps
 
 ### 10.2 Future Convex preset
 

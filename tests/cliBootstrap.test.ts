@@ -12,7 +12,12 @@ import { createGenerationRunner } from '../src/generate/index.js';
 import { createPresetRegistry } from '../src/presets/index.js';
 import { createPromptController } from '../src/prompts/index.js';
 import { createTransformPipeline } from '../src/transforms/index.js';
-import { listRelativeFiles, readUtf8File, removePaths } from '../src/utils/fs.js';
+import {
+  listRelativeDirectories,
+  listRelativeFiles,
+  readUtf8File,
+  removePaths,
+} from '../src/utils/fs.js';
 import {
   validatePackageName,
   validateProjectName,
@@ -126,6 +131,7 @@ describe('bootstrap modules', () => {
       description: 'Baseline npm-workspaces monorepo for TS-first SaaS projects.',
       packageManagers: ['npm'],
       templateDirectory: 'templates/base',
+      reservedDirectories: ['packages'],
       placeholderKeys: [
         'projectName',
         'packageName',
@@ -179,6 +185,7 @@ describe('bootstrap modules', () => {
           description: 'Fixture',
           packageManagers: ['npm'],
           templateDirectory: 'templates/base',
+          reservedDirectories: ['packages'],
           placeholderKeys: ['projectName', 'packageName', 'displayName', 'targetDirectory'],
           postGeneration: {
             installDependencies: true,
@@ -210,6 +217,7 @@ describe('bootstrap modules', () => {
       description: 'Fixture',
       packageManagers: ['npm' as const],
       templateDirectory: 'tests/fixtures/pipelineTemplate',
+      reservedDirectories: ['packages'],
       placeholderKeys: ['projectName', 'packageName', 'displayName', 'targetDirectory'],
       postGeneration: {
         installDependencies: true,
@@ -248,6 +256,8 @@ describe('bootstrap modules', () => {
     const record = await runner.scaffold(context);
 
     expect(record.createdFiles.length).toBe(4);
+    await expect(listRelativeDirectories(targetRoot)).resolves.toContain('packages');
+    await expect(listRelativeDirectories(targetRoot)).resolves.not.toContain('_meta');
     await expect(listRelativeFiles(targetRoot)).resolves.toEqual([
       '.gitignore',
       'README.md',
@@ -296,6 +306,7 @@ describe('bootstrap modules', () => {
           description: 'Fixture',
           packageManagers: ['npm'],
           templateDirectory: 'fixture',
+          reservedDirectories: ['packages'],
           placeholderKeys: ['projectName', 'packageName', 'displayName', 'targetDirectory'],
           postGeneration: {
             installDependencies: true,
@@ -350,6 +361,7 @@ describe('bootstrap modules', () => {
           description: 'Fixture',
           packageManagers: ['npm'],
           templateDirectory: 'fixture',
+          reservedDirectories: ['packages'],
           placeholderKeys: ['projectName', 'packageName', 'displayName', 'targetDirectory'],
           postGeneration: {
             installDependencies: true,
@@ -481,19 +493,9 @@ describe('bootstrap modules', () => {
       'apps/web/src/main.tsx',
       'apps/web/vite.config.ts',
       'package.json',
-      'packages/config/README.md',
-      'packages/config/package.json',
-      'packages/config/src/index.ts',
-      'packages/types/README.md',
-      'packages/types/package.json',
-      'packages/types/src/index.ts',
-      'packages/ui/README.md',
-      'packages/ui/package.json',
-      'packages/ui/src/index.ts',
-      'packages/utils/README.md',
-      'packages/utils/package.json',
-      'packages/utils/src/index.ts',
     ]);
+    await expect(listRelativeDirectories(targetRoot)).resolves.toContain('packages');
+    await expect(listRelativeDirectories(targetRoot)).resolves.not.toContain('_meta');
     await expect(readUtf8File(path.join(targetRoot, 'README.md'))).resolves.toContain(
       'apps/web',
     );
@@ -533,18 +535,8 @@ describe('bootstrap modules', () => {
     await expect(readUtf8File(path.join(targetRoot, 'apps/api/src/index.ts'))).resolves.toContain(
       "new Hono()",
     );
-    await expect(
-      readUtf8File(path.join(targetRoot, 'packages/config/src/index.ts')),
-    ).resolves.toContain('APP_NAME');
-    await expect(readUtf8File(path.join(targetRoot, 'packages/ui/src/index.ts'))).resolves.toContain(
-      'ButtonLabel',
-    );
-    await expect(
-      readUtf8File(path.join(targetRoot, 'packages/types/src/index.ts')),
-    ).resolves.toContain("HealthStatus = 'ok'");
-    await expect(
-      readUtf8File(path.join(targetRoot, 'packages/utils/src/index.ts')),
-    ).resolves.toContain('formatProjectName');
+    await expect(listRelativeFiles(path.join(targetRoot, 'packages'))).resolves.toEqual([]);
+    await expect(listRelativeDirectories(path.join(targetRoot, 'packages'))).resolves.toEqual([]);
     await expect(readUtf8File(path.join(targetRoot, '.gitignore'))).resolves.not.toContain(
       '.turbo',
     );

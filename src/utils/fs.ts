@@ -25,6 +25,10 @@ export async function listRelativeFiles(rootDirectory: string): Promise<string[]
   return walkDirectory(rootDirectory, rootDirectory);
 }
 
+export async function listRelativeDirectories(rootDirectory: string): Promise<string[]> {
+  return walkDirectories(rootDirectory, rootDirectory);
+}
+
 async function walkDirectory(rootDirectory: string, currentDirectory: string): Promise<string[]> {
   const entries = await readdir(currentDirectory, { withFileTypes: true });
   const files: string[] = [];
@@ -43,6 +47,26 @@ async function walkDirectory(rootDirectory: string, currentDirectory: string): P
   }
 
   return files.sort();
+}
+
+async function walkDirectories(
+  rootDirectory: string,
+  currentDirectory: string,
+): Promise<string[]> {
+  const entries = await readdir(currentDirectory, { withFileTypes: true });
+  const directories: string[] = [];
+
+  for (const entry of entries) {
+    if (!entry.isDirectory()) {
+      continue;
+    }
+
+    const absolutePath = path.join(currentDirectory, entry.name);
+    directories.push(path.relative(rootDirectory, absolutePath));
+    directories.push(...(await walkDirectories(rootDirectory, absolutePath)));
+  }
+
+  return directories.sort();
 }
 
 export async function readUtf8File(targetPath: string): Promise<string> {

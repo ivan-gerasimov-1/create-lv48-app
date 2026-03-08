@@ -42,6 +42,14 @@ function isPresetMetadata(value: unknown): value is PresetMetadata {
     return false;
   }
 
+  if (
+    'reservedDirectories' in value &&
+    (!Array.isArray(value.reservedDirectories) ||
+      value.reservedDirectories.some((directory) => typeof directory !== 'string'))
+  ) {
+    return false;
+  }
+
   if (!('packageManagers' in value) || !Array.isArray(value.packageManagers)) {
     return false;
   }

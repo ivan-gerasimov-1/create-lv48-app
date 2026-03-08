@@ -4,6 +4,7 @@
   "description": "Baseline npm-workspaces monorepo for TS-first SaaS projects.",
   "packageManagers": ["npm"],
   "templateDirectory": "templates/base",
+  "reservedDirectories": ["packages"],
   "placeholderKeys": [
     "projectName",
     "packageName",
