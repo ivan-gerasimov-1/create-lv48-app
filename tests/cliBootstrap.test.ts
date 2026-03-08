@@ -645,10 +645,15 @@ describe('bootstrap modules', () => {
       'apps/site/package.json',
       'apps/site/src/pages/index.astro',
       'apps/web/README.md',
+      'apps/web/components.json',
       'apps/web/index.html',
       'apps/web/package.json',
       'apps/web/src/App.tsx',
+      'apps/web/src/components/ui/button.tsx',
+      'apps/web/src/index.css',
+      'apps/web/src/lib/utils.ts',
       'apps/web/src/main.tsx',
+      'apps/web/tsconfig.json',
       'apps/web/vite.config.ts',
       'package.json',
     ]);
@@ -656,6 +661,9 @@ describe('bootstrap modules', () => {
     await expect(listRelativeDirectories(targetRoot)).resolves.not.toContain('_meta');
     await expect(readUtf8File(path.join(targetRoot, 'README.md'))).resolves.toContain(
       'apps/web',
+    );
+    await expect(readUtf8File(path.join(targetRoot, 'README.md'))).resolves.toContain(
+      'Tailwind CSS v4',
     );
     await expect(readUtf8File(path.join(targetRoot, 'package.json'))).resolves.toContain(
       '"workspaces"',
@@ -667,6 +675,15 @@ describe('bootstrap modules', () => {
       '/src/main.tsx',
     );
     await expect(readUtf8File(path.join(targetRoot, 'apps/web/package.json'))).resolves.toContain(
+      '"@tailwindcss/vite"',
+    );
+    await expect(readUtf8File(path.join(targetRoot, 'apps/web/package.json'))).resolves.toContain(
+      '"tailwindcss"',
+    );
+    await expect(readUtf8File(path.join(targetRoot, 'apps/web/package.json'))).resolves.toContain(
+      '"clsx"',
+    );
+    await expect(readUtf8File(path.join(targetRoot, 'apps/web/package.json'))).resolves.toContain(
       '"react"',
     );
     await expect(readUtf8File(path.join(targetRoot, 'apps/web/package.json'))).resolves.toContain(
@@ -675,8 +692,47 @@ describe('bootstrap modules', () => {
     await expect(readUtf8File(path.join(targetRoot, 'apps/web/src/main.tsx'))).resolves.toContain(
       "ReactDOM.createRoot",
     );
+    await expect(readUtf8File(path.join(targetRoot, 'apps/web/src/main.tsx'))).resolves.toContain(
+      "./index.css",
+    );
     await expect(readUtf8File(path.join(targetRoot, 'apps/web/src/App.tsx'))).resolves.toContain(
-      'React + Vite baseline',
+      'Tailwind CSS v4 + shadcn-ready',
+    );
+    await expect(readUtf8File(path.join(targetRoot, 'apps/web/src/App.tsx'))).resolves.toContain(
+      'Demo App',
+    );
+    await expect(readUtf8File(path.join(targetRoot, 'apps/web/src/App.tsx'))).resolves.toContain(
+      'demo-app',
+    );
+    await expect(readUtf8File(path.join(targetRoot, 'apps/web/README.md'))).resolves.toContain(
+      'Demo App',
+    );
+    await expect(readUtf8File(path.join(targetRoot, 'apps/web/src/index.css'))).resolves.toContain(
+      '@import "tailwindcss";',
+    );
+    await expect(readUtf8File(path.join(targetRoot, 'apps/web/src/index.css'))).resolves.toContain(
+      '@theme inline',
+    );
+    await expect(
+      readUtf8File(path.join(targetRoot, 'apps/web/src/components/ui/button.tsx')),
+    ).resolves.toContain('buttonVariants');
+    await expect(
+      readUtf8File(path.join(targetRoot, 'apps/web/src/lib/utils.ts')),
+    ).resolves.toContain('tailwind-merge');
+    await expect(readUtf8File(path.join(targetRoot, 'apps/web/components.json'))).resolves.toContain(
+      '"css": "src/index.css"',
+    );
+    await expect(readUtf8File(path.join(targetRoot, 'apps/web/components.json'))).resolves.toContain(
+      '"components": "@/components"',
+    );
+    await expect(readUtf8File(path.join(targetRoot, 'apps/web/tsconfig.json'))).resolves.toContain(
+      '"@/*"',
+    );
+    await expect(readUtf8File(path.join(targetRoot, 'apps/web/vite.config.ts'))).resolves.toContain(
+      "tailwindcss()",
+    );
+    await expect(readUtf8File(path.join(targetRoot, 'apps/web/vite.config.ts'))).resolves.toContain(
+      "new URL('./src', import.meta.url)",
     );
     await expect(
       readUtf8File(path.join(targetRoot, 'apps/site/astro.config.mjs')),
