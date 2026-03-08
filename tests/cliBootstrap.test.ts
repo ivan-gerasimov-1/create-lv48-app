@@ -645,10 +645,16 @@ describe('bootstrap modules', () => {
       'apps/site/package.json',
       'apps/site/src/pages/index.astro',
       'apps/web/README.md',
+      'apps/web/components.json',
       'apps/web/index.html',
       'apps/web/package.json',
+      'apps/web/postcss.config.cjs',
       'apps/web/src/App.tsx',
+      'apps/web/src/components/ui/button.tsx',
+      'apps/web/src/index.css',
+      'apps/web/src/lib/utils.ts',
       'apps/web/src/main.tsx',
+      'apps/web/tailwind.config.ts',
       'apps/web/vite.config.ts',
       'package.json',
     ]);
@@ -676,7 +682,7 @@ describe('bootstrap modules', () => {
       "ReactDOM.createRoot",
     );
     await expect(readUtf8File(path.join(targetRoot, 'apps/web/src/App.tsx'))).resolves.toContain(
-      'React + Vite baseline',
+      'Tailwind and shadcn/ui baseline',
     );
     await expect(
       readUtf8File(path.join(targetRoot, 'apps/site/astro.config.mjs')),
