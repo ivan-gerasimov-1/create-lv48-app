@@ -20,7 +20,7 @@
     "url": "https://github.com/ivan-gerasimov-1/create-lv48-app/issues"
   },
   "bin": {
-    "create-lv48-app": "./bin/create-lv48-app.js"
+    "create-lv48-app": "bin/create-lv48-app.js"
   },
   "files": [
     "bin",
