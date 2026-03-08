@@ -28,4 +28,4 @@ jobs:
 
       - name: Publish to npm
         if: github.ref == 'refs/heads/main'
-        run: npm publish --provenance --access public
+        run: npm publish --access public

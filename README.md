@@ -39,6 +39,12 @@ Publish flow:
 1. Trigger the `Publish Package` workflow manually.
 2. GitHub Actions runs `npm ci`.
 3. GitHub Actions runs `npm run release:check`.
-4. GitHub Actions publishes with `npm publish --provenance --access public`.
+4. GitHub Actions publishes with `npm publish --access public`.
+
+Notes:
+
+- Public npm packages can be published from a private GitHub repository.
+- npm provenance is not supported for GitHub Actions publishes from private repositories, so this workflow intentionally does not pass `--provenance`.
+- Keep npm trusted publishing configured for the repository. If trusted publishing is unavailable, use an `NPM_TOKEN`-based publish path instead of re-enabling provenance.
 
 If any verification step fails, publish does not run.

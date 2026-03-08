@@ -211,7 +211,7 @@ describe('bootstrap modules', () => {
     expect(workflowContents).toContain('id-token: write');
     expect(workflowContents).toContain('npm run release:check');
     expect(workflowContents).toContain("if: github.ref == 'refs/heads/main'");
-    expect(workflowContents).toContain('npm publish --provenance --access public');
+    expect(workflowContents).toContain('npm publish --access public');
     await expect(readUtf8File(path.join(process.cwd(), 'package.json'))).resolves.toContain(
       '"release:validate-workflow": "node ./scripts/validatePublishWorkflow.mjs"',
     );
