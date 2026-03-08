@@ -124,6 +124,8 @@ Initializer должен:
 - опционально устанавливать зависимости
 - опционально выполнять `git init`
 - печатать понятные next steps
+- публиковаться как публичный npm package под лицензией `MIT` с воспроизводимой release-проверкой
+- иметь GitHub Actions-based release path через `workflow_dispatch` и trusted publishing после прохождения verification gates
 
 ### 7.2 In scope for phase 2
 
@@ -241,6 +243,16 @@ Initializer должен уметь:
 - объяснять ошибки понятным языком
 - откатывать процесс или честно сообщать о частично завершённой генерации
 
+### 9.9 Package release and distribution
+
+Система доставки initializer должна:
+
+- публиковать `create-lv48-app` как публичный npm package
+- содержать корректные package metadata для registry-facing использования, включая лицензию `MIT`
+- проверять release tarball до публикации
+- подтверждать, что packed artifact реально запускает CLI и видит runtime templates
+- поддерживать GitHub Actions workflow с `workflow_dispatch` и trusted publishing, который публикует пакет только после успешных release checks
+
 ## 10. Preset strategy
 
 ### 10.1 Base preset
@@ -286,6 +298,14 @@ Initializer должен быть:
 
 Версия CLI и версия generated template output должны быть достаточно прозрачно связаны.
 
+### 11.5 Release safety
+
+Путь публикации должен быть:
+
+- воспроизводимым
+- проверяемым до фактического publish
+- одинаковым по release gates локально и в GitHub Actions
+
 ### 11.4 Developer experience
 
 Опыт использования должен быть:
@@ -305,6 +325,8 @@ Initializer должен быть:
 - generated project будет выглядеть слишком “демо-шаблонно”
 - CLI будет сложно обновлять вместе с шаблонами
 - Convex preset будет недооценён как отдельная архитектура
+- первый публичный npm release может оказаться битым из-за packaging drift
+- GitHub Actions release path может разъехаться с локальной проверкой
 
 ## 13. Success criteria
 
@@ -316,3 +338,5 @@ Initializer должен быть:
 - generated README-инструкции совпадают с generated structure
 - добавление второго preset не ломает первый
 - после генерации можно сразу переходить к OpenSpec-этапу и реализации
+- npm package публикуется с корректным tarball и рабочим entrypoint
+- GitHub Actions publish не обходит обязательные release checks

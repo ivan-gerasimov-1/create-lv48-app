@@ -2,8 +2,23 @@
   "name": "create-lv48-app",
   "version": "0.1.0",
   "description": "Opinionated initializer for TS-first SaaS projects.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "type": "module",
+  "keywords": [
+    "create",
+    "initializer",
+    "scaffold",
+    "typescript",
+    "saas"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivan-gerasimov-1/create-lv48-app.git"
+  },
+  "homepage": "https://github.com/ivan-gerasimov-1/create-lv48-app#readme",
+  "bugs": {
+    "url": "https://github.com/ivan-gerasimov-1/create-lv48-app/issues"
+  },
   "bin": {
     "create-lv48-app": "./bin/create-lv48-app.js"
   },
@@ -12,11 +27,18 @@
     "dist",
     "templates"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "engines": {
     "node": ">=20.0.0"
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
+    "release:check": "node ./scripts/releaseCheck.mjs",
+    "release:smoke": "node ./scripts/releaseSmoke.mjs",
+    "release:validate-workflow": "node ./scripts/validatePublishWorkflow.mjs",
+    "release:verify-pack": "node ./scripts/verifyPack.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc -p tsconfig.json --noEmit"

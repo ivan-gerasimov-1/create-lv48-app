@@ -1,4 +1,4 @@
-import { mkdtemp, mkdir, writeFile } from 'node:fs/promises';
+import { mkdtemp, mkdir, readFile, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 
@@ -11,6 +11,8 @@ import { runCli } from '../src/cli.js';
 import { createGenerationRunner } from '../src/generate/index.js';
 import { createPresetRegistry } from '../src/presets/index.js';
 import { createPromptController } from '../src/prompts/index.js';
+import { createReleaseSmokePaths, getInstalledSmokeCliPath } from '../src/release/smoke.js';
+import { getExpectedPackedFiles, verifyPackedFiles } from '../src/release/verifyPack.js';
 import { createTransformPipeline } from '../src/transforms/index.js';
 import {
   listRelativeDirectories,
@@ -150,8 +152,94 @@ describe('bootstrap modules', () => {
 
   it('publishes template assets with the package for runtime scaffold access', async () => {
     const packageManifest = await readUtf8File(path.join(process.cwd(), 'package.json'));
+    const parsedManifest = JSON.parse(packageManifest) as {
+      license: string;
+      files: string[];
+      publishConfig: { access: string };
+      repository: { type: string; url: string };
+      homepage: string;
+      bugs: { url: string };
+      bin: Record<string, string>;
+    };
 
+    expect(parsedManifest.license).toBe('MIT');
+    expect(parsedManifest.files).toEqual(['bin', 'dist', 'templates']);
+    expect(parsedManifest.publishConfig).toEqual({ access: 'public' });
+    expect(parsedManifest.repository).toEqual({
+      type: 'git',
+      url: 'git+https://github.com/ivan-gerasimov-1/create-lv48-app.git',
+    });
+    expect(parsedManifest.homepage).toBe('https://github.com/ivan-gerasimov-1/create-lv48-app#readme');
+    expect(parsedManifest.bugs).toEqual({
+      url: 'https://github.com/ivan-gerasimov-1/create-lv48-app/issues',
+    });
+    expect(parsedManifest.bin).toEqual({
+      'create-lv48-app': './bin/create-lv48-app.js',
+    });
     expect(packageManifest).toContain('"templates"');
+    await expect(readUtf8File(path.join(process.cwd(), 'LICENSE'))).resolves.toContain('MIT License');
+  });
+
+  it('verifies packed artifact paths against the public file contract', () => {
+    const result = verifyPackedFiles(
+      getExpectedPackedFiles().map((filePath) => ({
+        path: filePath,
+      })),
+    );
+
+    expect(result.missingFiles).toEqual([]);
+    expect(result.unexpectedFiles).toEqual([]);
+  });
+
+  it('flags unexpected packed files outside the public contract', () => {
+    const result = verifyPackedFiles([
+      { path: 'package/bin/create-lv48-app.js' },
+      { path: 'package/dist/cli.js' },
+      { path: 'package/src/cli.ts' },
+    ]);
+
+    expect(result.unexpectedFiles).toEqual(['src/cli.ts']);
+  });
+
+  it('documents a workflow_dispatch publish workflow with OIDC permissions', async () => {
+    const workflowContents = await readFile(
+      path.join(process.cwd(), '.github/workflows/publish.yml'),
+      'utf8',
+    );
+
+    expect(workflowContents).toContain('workflow_dispatch:');
+    expect(workflowContents).toContain('id-token: write');
+    expect(workflowContents).toContain('npm run release:check');
+    expect(workflowContents).toContain("if: github.ref == 'refs/heads/main'");
+    expect(workflowContents).toContain('npm publish --provenance --access public');
+    await expect(readUtf8File(path.join(process.cwd(), 'package.json'))).resolves.toContain(
+      '"release:validate-workflow": "node ./scripts/validatePublishWorkflow.mjs"',
+    );
+  });
+
+  it('creates isolated directories for packed-artifact smoke verification', async () => {
+    const smokePaths = await createReleaseSmokePaths();
+    const releaseSmokeScript = await readUtf8File(
+      path.join(process.cwd(), 'scripts/releaseSmoke.mjs'),
+    );
+
+    cleanupPaths.push(smokePaths.workspaceRoot);
+
+    expect(smokePaths.generatedProjectRoot).toBe(
+      path.join(smokePaths.runDirectory, 'smoke-app'),
+    );
+    expect(releaseSmokeScript).toContain('getInstalledSmokeCliPath');
+    expect(getInstalledSmokeCliPath(smokePaths.installDirectory, 'linux')).toBe(
+      path.join(smokePaths.installDirectory, 'node_modules', '.bin', 'create-lv48-app'),
+    );
+    expect(getInstalledSmokeCliPath(smokePaths.installDirectory, 'win32')).toBe(
+      path.join(smokePaths.installDirectory, 'node_modules', '.bin', 'create-lv48-app.cmd'),
+    );
+    expect(releaseSmokeScript).toContain("projectName: 'smoke-app'");
+    expect(releaseSmokeScript).toContain('await scaffoldFromInstalledPackage');
+    await expect(readUtf8File(path.join(process.cwd(), 'package.json'))).resolves.toContain(
+      '"release:smoke": "node ./scripts/releaseSmoke.mjs"',
+    );
   });
 
   it('checks target directory conflicts before generation', async () => {
