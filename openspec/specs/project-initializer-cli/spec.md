@@ -6,7 +6,7 @@ Define the canonical behavior for the project initializer CLI that scaffolds a n
 ## Requirements
 
 ### Requirement: CLI entrypoints start the initializer flow
-The system SHALL expose the project initializer through `npm init lv48-app`, `npx create-lv48-app`, and a direct executable bin entrypoint, and each entrypoint SHALL start the same initialization flow.
+The system SHALL expose the project initializer through `npm init lv48-app`, `npx create-lv48-app`, and a direct executable bin entrypoint, and each entrypoint SHALL start the same initialization flow from the published npm artifact as well as from the local package source.
 
 #### Scenario: User starts the initializer from an npm entrypoint
 - **WHEN** the user runs `npm init lv48-app` or `npx create-lv48-app`
@@ -15,6 +15,10 @@ The system SHALL expose the project initializer through `npm init lv48-app`, `np
 #### Scenario: User starts the initializer from the bin entrypoint
 - **WHEN** the executable bin script is invoked directly
 - **THEN** the system runs the same prompt, generation, and summary behavior as the npm-based entrypoints
+
+#### Scenario: Published package includes runtime assets for the initializer
+- **WHEN** the initializer is executed from the packed or published npm package
+- **THEN** the entrypoint can resolve its compiled runtime files and template assets without requiring files that exist only in the source repository
 
 ### Requirement: Initializer collects required setup decisions
 The system SHALL collect the project name, target directory, dependency-install choice, and git-initialization choice before generation, and the system SHALL use `npm` as the phase 1 package manager while applying the `base` preset by default without requiring package-manager or preset prompts.
