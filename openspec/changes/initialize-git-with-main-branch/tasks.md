@@ -1,7 +1,7 @@
 ## 1. Git initialization behavior
 
-- [ ] 1.1 Update the post-setup executor so optional git initialization targets the `main` branch for newly generated repositories
-- [ ] 1.2 Add a compatibility fallback for Git versions that cannot set the initial branch directly, while preserving existing optional-step failure handling
+- [x] 1.1 Update the post-setup executor so optional git initialization targets the `main` branch for newly generated repositories
+- [x] 1.2 Add a compatibility fallback for Git versions that cannot set the initial branch directly, while preserving existing optional-step failure handling
 
 ## 2. Verification
 

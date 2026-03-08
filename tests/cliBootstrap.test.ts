@@ -472,6 +472,77 @@ describe('bootstrap modules', () => {
   });
 
   it('runs optional post-setup actions and reports failures without hiding scaffold success', async () => {
+  it('initializes git repositories on the main branch when git supports the initial branch flag', async () => {
+    const executed: string[] = [];
+    const executor = createPostSetupExecutor(async (command, args, cwd) => {
+      executed.push(`${command} ${args.join(' ')} @ ${cwd}`);
+    });
+
+    await expect(
+      executor.run({
+        targetRoot: '/tmp/demo-app',
+        installDependencies: false,
+        initializeGit: true,
+      }),
+    ).resolves.toEqual([
+      {
+        name: 'installDependencies',
+        selected: false,
+        ok: true,
+        detail: 'npm install skipped',
+      },
+      {
+        name: 'initializeGit',
+        selected: true,
+        ok: true,
+        detail: 'git init completed',
+      },
+    ]);
+
+    expect(executed).toEqual([
+      'git init --initial-branch=main @ /tmp/demo-app',
+    ]);
+  });
+
+  it('falls back to a compatible main-branch setup when git does not support the initial branch flag', async () => {
+    const executed: string[] = [];
+    const executor = createPostSetupExecutor(async (command, args, cwd) => {
+      executed.push(`${command} ${args.join(' ')} @ ${cwd}`);
+
+      if (command === 'git' && args[0] === 'init' && args[1] === '--initial-branch=main') {
+        throw new Error('error: unknown option `initial-branch=main`');
+      }
+    });
+
+    await expect(
+      executor.run({
+        targetRoot: '/tmp/demo-app',
+        installDependencies: false,
+        initializeGit: true,
+      }),
+    ).resolves.toEqual([
+      {
+        name: 'installDependencies',
+        selected: false,
+        ok: true,
+        detail: 'npm install skipped',
+      },
+      {
+        name: 'initializeGit',
+        selected: true,
+        ok: true,
+        detail: 'git init completed',
+      },
+    ]);
+
+    expect(executed).toEqual([
+      'git init --initial-branch=main @ /tmp/demo-app',
+      'git init @ /tmp/demo-app',
+      'git symbolic-ref HEAD refs/heads/main @ /tmp/demo-app',
+    ]);
+  });
+
+  it('runs optional post-setup actions and reports failures without hiding scaffold success', async () => {
     const executed: string[] = [];
     const executor = createPostSetupExecutor(async (command, args, cwd) => {
       executed.push(`${command} ${args.join(' ')} @ ${cwd}`);
@@ -504,7 +575,7 @@ describe('bootstrap modules', () => {
 
     expect(executed).toEqual([
       'npm install @ /tmp/demo-app',
-      'git init @ /tmp/demo-app',
+      'git init --initial-branch=main @ /tmp/demo-app',
     ]);
   });
 
