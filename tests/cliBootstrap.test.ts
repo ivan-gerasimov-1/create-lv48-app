@@ -578,6 +578,40 @@ describe('bootstrap modules', () => {
     ]);
   });
 
+  it('emits progress messages before running each selected post-setup action', async () => {
+    const started: string[] = [];
+    const executor = createPostSetupExecutor(async () => {});
+
+    await expect(
+      executor.run({
+        targetRoot: '/tmp/demo-app',
+        installDependencies: true,
+        initializeGit: true,
+        onActionStart(action) {
+          started.push(action.message);
+        },
+      }),
+    ).resolves.toEqual([
+      {
+        name: 'installDependencies',
+        selected: true,
+        ok: true,
+        detail: 'npm install completed',
+      },
+      {
+        name: 'initializeGit',
+        selected: true,
+        ok: true,
+        detail: 'git init completed',
+      },
+    ]);
+
+    expect(started).toEqual([
+      'Post-setup: installing npm dependencies. This can take a moment...',
+      'Post-setup: initializing a git repository on branch main...',
+    ]);
+  });
+
   it('builds a final summary with manual next steps when post-setup fails', () => {
     const summary = buildInitializationSummary({
       projectName: 'demo-app',
@@ -780,6 +814,11 @@ describe('bootstrap modules', () => {
     expect(messages.some((message) => message.includes('create-lv48-app will scaffold'))).toBe(
       true,
     );
+    expect(
+      messages.some((message) =>
+        message.includes('Post-setup: installing npm dependencies. This can take a moment...'),
+      ),
+    ).toBe(true);
     expect(messages.some((message) => message.includes('Post-setup:'))).toBe(true);
     await expect(listRelativeFiles(path.join(rootDirectory, 'demo-directory'))).resolves.toContain(
       'apps/web/src/main.tsx',

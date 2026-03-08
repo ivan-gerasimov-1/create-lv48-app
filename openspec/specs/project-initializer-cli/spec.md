@@ -2,9 +2,7 @@
 
 ## Purpose
 Define the canonical behavior for the project initializer CLI that scaffolds a new lv48 application using the phase 1 default flow.
-
 ## Requirements
-
 ### Requirement: CLI entrypoints start the initializer flow
 The system SHALL expose the project initializer through `npm init lv48-app`, `npx create-lv48-app`, and a direct executable bin entrypoint, and each entrypoint SHALL start the same initialization flow from the published npm artifact as well as from the local package source.
 
@@ -47,11 +45,11 @@ The system SHALL validate project and package naming before generation and SHALL
 - **THEN** the system stops before generation and reports the directory conflict in plain language
 
 ### Requirement: Initializer performs optional post-setup actions and reports outcome
-The system SHALL allow the user to opt into dependency installation and git initialization, it SHALL create the generated repository with `main` as the initial branch whenever git initialization is selected, and it SHALL print a final summary that distinguishes completed scaffold work from any optional post-setup failures.
+The system SHALL allow the user to opt into dependency installation and git initialization, it SHALL create the generated repository with `main` as the initial branch whenever git initialization is selected, it SHALL emit visible progress messages when selected post-setup actions start running, and it SHALL print a final summary that distinguishes completed scaffold work from any optional post-setup failures.
 
 #### Scenario: User enables post-setup actions
 - **WHEN** the user opts into dependency installation and git initialization
-- **THEN** the system runs those actions after scaffold generation and includes the resulting status in the final summary
+- **THEN** the system runs those actions after scaffold generation, emits progress messages identifying each selected action as it starts, and includes the resulting status in the final summary
 
 #### Scenario: Git initialization creates a repository on main
 - **WHEN** the user opts into git initialization for a newly generated project
@@ -60,3 +58,4 @@ The system SHALL allow the user to opt into dependency installation and git init
 #### Scenario: Post-setup action fails after scaffold generation
 - **WHEN** the scaffold has already been generated and a selected post-setup action fails
 - **THEN** the system preserves the generated project, reports which step failed, and prints next steps that let the user continue manually
+

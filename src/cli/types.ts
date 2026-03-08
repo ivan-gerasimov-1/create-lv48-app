@@ -2,11 +2,19 @@ import type { GenerationRecord } from '../generate/types.js';
 
 import type { PromptController } from '../prompts/types.js';
 
+export type PostSetupActionName = 'installDependencies' | 'initializeGit';
+
 export type PostSetupActionStatus = {
-  name: 'installDependencies' | 'initializeGit';
+  name: PostSetupActionName;
   selected: boolean;
   ok: boolean;
   detail: string;
+};
+
+export type PostSetupActionStart = {
+  name: PostSetupActionName;
+  detail: string;
+  message: string;
 };
 
 export type InitializationSummary = {
@@ -31,6 +39,7 @@ export type PostSetupExecutor = {
     targetRoot: string;
     installDependencies: boolean;
     initializeGit: boolean;
+    onActionStart?(action: PostSetupActionStart): void;
   }): Promise<PostSetupActionStatus[]>;
 };
 

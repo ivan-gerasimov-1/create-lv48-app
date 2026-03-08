@@ -2,19 +2,25 @@ import { spawn } from 'node:child_process';
 
 import type {
   CommandExecutor,
+  PostSetupActionName,
   PostSetupActionStatus,
+  PostSetupActionStart,
   PostSetupExecutor,
 } from './types.js';
 
 const INITIALIZE_GIT_WITH_MAIN_ARGS = ['init', '--initial-branch=main'];
 const INITIALIZE_GIT_FALLBACK_ARGS = ['init'];
 const SET_GIT_HEAD_TO_MAIN_ARGS = ['symbolic-ref', 'HEAD', 'refs/heads/main'];
+const POST_SETUP_ACTION_MESSAGES: Record<PostSetupActionName, string> = {
+  installDependencies: 'Post-setup: installing npm dependencies. This can take a moment...',
+  initializeGit: 'Post-setup: initializing a git repository on branch main...',
+};
 
 export function createPostSetupExecutor(
   commandExecutor: CommandExecutor = executeCommand,
 ): PostSetupExecutor {
   return {
-    async run({ targetRoot, installDependencies, initializeGit }) {
+    async run({ targetRoot, installDependencies, initializeGit, onActionStart }) {
       const statuses: PostSetupActionStatus[] = [];
 
       statuses.push(
@@ -22,6 +28,7 @@ export function createPostSetupExecutor(
           selected: installDependencies,
           name: 'installDependencies',
           detail: 'npm install',
+          onActionStart,
           run() {
             return commandExecutor('npm', ['install'], targetRoot);
           },
@@ -33,6 +40,7 @@ export function createPostSetupExecutor(
           selected: initializeGit,
           name: 'initializeGit',
           detail: 'git init',
+          onActionStart,
           run() {
             return initializeGitRepository(commandExecutor, targetRoot);
           },
@@ -46,8 +54,9 @@ export function createPostSetupExecutor(
 
 async function runOptionalAction(options: {
   selected: boolean;
-  name: 'installDependencies' | 'initializeGit';
+  name: PostSetupActionName;
   detail: string;
+  onActionStart?(action: PostSetupActionStart): void;
   run(): Promise<void>;
 }): Promise<PostSetupActionStatus> {
   if (!options.selected) {
@@ -60,6 +69,11 @@ async function runOptionalAction(options: {
   }
 
   try {
+    options.onActionStart?.({
+      name: options.name,
+      detail: options.detail,
+      message: POST_SETUP_ACTION_MESSAGES[options.name],
+    });
     await options.run();
 
     return {

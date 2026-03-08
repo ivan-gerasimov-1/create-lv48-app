@@ -47,6 +47,9 @@ export async function runCli(dependencies: CliDependencies = {}) {
     targetRoot,
     installDependencies: answers.installDependencies,
     initializeGit: answers.initializeGit,
+    onActionStart(action) {
+      logger.info(action.message);
+    },
   });
   const summary = buildInitializationSummary({
     projectName: answers.projectName,
