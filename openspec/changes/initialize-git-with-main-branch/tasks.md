@@ -5,5 +5,5 @@
 
 ## 2. Verification
 
-- [ ] 2.1 Extend unit tests for post-setup execution to cover the `main` happy path and the compatibility fallback command sequence
-- [ ] 2.2 Run the affected test/build verification for the initializer CLI and fix any gaps before handoff
+- [x] 2.1 Extend unit tests for post-setup execution to cover the `main` happy path and the compatibility fallback command sequence
+- [x] 2.2 Run the affected test/build verification for the initializer CLI and fix any gaps before handoff

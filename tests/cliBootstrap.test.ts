@@ -471,7 +471,6 @@ describe('bootstrap modules', () => {
     ]);
   });
 
-  it('runs optional post-setup actions and reports failures without hiding scaffold success', async () => {
   it('initializes git repositories on the main branch when git supports the initial branch flag', async () => {
     const executed: string[] = [];
     const executor = createPostSetupExecutor(async (command, args, cwd) => {
