@@ -6,8 +6,8 @@
 
 ## 2. Scaffold contract updates
 
-- [ ] 2.1 Update the baseline scaffold smoke test to expect only `apps/*`, root files, and an empty reserved `packages/` directory.
-- [ ] 2.2 Remove package-specific content assertions from scaffold verification and replace them with an assertion that the reserved `packages/` directory is generated without extra files.
+- [x] 2.1 Update the baseline scaffold smoke test to expect only `apps/*`, root files, and an empty reserved `packages/` directory.
+- [x] 2.2 Remove package-specific content assertions from scaffold verification and replace them with an assertion that the reserved `packages/` directory is generated without extra files.
 
 ## 3. Spec and doc alignment
 
