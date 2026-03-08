@@ -1,8 +1,8 @@
 ## 1. Preset asset simplification
 
-- [ ] 1.1 Remove generated shared package template assets from `templates/base/packages/*` while preserving the top-level `packages/` directory in the scaffold.
-- [ ] 1.2 Extend scaffold generation so empty template directories are created in the output without relying on marker files.
-- [ ] 1.3 Update the base template README to describe `packages/` as a future workspace container instead of listing starter packages.
+- [x] 1.1 Remove generated shared package template assets from `templates/base/packages/*` while preserving the top-level `packages/` directory in the scaffold.
+- [x] 1.2 Extend scaffold generation so empty template directories are created in the output without relying on marker files.
+- [x] 1.3 Update the base template README to describe `packages/` as a future workspace container instead of listing starter packages.
 
 ## 2. Scaffold contract updates
 

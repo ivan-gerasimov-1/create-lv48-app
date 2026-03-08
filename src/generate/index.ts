@@ -8,6 +8,7 @@ import type {
   GenerationRunner,
 } from './types.js';
 import {
+  listRelativeDirectories,
   listRelativeFiles,
   pathExists,
   readUtf8File,
@@ -64,6 +65,9 @@ async function scaffoldTemplate(
     context.templateBaseDirectory,
     context.preset.templateDirectory,
   );
+  const relativeDirectories = (await listRelativeDirectories(templateRoot)).filter(
+    (relativeDirectory) => !relativeDirectory.startsWith('_meta/'),
+  );
   const relativeFiles = (await listRelativeFiles(templateRoot)).filter(
     (relativeFile) => !relativeFile.startsWith('_meta/'),
   );
@@ -78,6 +82,20 @@ async function scaffoldTemplate(
   }
 
   try {
+    for (const relativeDirectory of relativeDirectories) {
+      const destinationRelativePath = transformPipeline.mapDestinationPath(relativeDirectory);
+      const destinationPath = path.join(context.targetRoot, destinationRelativePath);
+      const wasCreated = createdDirectories.includes(destinationPath);
+      const isPreexistingTargetRoot = destinationPath === context.targetRoot && targetRootExisted;
+
+      if (wasCreated || isPreexistingTargetRoot) {
+        continue;
+      }
+
+      await mkdir(destinationPath, { recursive: true });
+      createdDirectories.push(destinationPath);
+    }
+
     for (const relativeFile of relativeFiles) {
       const sourcePath = path.join(templateRoot, relativeFile);
       const destinationRelativePath = transformPipeline.mapDestinationPath(relativeFile);

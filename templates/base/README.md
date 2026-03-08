@@ -7,10 +7,7 @@ Baseline npm-workspaces monorepo scaffolded by `create-lv48-app`.
 - `apps/web` - React + Vite product app
 - `apps/site` - Astro marketing site
 - `apps/api` - Node + Hono API
-- `packages/config` - shared config defaults
-- `packages/ui` - shared UI exports
-- `packages/types` - shared domain types
-- `packages/utils` - shared utilities
+- `packages/` - reserved workspace container for future shared packages
 
 ## Getting started
 
