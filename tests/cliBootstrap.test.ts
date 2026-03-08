@@ -131,6 +131,7 @@ describe('bootstrap modules', () => {
       description: 'Baseline npm-workspaces monorepo for TS-first SaaS projects.',
       packageManagers: ['npm'],
       templateDirectory: 'templates/base',
+      reservedDirectories: ['packages'],
       placeholderKeys: [
         'projectName',
         'packageName',
@@ -184,6 +185,7 @@ describe('bootstrap modules', () => {
           description: 'Fixture',
           packageManagers: ['npm'],
           templateDirectory: 'templates/base',
+          reservedDirectories: ['packages'],
           placeholderKeys: ['projectName', 'packageName', 'displayName', 'targetDirectory'],
           postGeneration: {
             installDependencies: true,
@@ -215,6 +217,7 @@ describe('bootstrap modules', () => {
       description: 'Fixture',
       packageManagers: ['npm' as const],
       templateDirectory: 'tests/fixtures/pipelineTemplate',
+      reservedDirectories: ['packages'],
       placeholderKeys: ['projectName', 'packageName', 'displayName', 'targetDirectory'],
       postGeneration: {
         installDependencies: true,
@@ -253,6 +256,8 @@ describe('bootstrap modules', () => {
     const record = await runner.scaffold(context);
 
     expect(record.createdFiles.length).toBe(4);
+    await expect(listRelativeDirectories(targetRoot)).resolves.toContain('packages');
+    await expect(listRelativeDirectories(targetRoot)).resolves.not.toContain('_meta');
     await expect(listRelativeFiles(targetRoot)).resolves.toEqual([
       '.gitignore',
       'README.md',
@@ -301,6 +306,7 @@ describe('bootstrap modules', () => {
           description: 'Fixture',
           packageManagers: ['npm'],
           templateDirectory: 'fixture',
+          reservedDirectories: ['packages'],
           placeholderKeys: ['projectName', 'packageName', 'displayName', 'targetDirectory'],
           postGeneration: {
             installDependencies: true,
@@ -355,6 +361,7 @@ describe('bootstrap modules', () => {
           description: 'Fixture',
           packageManagers: ['npm'],
           templateDirectory: 'fixture',
+          reservedDirectories: ['packages'],
           placeholderKeys: ['projectName', 'packageName', 'displayName', 'targetDirectory'],
           postGeneration: {
             installDependencies: true,
@@ -488,6 +495,7 @@ describe('bootstrap modules', () => {
       'package.json',
     ]);
     await expect(listRelativeDirectories(targetRoot)).resolves.toContain('packages');
+    await expect(listRelativeDirectories(targetRoot)).resolves.not.toContain('_meta');
     await expect(readUtf8File(path.join(targetRoot, 'README.md'))).resolves.toContain(
       'apps/web',
     );

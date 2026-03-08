@@ -6,6 +6,7 @@ export type PresetMetadata = {
   description: string;
   packageManagers: PackageManager[];
   templateDirectory: string;
+  reservedDirectories?: string[];
   placeholderKeys: string[];
   postGeneration: {
     installDependencies: boolean;

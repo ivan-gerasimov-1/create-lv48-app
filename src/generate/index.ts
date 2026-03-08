@@ -65,11 +65,13 @@ async function scaffoldTemplate(
     context.templateBaseDirectory,
     context.preset.templateDirectory,
   );
-  const relativeDirectories = (await listRelativeDirectories(templateRoot)).filter(
-    (relativeDirectory) => !relativeDirectory.startsWith('_meta/'),
-  );
+  const templateDirectories = await listRelativeDirectories(templateRoot);
+  const relativeDirectories = [
+    ...templateDirectories.filter(isPublicTemplatePath),
+    ...(context.preset.reservedDirectories ?? []),
+  ].sort();
   const relativeFiles = (await listRelativeFiles(templateRoot)).filter(
-    (relativeFile) => !relativeFile.startsWith('_meta/'),
+    isPublicTemplatePath,
   );
   const targetRootExisted = await pathExists(context.targetRoot);
   const createdDirectories: string[] = [];
@@ -129,6 +131,10 @@ async function scaffoldTemplate(
     createdDirectories,
     createdFiles,
   };
+}
+
+function isPublicTemplatePath(relativePath: string): boolean {
+  return relativePath !== '_meta' && !relativePath.startsWith('_meta/');
 }
 
 export type {
