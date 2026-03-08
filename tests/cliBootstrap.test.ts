@@ -11,7 +11,7 @@ import { runCli } from '../src/cli.js';
 import { createGenerationRunner } from '../src/generate/index.js';
 import { createPresetRegistry } from '../src/presets/index.js';
 import { createPromptController } from '../src/prompts/index.js';
-import { createReleaseSmokePaths } from '../src/release/smoke.js';
+import { createReleaseSmokePaths, getInstalledSmokeCliPath } from '../src/release/smoke.js';
 import { getExpectedPackedFiles, verifyPackedFiles } from '../src/release/verifyPack.js';
 import { createTransformPipeline } from '../src/transforms/index.js';
 import {
@@ -210,6 +210,7 @@ describe('bootstrap modules', () => {
     expect(workflowContents).toContain('workflow_dispatch:');
     expect(workflowContents).toContain('id-token: write');
     expect(workflowContents).toContain('npm run release:check');
+    expect(workflowContents).toContain("if: github.ref == 'refs/heads/main'");
     expect(workflowContents).toContain('npm publish --provenance --access public');
     await expect(readUtf8File(path.join(process.cwd(), 'package.json'))).resolves.toContain(
       '"release:validate-workflow": "node ./scripts/validatePublishWorkflow.mjs"',
@@ -227,7 +228,13 @@ describe('bootstrap modules', () => {
     expect(smokePaths.generatedProjectRoot).toBe(
       path.join(smokePaths.runDirectory, 'smoke-app'),
     );
-    expect(releaseSmokeScript).toContain("node_modules', '.bin', 'create-lv48-app");
+    expect(releaseSmokeScript).toContain('getInstalledSmokeCliPath');
+    expect(getInstalledSmokeCliPath(smokePaths.installDirectory, 'linux')).toBe(
+      path.join(smokePaths.installDirectory, 'node_modules', '.bin', 'create-lv48-app'),
+    );
+    expect(getInstalledSmokeCliPath(smokePaths.installDirectory, 'win32')).toBe(
+      path.join(smokePaths.installDirectory, 'node_modules', '.bin', 'create-lv48-app.cmd'),
+    );
     expect(releaseSmokeScript).toContain("projectName: 'smoke-app'");
     expect(releaseSmokeScript).toContain('await scaffoldFromInstalledPackage');
     await expect(readUtf8File(path.join(process.cwd(), 'package.json'))).resolves.toContain(

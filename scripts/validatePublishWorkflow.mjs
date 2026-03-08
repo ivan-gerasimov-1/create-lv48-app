@@ -12,6 +12,7 @@ async function main() {
     'id-token: write',
     'run: npm ci',
     'run: npm run release:check',
+    "if: github.ref == 'refs/heads/main'",
     'run: npm publish --provenance --access public',
   ];
   const missingSnippets = requiredSnippets.filter((snippet) => !workflowContents.includes(snippet));

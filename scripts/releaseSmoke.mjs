@@ -6,7 +6,10 @@ import { pathToFileURL } from 'node:url';
 import { execFile, spawn } from 'node:child_process';
 import { promisify } from 'node:util';
 
-import { createReleaseSmokePaths } from '../dist/release/smoke.js';
+import {
+  createReleaseSmokePaths,
+  getInstalledSmokeCliPath,
+} from '../dist/release/smoke.js';
 
 const execFileAsync = promisify(execFile);
 
@@ -78,7 +81,7 @@ async function installTarball(tarballPath, installDirectory, npmCacheDirectory) 
 }
 
 async function verifyPublishedEntrypointStarts(installDirectory, runDirectory) {
-  const executablePath = path.join(installDirectory, 'node_modules', '.bin', 'create-lv48-app');
+  const executablePath = getInstalledSmokeCliPath(installDirectory);
 
   await new Promise((resolve, reject) => {
     const child = spawn(executablePath, {

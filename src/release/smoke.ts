@@ -11,6 +11,8 @@ export type ReleaseSmokePaths = {
   generatedProjectRoot: string;
 };
 
+const WINDOWS_NPM_BIN_SUFFIX = '.cmd';
+
 export async function createReleaseSmokePaths(): Promise<ReleaseSmokePaths> {
   const workspaceRoot = await mkdtemp(path.join(os.tmpdir(), 'lv48-release-smoke-'));
   const npmCacheDirectory = path.join(workspaceRoot, 'npm-cache');
@@ -32,4 +34,16 @@ export async function createReleaseSmokePaths(): Promise<ReleaseSmokePaths> {
     runDirectory,
     generatedProjectRoot,
   };
+}
+
+export function getInstalledSmokeCliPath(
+  installDirectory: string,
+  platform: NodeJS.Platform = process.platform,
+): string {
+  const executableName =
+    platform === 'win32'
+      ? `create-lv48-app${WINDOWS_NPM_BIN_SUFFIX}`
+      : 'create-lv48-app';
+
+  return path.join(installDirectory, 'node_modules', '.bin', executableName);
 }
