@@ -8,6 +8,7 @@ const steps = [
   { label: 'build', command: 'npm', args: ['run', 'build'] },
   { label: 'test', command: 'npm', args: ['run', 'test'] },
   { label: 'verify-pack', command: 'npm', args: ['run', 'release:verify-pack'] },
+  { label: 'smoke', command: 'npm', args: ['run', 'release:smoke'] },
 ];
 
 await main();

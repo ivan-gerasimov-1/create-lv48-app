@@ -11,6 +11,7 @@ import { runCli } from '../src/cli.js';
 import { createGenerationRunner } from '../src/generate/index.js';
 import { createPresetRegistry } from '../src/presets/index.js';
 import { createPromptController } from '../src/prompts/index.js';
+import { createReleaseSmokePaths } from '../src/release/smoke.js';
 import { getExpectedPackedFiles, verifyPackedFiles } from '../src/release/verifyPack.js';
 import { createTransformPipeline } from '../src/transforms/index.js';
 import {
@@ -210,6 +211,25 @@ describe('bootstrap modules', () => {
     expect(workflowContents).toContain('id-token: write');
     expect(workflowContents).toContain('npm run release:check');
     expect(workflowContents).toContain('npm publish --provenance --access public');
+  });
+
+  it('creates isolated directories for packed-artifact smoke verification', async () => {
+    const smokePaths = await createReleaseSmokePaths();
+    const releaseSmokeScript = await readUtf8File(
+      path.join(process.cwd(), 'scripts/releaseSmoke.mjs'),
+    );
+
+    cleanupPaths.push(smokePaths.workspaceRoot);
+
+    expect(smokePaths.generatedProjectRoot).toBe(
+      path.join(smokePaths.runDirectory, 'smoke-app'),
+    );
+    expect(releaseSmokeScript).toContain("node_modules', '.bin', 'create-lv48-app");
+    expect(releaseSmokeScript).toContain("projectName: 'smoke-app'");
+    expect(releaseSmokeScript).toContain('await scaffoldFromInstalledPackage');
+    await expect(readUtf8File(path.join(process.cwd(), 'package.json'))).resolves.toContain(
+      '"release:smoke": "node ./scripts/releaseSmoke.mjs"',
+    );
   });
 
   it('checks target directory conflicts before generation', async () => {

@@ -11,8 +11,8 @@
 
 ## 3. Packed artifact smoke verification
 
-- [ ] 3.1 Add a smoke test that packs the CLI, runs it from the generated tarball in an isolated temporary directory, and verifies the published entrypoint can resolve runtime template assets
-- [ ] 3.2 Ensure the packed-artifact smoke path covers the published npm entrypoint behavior without requiring source-tree-only files
+- [x] 3.1 Add a smoke test that packs the CLI, runs it from the generated tarball in an isolated temporary directory, and verifies the published entrypoint can resolve runtime template assets
+- [x] 3.2 Ensure the packed-artifact smoke path covers the published npm entrypoint behavior without requiring source-tree-only files
 
 ## 4. Release documentation and final verification
 

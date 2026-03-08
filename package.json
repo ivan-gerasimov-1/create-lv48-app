@@ -36,6 +36,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "release:check": "node ./scripts/releaseCheck.mjs",
+    "release:smoke": "node ./scripts/releaseSmoke.mjs",
     "release:verify-pack": "node ./scripts/verifyPack.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
