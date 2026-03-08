@@ -1,7 +1,7 @@
 ## 1. Public package metadata
 
-- [ ] 1.1 Update the root package manifest with public npm metadata, MIT SPDX license, repository links, and publish configuration for `create-lv48-app`
-- [ ] 1.2 Verify the publishable file contract so the package includes only the executable entrypoint, compiled runtime output, and template assets needed at runtime
+- [x] 1.1 Update the root package manifest with public npm metadata, MIT SPDX license, repository links, and publish configuration for `create-lv48-app`
+- [x] 1.2 Verify the publishable file contract so the package includes only the executable entrypoint, compiled runtime output, and template assets needed at runtime
 
 ## 2. Release-check workflow
 

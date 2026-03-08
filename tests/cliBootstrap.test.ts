@@ -150,8 +150,32 @@ describe('bootstrap modules', () => {
 
   it('publishes template assets with the package for runtime scaffold access', async () => {
     const packageManifest = await readUtf8File(path.join(process.cwd(), 'package.json'));
+    const parsedManifest = JSON.parse(packageManifest) as {
+      license: string;
+      files: string[];
+      publishConfig: { access: string };
+      repository: { type: string; url: string };
+      homepage: string;
+      bugs: { url: string };
+      bin: Record<string, string>;
+    };
 
+    expect(parsedManifest.license).toBe('MIT');
+    expect(parsedManifest.files).toEqual(['bin', 'dist', 'templates']);
+    expect(parsedManifest.publishConfig).toEqual({ access: 'public' });
+    expect(parsedManifest.repository).toEqual({
+      type: 'git',
+      url: 'git+https://github.com/ivan-gerasimov-1/create-lv48-app.git',
+    });
+    expect(parsedManifest.homepage).toBe('https://github.com/ivan-gerasimov-1/create-lv48-app#readme');
+    expect(parsedManifest.bugs).toEqual({
+      url: 'https://github.com/ivan-gerasimov-1/create-lv48-app/issues',
+    });
+    expect(parsedManifest.bin).toEqual({
+      'create-lv48-app': './bin/create-lv48-app.js',
+    });
     expect(packageManifest).toContain('"templates"');
+    await expect(readUtf8File(path.join(process.cwd(), 'LICENSE'))).resolves.toContain('MIT License');
   });
 
   it('checks target directory conflicts before generation', async () => {
