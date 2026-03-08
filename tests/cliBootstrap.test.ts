@@ -1,4 +1,4 @@
-import { mkdtemp, mkdir, writeFile } from 'node:fs/promises';
+import { mkdtemp, mkdir, readFile, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 
@@ -11,6 +11,7 @@ import { runCli } from '../src/cli.js';
 import { createGenerationRunner } from '../src/generate/index.js';
 import { createPresetRegistry } from '../src/presets/index.js';
 import { createPromptController } from '../src/prompts/index.js';
+import { getExpectedPackedFiles, verifyPackedFiles } from '../src/release/verifyPack.js';
 import { createTransformPipeline } from '../src/transforms/index.js';
 import {
   listRelativeDirectories,
@@ -176,6 +177,39 @@ describe('bootstrap modules', () => {
     });
     expect(packageManifest).toContain('"templates"');
     await expect(readUtf8File(path.join(process.cwd(), 'LICENSE'))).resolves.toContain('MIT License');
+  });
+
+  it('verifies packed artifact paths against the public file contract', () => {
+    const result = verifyPackedFiles(
+      getExpectedPackedFiles().map((filePath) => ({
+        path: filePath,
+      })),
+    );
+
+    expect(result.missingFiles).toEqual([]);
+    expect(result.unexpectedFiles).toEqual([]);
+  });
+
+  it('flags unexpected packed files outside the public contract', () => {
+    const result = verifyPackedFiles([
+      { path: 'package/bin/create-lv48-app.js' },
+      { path: 'package/dist/cli.js' },
+      { path: 'package/src/cli.ts' },
+    ]);
+
+    expect(result.unexpectedFiles).toEqual(['src/cli.ts']);
+  });
+
+  it('documents a workflow_dispatch publish workflow with OIDC permissions', async () => {
+    const workflowContents = await readFile(
+      path.join(process.cwd(), '.github/workflows/publish.yml'),
+      'utf8',
+    );
+
+    expect(workflowContents).toContain('workflow_dispatch:');
+    expect(workflowContents).toContain('id-token: write');
+    expect(workflowContents).toContain('npm run release:check');
+    expect(workflowContents).toContain('npm publish --provenance --access public');
   });
 
   it('checks target directory conflicts before generation', async () => {

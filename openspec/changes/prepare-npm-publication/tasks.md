@@ -5,9 +5,9 @@
 
 ## 2. Release-check workflow
 
-- [ ] 2.1 Add explicit npm scripts or equivalent repo-level commands for release readiness checks that run build, affected tests, and tarball verification in a documented order
-- [ ] 2.2 Add a tarball verification test or helper that fails when required runtime files are missing from the packed artifact or when packaging drift breaks the release contract
-- [ ] 2.3 Add a `workflow_dispatch` GitHub Actions workflow that uses npm trusted publishing and only publishes to npm after all release-check gates pass
+- [x] 2.1 Add explicit npm scripts or equivalent repo-level commands for release readiness checks that run build, affected tests, and tarball verification in a documented order
+- [x] 2.2 Add a tarball verification test or helper that fails when required runtime files are missing from the packed artifact or when packaging drift breaks the release contract
+- [x] 2.3 Add a `workflow_dispatch` GitHub Actions workflow that uses npm trusted publishing and only publishes to npm after all release-check gates pass
 
 ## 3. Packed artifact smoke verification
 
