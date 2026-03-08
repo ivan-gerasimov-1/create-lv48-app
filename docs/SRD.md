@@ -136,13 +136,21 @@ templates/base/
     template.json
   apps/
     web/
+      components.json
       package.json
       README.md
       index.html
+      tsconfig.json
       vite.config.ts
       src/
-        main.tsx
         App.tsx
+        components/
+          ui/
+            button.tsx
+        index.css
+        lib/
+          utils.ts
+        main.tsx
     site/
       package.json
       README.md
@@ -264,13 +272,21 @@ Generated project phase 1 должен содержать:
 ```txt
 apps/
   web/
+    components.json
     package.json
     README.md
     index.html
+    tsconfig.json
     vite.config.ts
     src/
-      main.tsx
       App.tsx
+      components/
+        ui/
+          button.tsx
+      index.css
+      lib/
+        utils.ts
+      main.tsx
   site/
     package.json
     README.md
@@ -298,7 +314,7 @@ Generated README files должны быть согласованы с generated
 
 Smoke verification для phase 1 должна подтверждать не только наличие starter files, но и то, что:
 
-- `apps/web` содержит ожидаемый Vite + React entry pattern (`index.html`, `src/main.tsx`, `src/App.tsx`, `vite.config.ts`)
+- `apps/web` содержит ожидаемый Vite + React + Tailwind CSS v4 entry pattern (`index.html`, `src/main.tsx`, `src/App.tsx`, `src/index.css`, `vite.config.ts`) и shadcn-ready wiring (`components.json`, alias config, utility helper, starter UI component)
 - `apps/site` содержит ожидаемый Astro entry pattern (`astro.config.mjs`, `src/pages/index.astro`)
 - `apps/api` содержит ожидаемый минимальный Hono entry pattern (`src/index.ts` с Hono app bootstrap)
 - `packages/` создаётся как пустая зарезервированная директория без дополнительных файлов
