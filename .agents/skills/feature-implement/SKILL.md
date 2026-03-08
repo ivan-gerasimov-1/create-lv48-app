@@ -16,6 +16,8 @@ Additional requirements:
 - Stop iterating once the implementation is ready to ship; do not continue refining purely subjective or non-essential feedback.
 - If further review produces only minor, non-blocking suggestions, record them as follow-up improvements instead of continuing the implementation loop.
 
-Use the following skill:
+Use the following skills:
 
-/openspec-apply-change
+1. /openspec-apply-change
+
+2. /openspec-verify-change
