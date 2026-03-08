@@ -12,7 +12,8 @@
 ## 3. Spec and doc alignment
 
 - [ ] 3.1 Update the `preset-project-scaffolding` spec text to describe the simplified baseline structure and README contract.
-- [ ] 3.2 Update product-facing docs that still describe generated shared packages so they match the new scaffold output.
+- [ ] 3.2 Update `docs/PRD.md` so the generated baseline structure no longer promises starter shared packages.
+- [ ] 3.3 Update `docs/SRD.md` so the template tree and smoke-verification sections match the empty reserved `packages/` directory.
 
 ## 4. Verification
 

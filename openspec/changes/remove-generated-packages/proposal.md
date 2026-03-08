@@ -24,4 +24,4 @@
 
 ## Impact
 
-Affected areas: `templates/base`, тесты scaffold generation, README шаблона, и OpenSpec-описание baseline project structure.
+Affected areas: `templates/base`, scaffold generation pipeline, тесты scaffold generation, README шаблона, `docs/PRD.md`, `docs/SRD.md`, и OpenSpec-описание baseline project structure.
