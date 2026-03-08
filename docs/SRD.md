@@ -261,26 +261,6 @@ apps/
       index.ts
 
 packages/
-  config/
-    package.json
-    README.md
-    src/
-      index.ts
-  ui/
-    package.json
-    README.md
-    src/
-      index.ts
-  types/
-    package.json
-    README.md
-    src/
-      index.ts
-  utils/
-    package.json
-    README.md
-    src/
-      index.ts
 
 package.json
 README.md
