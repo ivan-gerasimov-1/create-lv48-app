@@ -14,13 +14,11 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "types": [
-      "node",
-      "vitest/globals"
+      "node"
     ]
   },
   "include": [
     "src/**/*.ts",
-    "tests/**/*.ts",
-    "vitest.config.ts"
+    "tests/**/*.ts"
   ]
 }
