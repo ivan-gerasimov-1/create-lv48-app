@@ -59,3 +59,10 @@ The system SHALL allow the user to opt into dependency installation and git init
 - **WHEN** the scaffold has already been generated and a selected post-setup action fails
 - **THEN** the system preserves the generated project, reports which step failed, and prints next steps that let the user continue manually
 
+### Requirement: Published package declares the supported Node.js runtime
+The system SHALL publish the initializer package with an explicit Node.js engine requirement of `>=24.0.0` so the supported runtime contract is visible in the package metadata.
+
+#### Scenario: User inspects the published package manifest
+- **WHEN** the user or tooling reads the published `create-lv48-app` package manifest
+- **THEN** the manifest declares `engines.node` as `>=24.0.0`
+

@@ -11,6 +11,8 @@ Baseline npm-workspaces monorepo scaffolded by `create-lv48-app`.
 
 ## Getting started
 
+Use Node.js 24 or newer before installing dependencies.
+
 1. Install dependencies with `npm install`
 2. Start the web app with `npm run dev --workspace @{{packageName}}/web`
 3. Start the site with `npm run dev --workspace @{{packageName}}/site`

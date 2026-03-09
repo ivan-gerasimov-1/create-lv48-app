@@ -2,15 +2,15 @@
 
 ## Purpose
 Define the canonical baseline scaffold produced by the `base` preset, including generated structure, file transforms, starter assets, and metadata-driven generation behavior.
-
 ## Requirements
-
 ### Requirement: Base preset generates the baseline project structure
-The system SHALL provide a `base` preset that generates a baseline monorepo on top of npm workspaces containing `apps/web`, `apps/site`, `apps/api`, an empty reserved `packages/` directory, root workspace configuration, workspace package manifests for generated apps, and starter README assets.
+The system SHALL provide a `base` preset that generates a baseline monorepo on top of npm workspaces containing `apps/web`, `apps/site`, `apps/api`, an empty reserved `packages/` directory, root workspace configuration, workspace package manifests for generated apps, and starter README assets, and the generated package manifests SHALL declare Node.js `>=24.0.0`.
 
 #### Scenario: Phase 1 baseline scaffold is generated
 - **WHEN** the user confirms generation in the phase 1 flow
 - **THEN** the generated project contains the baseline apps, the reserved `packages/` directory, workspace config files, workspace package manifests for generated apps, and starter README assets defined by the `base` preset
+- **AND** the root workspace manifest declares `engines.node` as `>=24.0.0`
+- **AND** each generated app manifest declares `engines.node` as `>=24.0.0`
 
 ### Requirement: Preset generation applies placeholder interpolation consistently
 The system SHALL replace centralized placeholder keys in template assets with project-specific values, including project naming, package naming, display naming, and starter metadata values used by the preset.
@@ -62,15 +62,12 @@ The system SHALL generate minimal starter files that match the promised baseline
 - **THEN** the generated project contains an empty `packages/` directory reserved for future shared workspaces, without marker files in that directory
 
 ### Requirement: Preset output includes the baseline README instructions
-The system SHALL generate a starter README set that includes the root `README.md` and project-level `README.md` files for generated applications, and those documents SHALL remain consistent with the generated baseline project structure, setup path, and web starter conventions including Tailwind CSS `v4` and shadcn-ready usage expectations where relevant.
+The system SHALL generate a starter README set that includes the root `README.md` and project-level `README.md` files for generated applications, and those documents SHALL remain consistent with the generated baseline project structure, setup path, web starter conventions including Tailwind CSS `v4` and shadcn-ready usage expectations where relevant, and the Node.js 24 runtime requirement.
 
 #### Scenario: User inspects generated documentation
 - **WHEN** scaffold generation completes for the `base` preset
 - **THEN** the generated project contains the README set and the instructions describe the same apps, reserved `packages/` directory, setup path, and the prepared frontend baseline for `apps/web` that the scaffold created
-
-#### Scenario: User inspects root tooling files
-- **WHEN** scaffold generation completes for the `base` preset
-- **THEN** the generated project uses npm-workspaces root configuration appropriate for the baseline scaffold
+- **AND** the root README tells the user that Node.js 24 or newer is required before installing dependencies
 
 ### Requirement: Preset behavior is driven by explicit preset metadata
 The system SHALL resolve scaffolding behavior from explicit preset metadata that declares the preset identity, supported package-manager values, placeholder keys, and any optional post-generation rules.
@@ -78,3 +75,4 @@ The system SHALL resolve scaffolding behavior from explicit preset metadata that
 #### Scenario: CLI resolves default preset metadata before generation
 - **WHEN** the phase 1 generation flow starts
 - **THEN** the system loads the `base` preset metadata before generation and uses it to determine which template assets and placeholder values are valid for the scaffold
+

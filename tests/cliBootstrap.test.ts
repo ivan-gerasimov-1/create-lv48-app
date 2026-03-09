@@ -191,6 +191,7 @@ describe('bootstrap modules', () => {
       homepage: string;
       bugs: { url: string };
       bin: Record<string, string>;
+      engines: { node: string };
     };
 
     assert.equal(parsedManifest.license, 'MIT');
@@ -206,6 +207,9 @@ describe('bootstrap modules', () => {
     });
     assert.deepEqual(parsedManifest.bin, {
       'create-lv48-app': 'bin/create-lv48-app.js',
+    });
+    assert.deepEqual(parsedManifest.engines, {
+      node: '>=24.0.0',
     });
     assertContains(packageManifest, '"templates"');
     assertContains(await readUtf8File(path.join(process.cwd(), 'LICENSE')), 'MIT License');
@@ -748,6 +752,10 @@ describe('bootstrap modules', () => {
       '"build": "npm run build --workspaces --if-present"',
     );
     assertContains(
+      await readUtf8File(path.join(targetRoot, 'package.json')),
+      '"node": ">=24.0.0"',
+    );
+    assertContains(
       await readUtf8File(path.join(targetRoot, 'apps/web/index.html')),
       '/src/main.tsx',
     );
@@ -770,6 +778,10 @@ describe('bootstrap modules', () => {
     assertContains(
       await readUtf8File(path.join(targetRoot, 'apps/web/package.json')),
       '"vite"',
+    );
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/web/package.json')),
+      '"node": ">=24.0.0"',
     );
     assertContains(
       await readUtf8File(path.join(targetRoot, 'apps/web/src/main.tsx')),
@@ -840,12 +852,20 @@ describe('bootstrap modules', () => {
       '"astro"',
     );
     assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/site/package.json')),
+      '"node": ">=24.0.0"',
+    );
+    assertContains(
       await readUtf8File(path.join(targetRoot, 'apps/site/src/pages/index.astro')),
       'Astro starter site',
     );
     assertContains(
       await readUtf8File(path.join(targetRoot, 'apps/api/package.json')),
       '"hono"',
+    );
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/api/package.json')),
+      '"node": ">=24.0.0"',
     );
     assertContains(
       await readUtf8File(path.join(targetRoot, 'apps/api/src/index.ts')),
@@ -856,6 +876,10 @@ describe('bootstrap modules', () => {
     assertNotContains(
       await readUtf8File(path.join(targetRoot, '.gitignore')),
       '.turbo',
+    );
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'README.md')),
+      'Node.js 24 or newer',
     );
   });
 
