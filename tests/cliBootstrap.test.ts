@@ -1,8 +1,8 @@
+import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, readFile, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, it } from 'node:test';
 
 import { buildInitializationSummary, formatInitializationSummary } from '../src/cli/summary.js';
 import { createPlaceholderValues } from '../src/cli/placeholders.js';
@@ -55,6 +55,36 @@ function createPromptIoMock() {
 
 const cleanupPaths: string[] = [];
 
+function assertContains(container: readonly string[] | string, expected: string) {
+  if (typeof container === 'string') {
+    assert.ok(container.includes(expected));
+    return;
+  }
+
+  assert.ok(container.includes(expected));
+}
+
+function assertNotContains(container: readonly string[] | string, expected: string) {
+  if (typeof container === 'string') {
+    assert.ok(!container.includes(expected));
+    return;
+  }
+
+  assert.ok(!container.includes(expected));
+}
+
+async function assertRejects(action: Promise<unknown>, message?: string) {
+  await assert.rejects(action, (error) => {
+    assert.ok(error instanceof Error);
+
+    if (typeof message === 'string') {
+      assert.equal(error.message, message);
+    }
+
+    return true;
+  });
+}
+
 afterEach(async () => {
   await removePaths(cleanupPaths);
   cleanupPaths.length = 0;
@@ -62,16 +92,16 @@ afterEach(async () => {
 
 describe('bootstrap modules', () => {
   it('exposes phase 1 defaults', () => {
-    expect(createPromptController(createPromptIoMock()).phase).toBe('phase-1');
-    expect(createPresetRegistry().defaultPresetId).toBe('base');
-    expect(createTransformPipeline().mode).toBe('staged');
-    expect(createGenerationRunner(createTransformPipeline()).status).toBe('ready');
+    assert.equal(createPromptController(createPromptIoMock()).phase, 'phase-1');
+    assert.equal(createPresetRegistry().defaultPresetId, 'base');
+    assert.equal(createTransformPipeline().mode, 'staged');
+    assert.equal(createGenerationRunner(createTransformPipeline()).status, 'ready');
   });
 
   it('collects phase 1 prompt answers without package manager or preset prompts', async () => {
     const controller = createPromptController(createPromptIoMock());
 
-    await expect(controller.collectAnswers('fallback-name')).resolves.toEqual({
+    assert.deepEqual(await controller.collectAnswers('fallback-name'), {
       projectName: 'demo-app',
       packageName: 'demo-app',
       displayName: 'Demo App',
@@ -84,7 +114,7 @@ describe('bootstrap modules', () => {
   });
 
   it('builds placeholder values for package-specific template keys', () => {
-    expect(
+    assert.deepEqual(
       createPlaceholderValues({
         projectName: 'demo-app',
         packageName: 'demo-app',
@@ -95,7 +125,7 @@ describe('bootstrap modules', () => {
         installDependencies: true,
         initializeGit: true,
       }),
-    ).toEqual({
+      {
       projectName: 'demo-app',
       packageName: 'demo-app',
       displayName: 'Demo App',
@@ -103,22 +133,23 @@ describe('bootstrap modules', () => {
       webPackageName: '@demo-app/web',
       sitePackageName: '@demo-app/site',
       apiPackageName: '@demo-app/api',
-    });
+      },
+    );
   });
 
   it('validates project, package, and target directory inputs', () => {
-    expect(validateProjectName('demo-app')).toEqual({ ok: true, value: 'demo-app' });
-    expect(validatePackageName('demo-app')).toEqual({ ok: true, value: 'demo-app' });
-    expect(validateTargetDirectory('apps/demo')).toEqual({
+    assert.deepEqual(validateProjectName('demo-app'), { ok: true, value: 'demo-app' });
+    assert.deepEqual(validatePackageName('demo-app'), { ok: true, value: 'demo-app' });
+    assert.deepEqual(validateTargetDirectory('apps/demo'), {
       ok: true,
       value: 'apps/demo',
     });
-    expect(validateProjectName('Demo App')).toEqual({
+    assert.deepEqual(validateProjectName('Demo App'), {
       ok: false,
       reason:
         'Project name must use lowercase letters, numbers, and single hyphens only.',
     });
-    expect(validateTargetDirectory('../demo')).toEqual({
+    assert.deepEqual(validateTargetDirectory('../demo'), {
       ok: false,
       reason: 'Target directory must stay within the current working directory.',
     });
@@ -127,7 +158,7 @@ describe('bootstrap modules', () => {
   it('loads the base preset metadata from the registry', () => {
     const registry = createPresetRegistry();
 
-    expect(registry.getDefaultPreset()).toEqual({
+    assert.deepEqual(registry.getDefaultPreset(), {
       id: 'base',
       displayName: 'Base SaaS Monorepo',
       description: 'Baseline npm-workspaces monorepo for TS-first SaaS projects.',
@@ -162,22 +193,22 @@ describe('bootstrap modules', () => {
       bin: Record<string, string>;
     };
 
-    expect(parsedManifest.license).toBe('MIT');
-    expect(parsedManifest.files).toEqual(['bin', 'dist', 'templates']);
-    expect(parsedManifest.publishConfig).toEqual({ access: 'public' });
-    expect(parsedManifest.repository).toEqual({
+    assert.equal(parsedManifest.license, 'MIT');
+    assert.deepEqual(parsedManifest.files, ['bin', 'dist', 'templates']);
+    assert.deepEqual(parsedManifest.publishConfig, { access: 'public' });
+    assert.deepEqual(parsedManifest.repository, {
       type: 'git',
       url: 'git+https://github.com/ivan-gerasimov-1/create-lv48-app.git',
     });
-    expect(parsedManifest.homepage).toBe('https://github.com/ivan-gerasimov-1/create-lv48-app#readme');
-    expect(parsedManifest.bugs).toEqual({
+    assert.equal(parsedManifest.homepage, 'https://github.com/ivan-gerasimov-1/create-lv48-app#readme');
+    assert.deepEqual(parsedManifest.bugs, {
       url: 'https://github.com/ivan-gerasimov-1/create-lv48-app/issues',
     });
-    expect(parsedManifest.bin).toEqual({
+    assert.deepEqual(parsedManifest.bin, {
       'create-lv48-app': 'bin/create-lv48-app.js',
     });
-    expect(packageManifest).toContain('"templates"');
-    await expect(readUtf8File(path.join(process.cwd(), 'LICENSE'))).resolves.toContain('MIT License');
+    assertContains(packageManifest, '"templates"');
+    assertContains(await readUtf8File(path.join(process.cwd(), 'LICENSE')), 'MIT License');
   });
 
   it('verifies packed artifact paths against the public file contract', () => {
@@ -187,8 +218,8 @@ describe('bootstrap modules', () => {
       })),
     );
 
-    expect(result.missingFiles).toEqual([]);
-    expect(result.unexpectedFiles).toEqual([]);
+    assert.deepEqual(result.missingFiles, []);
+    assert.deepEqual(result.unexpectedFiles, []);
   });
 
   it('flags unexpected packed files outside the public contract', () => {
@@ -198,7 +229,7 @@ describe('bootstrap modules', () => {
       { path: 'package/src/cli.ts' },
     ]);
 
-    expect(result.unexpectedFiles).toEqual(['src/cli.ts']);
+    assert.deepEqual(result.unexpectedFiles, ['src/cli.ts']);
   });
 
   it('documents a workflow_dispatch publish workflow with OIDC permissions', async () => {
@@ -207,12 +238,13 @@ describe('bootstrap modules', () => {
       'utf8',
     );
 
-    expect(workflowContents).toContain('workflow_dispatch:');
-    expect(workflowContents).toContain('id-token: write');
-    expect(workflowContents).toContain('npm run release:check');
-    expect(workflowContents).toContain("if: github.ref == 'refs/heads/main'");
-    expect(workflowContents).toContain('npm publish --access public');
-    await expect(readUtf8File(path.join(process.cwd(), 'package.json'))).resolves.toContain(
+    assertContains(workflowContents, 'workflow_dispatch:');
+    assertContains(workflowContents, 'id-token: write');
+    assertContains(workflowContents, 'npm run release:check');
+    assertContains(workflowContents, "if: github.ref == 'refs/heads/main'");
+    assertContains(workflowContents, 'npm publish --access public');
+    assertContains(
+      await readUtf8File(path.join(process.cwd(), 'package.json')),
       '"release:validate-workflow": "node ./scripts/validatePublishWorkflow.mjs"',
     );
   });
@@ -225,19 +257,20 @@ describe('bootstrap modules', () => {
 
     cleanupPaths.push(smokePaths.workspaceRoot);
 
-    expect(smokePaths.generatedProjectRoot).toBe(
+    assert.equal(smokePaths.generatedProjectRoot,
       path.join(smokePaths.runDirectory, 'smoke-app'),
     );
-    expect(releaseSmokeScript).toContain('getInstalledSmokeCliPath');
-    expect(getInstalledSmokeCliPath(smokePaths.installDirectory, 'linux')).toBe(
+    assertContains(releaseSmokeScript, 'getInstalledSmokeCliPath');
+    assert.equal(getInstalledSmokeCliPath(smokePaths.installDirectory, 'linux'),
       path.join(smokePaths.installDirectory, 'node_modules', '.bin', 'create-lv48-app'),
     );
-    expect(getInstalledSmokeCliPath(smokePaths.installDirectory, 'win32')).toBe(
+    assert.equal(getInstalledSmokeCliPath(smokePaths.installDirectory, 'win32'),
       path.join(smokePaths.installDirectory, 'node_modules', '.bin', 'create-lv48-app.cmd'),
     );
-    expect(releaseSmokeScript).toContain("projectName: 'smoke-app'");
-    expect(releaseSmokeScript).toContain('await scaffoldFromInstalledPackage');
-    await expect(readUtf8File(path.join(process.cwd(), 'package.json'))).resolves.toContain(
+    assertContains(releaseSmokeScript, "projectName: 'smoke-app'");
+    assertContains(releaseSmokeScript, 'await scaffoldFromInstalledPackage');
+    assertContains(
+      await readUtf8File(path.join(process.cwd(), 'package.json')),
       '"release:smoke": "node ./scripts/releaseSmoke.mjs"',
     );
   });
@@ -252,7 +285,7 @@ describe('bootstrap modules', () => {
 
     const runner = createGenerationRunner(createTransformPipeline());
 
-    await expect(
+    await assertRejects(
       runner.prepare({
         cwd: rootDirectory,
         templateBaseDirectory: process.cwd(),
@@ -287,7 +320,6 @@ describe('bootstrap modules', () => {
           targetDirectory: 'existing-target',
         },
       }),
-    ).rejects.toThrow(
       'Target directory existing-target already contains files that would conflict with the scaffold.',
     );
   });
@@ -336,30 +368,32 @@ describe('bootstrap modules', () => {
       },
     };
 
-    await expect(runner.prepare(context)).resolves.toEqual({
+    assert.deepEqual(await runner.prepare(context), {
       targetRoot,
       isEmpty: true,
     });
 
     const record = await runner.scaffold(context);
 
-    expect(record.createdFiles.length).toBe(4);
-    await expect(listRelativeDirectories(targetRoot)).resolves.toContain('packages');
-    await expect(listRelativeDirectories(targetRoot)).resolves.not.toContain('_meta');
-    await expect(listRelativeFiles(targetRoot)).resolves.toEqual([
+    assert.equal(record.createdFiles.length, 4);
+    assertContains(await listRelativeDirectories(targetRoot), 'packages');
+    assertNotContains(await listRelativeDirectories(targetRoot), '_meta');
+    assert.deepEqual(await listRelativeFiles(targetRoot), [
       '.gitignore',
       'README.md',
       'package.json',
       'packages/sample/package.json',
     ]);
-    await expect(readUtf8File(path.join(targetRoot, 'README.md'))).resolves.toBe('# Demo App\n');
-    await expect(readUtf8File(path.join(targetRoot, '.gitignore'))).resolves.toBe('node_modules\n');
-    await expect(readUtf8File(path.join(targetRoot, 'package.json'))).resolves.toContain(
+    assert.equal(await readUtf8File(path.join(targetRoot, 'README.md')), '# Demo App\n');
+    assert.equal(await readUtf8File(path.join(targetRoot, '.gitignore')), 'node_modules\n');
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'package.json')),
       '"name": "demo-app"',
     );
-    await expect(
-      readUtf8File(path.join(targetRoot, 'packages/sample/package.json')),
-    ).resolves.toContain('"name": "@demo-app/sample"');
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'packages/sample/package.json')),
+      '"name": "@demo-app/sample"',
+    );
   });
 
   it('rolls back created scaffold paths when generation fails before handoff', async () => {
@@ -373,7 +407,7 @@ describe('bootstrap modules', () => {
 
     const runner = createGenerationRunner(createTransformPipeline());
 
-    await expect(
+    await assertRejects(
       runner.scaffold({
         cwd: rootDirectory,
         templateBaseDirectory: rootDirectory,
@@ -408,9 +442,9 @@ describe('bootstrap modules', () => {
           targetDirectory: 'broken-app',
         },
       }),
-    ).rejects.toThrow();
+    );
 
-    await expect(listRelativeFiles(rootDirectory)).resolves.toEqual([
+    assert.deepEqual(await listRelativeFiles(rootDirectory), [
       'fixture/README.md',
       'fixture/package.json',
     ]);
@@ -428,7 +462,7 @@ describe('bootstrap modules', () => {
 
     const runner = createGenerationRunner(createTransformPipeline());
 
-    await expect(
+    await assertRejects(
       runner.scaffold({
         cwd: rootDirectory,
         templateBaseDirectory: rootDirectory,
@@ -463,9 +497,9 @@ describe('bootstrap modules', () => {
           targetDirectory: 'existing-target',
         },
       }),
-    ).rejects.toThrow();
+    );
 
-    await expect(listRelativeFiles(rootDirectory)).resolves.toEqual([
+    assert.deepEqual(await listRelativeFiles(rootDirectory), [
       'fixture/README.md',
       'fixture/package.json',
     ]);
@@ -477,13 +511,13 @@ describe('bootstrap modules', () => {
       executed.push(`${command} ${args.join(' ')} @ ${cwd}`);
     });
 
-    await expect(
-      executor.run({
+    assert.deepEqual(
+      await executor.run({
         targetRoot: '/tmp/demo-app',
         installDependencies: false,
         initializeGit: true,
       }),
-    ).resolves.toEqual([
+      [
       {
         name: 'installDependencies',
         selected: false,
@@ -496,9 +530,10 @@ describe('bootstrap modules', () => {
         ok: true,
         detail: 'git init completed',
       },
-    ]);
+      ],
+    );
 
-    expect(executed).toEqual([
+    assert.deepEqual(executed, [
       'git init --initial-branch=main @ /tmp/demo-app',
     ]);
   });
@@ -513,13 +548,13 @@ describe('bootstrap modules', () => {
       }
     });
 
-    await expect(
-      executor.run({
+    assert.deepEqual(
+      await executor.run({
         targetRoot: '/tmp/demo-app',
         installDependencies: false,
         initializeGit: true,
       }),
-    ).resolves.toEqual([
+      [
       {
         name: 'installDependencies',
         selected: false,
@@ -532,9 +567,10 @@ describe('bootstrap modules', () => {
         ok: true,
         detail: 'git init completed',
       },
-    ]);
+      ],
+    );
 
-    expect(executed).toEqual([
+    assert.deepEqual(executed, [
       'git init --initial-branch=main @ /tmp/demo-app',
       'git init @ /tmp/demo-app',
       'git symbolic-ref HEAD refs/heads/main @ /tmp/demo-app',
@@ -551,13 +587,13 @@ describe('bootstrap modules', () => {
       }
     });
 
-    await expect(
-      executor.run({
+    assert.deepEqual(
+      await executor.run({
         targetRoot: '/tmp/demo-app',
         installDependencies: true,
         initializeGit: true,
       }),
-    ).resolves.toEqual([
+      [
       {
         name: 'installDependencies',
         selected: true,
@@ -570,9 +606,10 @@ describe('bootstrap modules', () => {
         ok: false,
         detail: 'git init failed: git unavailable',
       },
-    ]);
+      ],
+    );
 
-    expect(executed).toEqual([
+    assert.deepEqual(executed, [
       'npm install @ /tmp/demo-app',
       'git init --initial-branch=main @ /tmp/demo-app',
     ]);
@@ -582,8 +619,8 @@ describe('bootstrap modules', () => {
     const started: string[] = [];
     const executor = createPostSetupExecutor(async () => {});
 
-    await expect(
-      executor.run({
+    assert.deepEqual(
+      await executor.run({
         targetRoot: '/tmp/demo-app',
         installDependencies: true,
         initializeGit: true,
@@ -591,7 +628,7 @@ describe('bootstrap modules', () => {
           started.push(action.message);
         },
       }),
-    ).resolves.toEqual([
+      [
       {
         name: 'installDependencies',
         selected: true,
@@ -604,9 +641,10 @@ describe('bootstrap modules', () => {
         ok: true,
         detail: 'git init completed',
       },
-    ]);
+      ],
+    );
 
-    expect(started).toEqual([
+    assert.deepEqual(started, [
       'Post-setup: installing npm dependencies. This can take a moment...',
       'Post-setup: initializing a git repository on branch main...',
     ]);
@@ -630,11 +668,11 @@ describe('bootstrap modules', () => {
       ],
     });
 
-    expect(summary.nextSteps).toEqual([
+    assert.deepEqual(summary.nextSteps, [
       'cd demo-app',
       'Review the failed optional steps above and rerun them manually if needed.',
     ]);
-    expect(formatInitializationSummary(summary)).toContain('installDependencies: FAILED');
+    assertContains(formatInitializationSummary(summary), 'installDependencies: FAILED');
   });
 
   it('scaffolds the real base preset and verifies the generated baseline tree', async () => {
@@ -667,7 +705,7 @@ describe('bootstrap modules', () => {
     await runner.prepare(context);
     await runner.scaffold(context);
 
-    await expect(listRelativeFiles(targetRoot)).resolves.toEqual([
+    assert.deepEqual(await listRelativeFiles(targetRoot), [
       '.env.example',
       '.gitignore',
       'README.md',
@@ -691,101 +729,132 @@ describe('bootstrap modules', () => {
       'apps/web/vite.config.ts',
       'package.json',
     ]);
-    await expect(listRelativeDirectories(targetRoot)).resolves.toContain('packages');
-    await expect(listRelativeDirectories(targetRoot)).resolves.not.toContain('_meta');
-    await expect(readUtf8File(path.join(targetRoot, 'README.md'))).resolves.toContain(
+    assertContains(await listRelativeDirectories(targetRoot), 'packages');
+    assertNotContains(await listRelativeDirectories(targetRoot), '_meta');
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'README.md')),
       'apps/web',
     );
-    await expect(readUtf8File(path.join(targetRoot, 'README.md'))).resolves.toContain(
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'README.md')),
       'Tailwind CSS v4',
     );
-    await expect(readUtf8File(path.join(targetRoot, 'package.json'))).resolves.toContain(
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'package.json')),
       '"workspaces"',
     );
-    await expect(readUtf8File(path.join(targetRoot, 'package.json'))).resolves.toContain(
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'package.json')),
       '"build": "npm run build --workspaces --if-present"',
     );
-    await expect(readUtf8File(path.join(targetRoot, 'apps/web/index.html'))).resolves.toContain(
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/web/index.html')),
       '/src/main.tsx',
     );
-    await expect(readUtf8File(path.join(targetRoot, 'apps/web/package.json'))).resolves.toContain(
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/web/package.json')),
       '"@tailwindcss/vite"',
     );
-    await expect(readUtf8File(path.join(targetRoot, 'apps/web/package.json'))).resolves.toContain(
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/web/package.json')),
       '"tailwindcss"',
     );
-    await expect(readUtf8File(path.join(targetRoot, 'apps/web/package.json'))).resolves.toContain(
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/web/package.json')),
       '"clsx"',
     );
-    await expect(readUtf8File(path.join(targetRoot, 'apps/web/package.json'))).resolves.toContain(
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/web/package.json')),
       '"react"',
     );
-    await expect(readUtf8File(path.join(targetRoot, 'apps/web/package.json'))).resolves.toContain(
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/web/package.json')),
       '"vite"',
     );
-    await expect(readUtf8File(path.join(targetRoot, 'apps/web/src/main.tsx'))).resolves.toContain(
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/web/src/main.tsx')),
       "ReactDOM.createRoot",
     );
-    await expect(readUtf8File(path.join(targetRoot, 'apps/web/src/main.tsx'))).resolves.toContain(
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/web/src/main.tsx')),
       "./index.css",
     );
-    await expect(readUtf8File(path.join(targetRoot, 'apps/web/src/App.tsx'))).resolves.toContain(
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/web/src/App.tsx')),
       'Tailwind CSS v4 + shadcn-ready',
     );
-    await expect(readUtf8File(path.join(targetRoot, 'apps/web/src/App.tsx'))).resolves.toContain(
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/web/src/App.tsx')),
       'Demo App',
     );
-    await expect(readUtf8File(path.join(targetRoot, 'apps/web/src/App.tsx'))).resolves.toContain(
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/web/src/App.tsx')),
       'demo-app',
     );
-    await expect(readUtf8File(path.join(targetRoot, 'apps/web/README.md'))).resolves.toContain(
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/web/README.md')),
       'Demo App',
     );
-    await expect(readUtf8File(path.join(targetRoot, 'apps/web/src/index.css'))).resolves.toContain(
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/web/src/index.css')),
       '@import "tailwindcss";',
     );
-    await expect(readUtf8File(path.join(targetRoot, 'apps/web/src/index.css'))).resolves.toContain(
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/web/src/index.css')),
       '@theme inline',
     );
-    await expect(
-      readUtf8File(path.join(targetRoot, 'apps/web/src/components/ui/button.tsx')),
-    ).resolves.toContain('buttonVariants');
-    await expect(
-      readUtf8File(path.join(targetRoot, 'apps/web/src/lib/utils.ts')),
-    ).resolves.toContain('tailwind-merge');
-    await expect(readUtf8File(path.join(targetRoot, 'apps/web/components.json'))).resolves.toContain(
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/web/src/components/ui/button.tsx')),
+      'buttonVariants',
+    );
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/web/src/lib/utils.ts')),
+      'tailwind-merge',
+    );
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/web/components.json')),
       '"css": "src/index.css"',
     );
-    await expect(readUtf8File(path.join(targetRoot, 'apps/web/components.json'))).resolves.toContain(
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/web/components.json')),
       '"components": "@/components"',
     );
-    await expect(readUtf8File(path.join(targetRoot, 'apps/web/tsconfig.json'))).resolves.toContain(
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/web/tsconfig.json')),
       '"@/*"',
     );
-    await expect(readUtf8File(path.join(targetRoot, 'apps/web/vite.config.ts'))).resolves.toContain(
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/web/vite.config.ts')),
       "tailwindcss()",
     );
-    await expect(readUtf8File(path.join(targetRoot, 'apps/web/vite.config.ts'))).resolves.toContain(
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/web/vite.config.ts')),
       "new URL('./src', import.meta.url)",
     );
-    await expect(
-      readUtf8File(path.join(targetRoot, 'apps/site/astro.config.mjs')),
-    ).resolves.toContain('defineConfig');
-    await expect(readUtf8File(path.join(targetRoot, 'apps/site/package.json'))).resolves.toContain(
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/site/astro.config.mjs')),
+      'defineConfig',
+    );
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/site/package.json')),
       '"astro"',
     );
-    await expect(
-      readUtf8File(path.join(targetRoot, 'apps/site/src/pages/index.astro')),
-    ).resolves.toContain('Astro starter site');
-    await expect(readUtf8File(path.join(targetRoot, 'apps/api/package.json'))).resolves.toContain(
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/site/src/pages/index.astro')),
+      'Astro starter site',
+    );
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/api/package.json')),
       '"hono"',
     );
-    await expect(readUtf8File(path.join(targetRoot, 'apps/api/src/index.ts'))).resolves.toContain(
+    assertContains(
+      await readUtf8File(path.join(targetRoot, 'apps/api/src/index.ts')),
       "new Hono()",
     );
-    await expect(listRelativeFiles(path.join(targetRoot, 'packages'))).resolves.toEqual([]);
-    await expect(listRelativeDirectories(path.join(targetRoot, 'packages'))).resolves.toEqual([]);
-    await expect(readUtf8File(path.join(targetRoot, '.gitignore'))).resolves.not.toContain(
+    assert.deepEqual(await listRelativeFiles(path.join(targetRoot, 'packages')), []);
+    assert.deepEqual(await listRelativeDirectories(path.join(targetRoot, 'packages')), []);
+    assertNotContains(
+      await readUtf8File(path.join(targetRoot, '.gitignore')),
       '.turbo',
     );
   });
@@ -811,16 +880,15 @@ describe('bootstrap modules', () => {
       },
     });
 
-    expect(messages.some((message) => message.includes('create-lv48-app will scaffold'))).toBe(
-      true,
-    );
-    expect(
+    assert.ok(messages.some((message) => message.includes('create-lv48-app will scaffold')));
+    assert.ok(
       messages.some((message) =>
         message.includes('Post-setup: installing npm dependencies. This can take a moment...'),
       ),
-    ).toBe(true);
-    expect(messages.some((message) => message.includes('Post-setup:'))).toBe(true);
-    await expect(listRelativeFiles(path.join(rootDirectory, 'demo-directory'))).resolves.toContain(
+    );
+    assert.ok(messages.some((message) => message.includes('Post-setup:')));
+    assertContains(
+      await listRelativeFiles(path.join(rootDirectory, 'demo-directory')),
       'apps/web/src/main.tsx',
     );
   });

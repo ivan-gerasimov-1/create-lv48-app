@@ -39,13 +39,12 @@
     "release:smoke": "node ./scripts/releaseSmoke.mjs",
     "release:validate-workflow": "node ./scripts/validatePublishWorkflow.mjs",
     "release:verify-pack": "node ./scripts/verifyPack.mjs",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "test": "node --loader ./scripts/tsTestLoader.mjs --test \"tests/**/*.test.ts\"",
+    "test:watch": "node ./scripts/watchTests.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "devDependencies": {
     "@types/node": "24.6.1",
-    "typescript": "5.9.3",
-    "vitest": "3.2.4"
+    "typescript": "5.9.3"
   }
 }
