@@ -6,7 +6,7 @@ The repository SHALL execute its unit-test suite through the built-in `node:test
 #### Scenario: Developer runs the standard test command
 - **WHEN** the developer runs the repository test script on a supported Node version
 - **THEN** the unit-test suite runs through `node:test`
-- **AND** the repository does not require `vitest` or another external test-runner package to execute the suite
+- **AND** the repository does not require another external test-runner package to execute the suite
 
 #### Scenario: Developer runs the watch-mode test command
 - **WHEN** the developer runs the repository watch test script on a supported Node version
@@ -23,4 +23,4 @@ The repository SHALL express its unit-test expectations with built-in Node asser
 #### Scenario: TypeScript test tooling is aligned with the built-in runner
 - **WHEN** TypeScript checks the repository test sources
 - **THEN** the active TypeScript configuration includes the types needed for the built-in Node runner
-- **AND** it does not rely on `vitest/globals`
+- **AND** it does not rely on third-party test globals
