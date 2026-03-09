@@ -6,5 +6,5 @@
 
 ## 2. Verification
 
-- [ ] 2.1 Run the unit-test suite through the new default `npm test` flow and fix migration regressions
-- [ ] 2.2 Run the watch-mode test command and `npm run typecheck` to confirm the developer workflow stays functional
+- [x] 2.1 Run the unit-test suite through the new default `npm test` flow and fix migration regressions
+- [x] 2.2 Run the watch-mode test command and `npm run typecheck` to confirm the developer workflow stays functional

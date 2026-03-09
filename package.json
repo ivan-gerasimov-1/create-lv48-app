@@ -40,7 +40,7 @@
     "release:validate-workflow": "node ./scripts/validatePublishWorkflow.mjs",
     "release:verify-pack": "node ./scripts/verifyPack.mjs",
     "test": "node --loader ./scripts/tsTestLoader.mjs --test \"tests/**/*.test.ts\"",
-    "test:watch": "node --loader ./scripts/tsTestLoader.mjs --test --watch \"tests/**/*.test.ts\"",
+    "test:watch": "node ./scripts/watchTests.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "devDependencies": {
