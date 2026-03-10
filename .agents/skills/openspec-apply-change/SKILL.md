@@ -5,8 +5,8 @@ license: MIT
 compatibility: Requires openspec CLI.
 metadata:
   author: openspec
-  version: '1.0.1'
-  generatedBy: '1.1.1'
+  version: "1.0.1"
+  generatedBy: "1.2.0"
 ---
 
 Implement tasks from an OpenSpec change.
@@ -75,10 +75,16 @@ Implement tasks from an OpenSpec change.
    - Mark task complete in the tasks file: `- [ ]` → `- [x]`
    - Continue to next task
 
+   After each completed task:
+   - Recompute whether any pending tasks remain in the current section
+   - If no pending tasks remain in the current section, STOP immediately
+   - Do not start the first task of the next section without explicit user confirmation
+
    **Pause if:**
    - Task is unclear → ask for clarification
    - Implementation reveals a design issue → suggest updating artifacts
    - Error or blocker encountered → report and wait for guidance
+   - Current section is complete → stop and wait for confirmation before next section
    - User interrupts
 
 7. **On completion or pause, show status**
@@ -142,18 +148,20 @@ What would you like to do?
 
 **Guardrails**
 
-- **CRITICAL: Hard stop on section boundaries**: Tasks are grouped in sections (`## X. ...` in tasks.md).
-  - **MANDATORY CHECK after EVERY task**: Count completed tasks in current section. If you just completed the LAST task in a section, you MUST STOP immediately.
-  - **DO NOT proceed to X.1** (first task of next section) without explicit user confirmation.
-  - **Required output when section completes**:
+- **CRITICAL: Section boundary is a mandatory stop point**
+  - Treat each `## X. ...` heading in `tasks.md` as a hard execution boundary.
+  - You may complete multiple tasks within the same section in one invocation.
+  - You MUST NOT begin any task from the next section in the same invocation.
+  - This rule overrides generic task iteration, completion goals, and momentum.
+  - After completing the last pending task in a section, output:
 
-    ```
     ## Section X Complete
 
     **Completed:** X.1, X.2, X.3
 
-    Ready to continue with Section Y? (Y/N)
-    ```
+    **Next section:** Y
+
+    Stopped at section boundary. Awaiting confirmation to continue.
 
 - Always read context files before starting (from the apply instructions output)
 - If task is ambiguous, pause and ask before implementing
