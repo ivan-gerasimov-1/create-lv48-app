@@ -1,10 +1,11 @@
 ## Why
 
-Сейчас публикация `create-lv48-app` зависит от ручного поднятия версии и отдельного ручного запуска publish workflow. Это создаёт риск рассинхрона между changelog, версией в `package.json` и фактическим npm release, а также держит release-процесс в голове у мейнтейнера.
+Сейчас публикация `create-lv48-app` зависит от ручного поднятия версии и отдельного ручного запуска publish workflow. Даже при переходе на `changesets` ручное создание changeset-файла остаётся лишним ритуалом и даёт новый способ забыть release intent внутри PR.
 
 ## What Changes
 
 - Перевести версионирование релиза на `changesets` с явным release PR, где version bump и changelog генерируются автоматически.
+- Автоматизировать создание и обновление draft changeset-файла в PR по release label, чтобы автор не заводил changeset вручную.
 - Автоматизировать подготовку release PR из накопленных changeset-файлов при изменениях в `main`.
 - Перевести npm publish на GitHub Actions path, который публикует только после merge release PR и повторно использует существующие release gates.
 - Задокументировать новый release flow для обычных изменений и для финального publish.
@@ -19,7 +20,7 @@
 
 ### New Capabilities
 
-- `changeset-release-management`: управление pending release changes через changeset-файлы, автоматический release PR и контролируемый publish после merge.
+- `changeset-release-management`: управление release intent через PR labels, автогенерируемые changeset-файлы, автоматический release PR и контролируемый publish после merge.
 
 ### Modified Capabilities
 
@@ -27,4 +28,4 @@
 
 ## Impact
 
-Affected areas: root `package.json`, lockfile, `.changeset/*`, GitHub Actions workflows, release scripts/docs, and the `npm-package-publication` release specification.
+Affected areas: root `package.json`, lockfile, `.changeset/*`, pull-request automation workflows, publish workflows, release scripts/docs, and the `npm-package-publication` release specification.
