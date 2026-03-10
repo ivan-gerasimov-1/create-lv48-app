@@ -20,3 +20,8 @@
 
 - [x] 4.1 Update release documentation to describe the new label -> generated changeset -> release PR -> publish flow and the maintainer responsibilities inside it
 - [x] 4.2 Run the affected verification commands for the release toolchain and fix any issues discovered before handoff
+
+## 5. Verification Fixes
+
+- [x] 5.1 Replace silent fork-PR skip behavior with an explicit release-policy check that fails clearly for releasable fork pull requests
+- [x] 5.2 Add regression coverage for the multiple-supported-label failure path in PR release-intent automation

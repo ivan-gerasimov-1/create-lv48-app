@@ -1,14 +1,20 @@
 name: Publish Package
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
-  publish:
+  release:
     runs-on: ubuntu-latest
+    concurrency:
+      group: publish-package
+      cancel-in-progress: false
     permissions:
-      contents: read
+      contents: write
       id-token: write
+      pull-requests: write
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -23,9 +29,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run release checks
-        run: npm run release:check
-
-      - name: Publish to npm
-        if: github.ref == 'refs/heads/main'
-        run: npm publish --access public
+      - name: Create release pull request or publish
+        uses: changesets/action@v1
+        with:
+          version: npm run release:version
+          publish: npm run release:publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_CONFIG_PROVENANCE: false

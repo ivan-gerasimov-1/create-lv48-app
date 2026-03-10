@@ -56,5 +56,6 @@ Notes:
 - npm provenance is not supported for GitHub Actions publishes from private repositories, so this workflow intentionally does not pass `--provenance`.
 - Keep npm trusted publishing configured for the repository. If trusted publishing is unavailable, use an `NPM_TOKEN`-based publish path instead of re-enabling provenance.
 - The managed `release-pr-<number>.md` changeset files are automation-owned and should not be edited manually.
+- Fork pull requests only support `release:none`; releasable changes must be merged from a repository branch so automation can commit the managed changeset file.
 
 If any verification step fails, publish does not run.
