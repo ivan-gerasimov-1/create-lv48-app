@@ -125,7 +125,7 @@ Initializer должен:
 - опционально выполнять `git init`
 - печатать понятные next steps
 - публиковаться как публичный npm package под лицензией `MIT` с воспроизводимой release-проверкой
-- иметь GitHub Actions-based release path через `workflow_dispatch` и trusted publishing после прохождения verification gates
+- иметь GitHub Actions-based release path через changesets-driven release PR и trusted publishing после прохождения verification gates
 
 ### 7.2 In scope for phase 2
 
@@ -251,7 +251,7 @@ Initializer должен уметь:
 - содержать корректные package metadata для registry-facing использования, включая лицензию `MIT`
 - проверять release tarball до публикации
 - подтверждать, что packed artifact реально запускает CLI и видит runtime templates
-- поддерживать GitHub Actions workflow с `workflow_dispatch` и trusted publishing, который публикует пакет только после успешных release checks
+- поддерживать changesets-driven GitHub Actions workflow, который собирает release PR из label-managed changesets и публикует пакет только после успешных release checks
 
 ## 10. Preset strategy
 

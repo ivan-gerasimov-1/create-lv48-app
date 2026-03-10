@@ -19,7 +19,7 @@
 
 ### 1. Release intent задаётся через PR label, а changeset генерируется automation
 
-Для каждого PR, который должен попасть в npm-релиз, мейнтейнер или автор выставляет один из согласованных release labels, например `release:patch`, `release:minor` или `release:major`. GitHub Action по этому label создаёт или обновляет служебный changeset-файл с нужным bump type и черновым changelog summary, чтобы release intent был зафиксирован в diff без ручного редактирования `.changeset`.
+Для каждого PR мейнтейнер или автор выставляет ровно один из согласованных release labels: `release:none`, `release:patch`, `release:minor` или `release:major`. GitHub Action по этому label создаёт, обновляет или удаляет служебный changeset-файл с нужным bump type и черновым changelog summary, чтобы release intent был зафиксирован в diff без ручного редактирования `.changeset`.
 
 Почему так:
 - release intent остаётся reviewable прямо в PR;

@@ -1,5 +1,9 @@
-## ADDED Requirements
+# changeset-release-management Specification
 
+## Purpose
+Define the canonical release-intent and release-orchestration contract for `create-lv48-app` through pull request labels, managed changeset files, and a generated release pull request.
+
+## Requirements
 ### Requirement: Release intent is recorded through PR labels and generated changeset files
 The system SHALL require publish-affecting changes for `create-lv48-app` to declare their release intent through approved pull request labels, and GitHub Actions SHALL translate that release intent into checked-in changeset files that encode the semantic version bump and changelog summary before release preparation begins.
 
