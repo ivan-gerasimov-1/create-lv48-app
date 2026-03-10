@@ -3,7 +3,7 @@ name: feature-implement
 description: Executes the implementation phase of a feature based on the existing SpecKit plan and task list, without revisiting requirements or planning artifacts.
 ---
 
-Execute all implementation tasks based on the existing OpecSpec plan and task list.
+Execute all implementation tasks based on the existing OpenSpec plan and task list.
 
 Do not redefine requirements, revisit planning decisions, or modify planning artifacts during this phase.
 
