@@ -1,0 +1,16 @@
+{
+  "defaultBranch": "main",
+  "releaseLabels": {
+    "release:none": "none",
+    "release:patch": "patch",
+    "release:minor": "minor",
+    "release:major": "major"
+  },
+  "managedChangeset": {
+    "directory": ".changeset",
+    "filenamePrefix": "release-pr-",
+    "filenameTemplate": "release-pr-<number>.md",
+    "summarySource": "pull_request.title",
+    "removeWhenLabelMissing": true
+  }
+}

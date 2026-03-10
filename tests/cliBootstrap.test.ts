@@ -236,21 +236,35 @@ describe('bootstrap modules', () => {
     assert.deepEqual(result.unexpectedFiles, ['src/cli.ts']);
   });
 
-  it('documents a workflow_dispatch publish workflow with OIDC permissions', async () => {
-    const workflowContents = await readFile(
+  it('documents changesets-driven release workflows with OIDC permissions', async () => {
+    const publishWorkflowContents = await readFile(
       path.join(process.cwd(), '.github/workflows/publish.yml'),
       'utf8',
     );
-
-    assertContains(workflowContents, 'workflow_dispatch:');
-    assertContains(workflowContents, 'id-token: write');
-    assertContains(workflowContents, 'npm run release:check');
-    assertContains(workflowContents, "if: github.ref == 'refs/heads/main'");
-    assertContains(workflowContents, 'npm publish --access public');
-    assertContains(
-      await readUtf8File(path.join(process.cwd(), 'package.json')),
-      '"release:validate-workflow": "node ./scripts/validatePublishWorkflow.mjs"',
+    const prWorkflowContents = await readFile(
+      path.join(process.cwd(), '.github/workflows/prReleaseChangeset.yml'),
+      'utf8',
     );
+    const packageManifest = await readUtf8File(path.join(process.cwd(), 'package.json'));
+    const releaseAutomationConfig = await readUtf8File(
+      path.join(process.cwd(), '.github/releaseAutomation.json'),
+    );
+
+    assertContains(publishWorkflowContents, 'push:');
+    assertContains(publishWorkflowContents, 'id-token: write');
+    assertContains(publishWorkflowContents, 'pull-requests: write');
+    assertContains(publishWorkflowContents, 'uses: changesets/action@v1');
+    assertContains(publishWorkflowContents, 'version: npm run release:version');
+    assertContains(publishWorkflowContents, 'publish: npm run release:publish');
+    assertContains(publishWorkflowContents, 'NPM_CONFIG_PROVENANCE: false');
+    assertContains(prWorkflowContents, 'pull_request:');
+    assertContains(prWorkflowContents, 'run: node ./scripts/validateForkReleasePolicy.mjs');
+    assertContains(prWorkflowContents, 'run: node ./scripts/syncPrChangeset.mjs');
+    assertContains(prWorkflowContents, 'git add -A ".changeset/release-pr-${PR_NUMBER}.md"');
+    assertContains(packageManifest, '"release:version": "changeset version"');
+    assertContains(packageManifest, '"release:publish": "node ./scripts/releasePublish.mjs"');
+    assertContains(packageManifest, '"release:validate-workflow": "node ./scripts/validatePublishWorkflow.mjs"');
+    assertContains(releaseAutomationConfig, '"release:none": "none"');
   });
 
   it('creates isolated directories for packed-artifact smoke verification', async () => {

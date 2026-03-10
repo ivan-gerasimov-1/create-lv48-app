@@ -48,7 +48,7 @@ CLI выполняется в Node.js runtime и использует локал
 
 ### 3.4 Release model
 
-Публикация пакета должна опираться на воспроизводимый release pipeline: локальный release-check и GitHub Actions workflow обязаны использовать один и тот же набор verification gates перед `npm publish`. Automation path в первой версии фиксируется как `workflow_dispatch` + npm trusted publishing через OIDC.
+Публикация пакета должна опираться на воспроизводимый release pipeline: локальный release-check и GitHub Actions workflow обязаны использовать один и тот же набор verification gates перед `npm publish`. Automation path фиксируется как PR labels -> managed changeset files -> changesets release PR -> npm trusted publishing через OIDC после merge release PR.
 
 ### 3.3 Internal architecture
 
@@ -218,9 +218,11 @@ CLI должен уметь спрашивать:
 
 ### 7.5 Release trigger requirement
 
-Публикация через GitHub Actions должна запускаться только явным trigger:
+Публикация через GitHub Actions должна запускаться только из merged release commit в `main`, который был подготовлен changesets automation:
 
-- `workflow_dispatch`
+- PR release intent задаётся ровно одним label из `release:none|patch|minor|major`
+- managed changeset генерируется и обновляется автоматически на уровне PR
+- финальный publish запускается только после merge generated release PR
 
 ## 8. File generation requirements
 
