@@ -11,7 +11,7 @@
 
 ## 3. Documentation and regression coverage
 
-- [ ] 3.1 Update repository release documentation and templates to describe the `release-please` + conventional commits flow
-- [ ] 3.2 Update `/Users/ivan/Developer/lv48/create-lv48-app/docs/PRD.md` and `/Users/ivan/Developer/lv48/create-lv48-app/docs/SRD.md` so they no longer mention `changesets` and describe the new canonical release path
-- [ ] 3.3 Refresh tests and workflow validation to cover conventional-commit enforcement, release PR generation, publish gating, and consistency of the canonical release contract
-- [ ] 3.4 Run the affected verification commands for release automation and fix any issues discovered before handoff
+- [x] 3.1 Update repository release documentation and templates to describe the `release-please` + conventional commits flow
+- [x] 3.2 Update `/Users/ivan/Developer/lv48/create-lv48-app/docs/PRD.md` and `/Users/ivan/Developer/lv48/create-lv48-app/docs/SRD.md` so they no longer mention `changesets` and describe the new canonical release path
+- [x] 3.3 Refresh tests and workflow validation to cover conventional-commit enforcement, release PR generation, publish gating, and consistency of the canonical release contract
+- [x] 3.4 Run the affected verification commands for release automation and fix any issues discovered before handoff
