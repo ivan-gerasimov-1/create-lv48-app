@@ -19,6 +19,8 @@
   },
   "include": [
     "src/**/*.ts",
+    ".github/scripts/**/*.test.ts",
+    ".github/scripts/**/*.d.mts",
     "tests/**/*.ts",
     "tests/**/*.d.ts"
   ]

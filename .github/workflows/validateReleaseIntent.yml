@@ -46,4 +46,4 @@ jobs:
         env:
           PR_TITLE: ${{ github.event.pull_request.title }}
           PR_COMMITS_JSON: ${{ steps.collect-commits.outputs.messages-json }}
-        run: node ./scripts/validateReleaseIntent.mjs
+        run: node ./.github/scripts/validateReleaseIntent.mjs

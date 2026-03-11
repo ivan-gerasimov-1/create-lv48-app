@@ -17,7 +17,7 @@ async function main() {
         'pull-requests: read',
         'ref: ${{ github.event.pull_request.base.sha }}',
         'uses: actions/github-script@v7',
-        'run: node ./scripts/validateReleaseIntent.mjs',
+        'run: node ./.github/scripts/validateReleaseIntent.mjs',
       ],
     },
     {

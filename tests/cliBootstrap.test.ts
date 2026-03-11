@@ -262,7 +262,7 @@ describe('bootstrap modules', () => {
     assertContains(releaseIntentWorkflowContents, 'pull_request_target:');
     assertContains(releaseIntentWorkflowContents, 'ref: ${{ github.event.pull_request.base.sha }}');
     assertContains(releaseIntentWorkflowContents, 'uses: actions/github-script@v7');
-    assertContains(releaseIntentWorkflowContents, 'run: node ./scripts/validateReleaseIntent.mjs');
+    assertContains(releaseIntentWorkflowContents, 'run: node ./.github/scripts/validateReleaseIntent.mjs');
     assertContains(releasePleaseConfig, '"release-type": "node"');
     assertContains(releasePleaseConfig, '"package-name": "create-lv48-app"');
     assertContains(releasePleaseManifest, '".": "0.3.1"');

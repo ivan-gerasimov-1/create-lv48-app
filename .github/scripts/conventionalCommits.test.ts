@@ -5,7 +5,7 @@ import {
   loadConventionalCommitPolicy,
   parseConventionalCommit,
   validateReleaseIntent,
-} from '../scripts/conventionalCommits.mjs';
+} from './conventionalCommits.mjs';
 
 describe('conventional commit policy', async () => {
   const policy = await loadConventionalCommitPolicy(process.cwd());
