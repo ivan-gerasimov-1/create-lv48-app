@@ -1,7 +1,7 @@
 ## 1. Conventional release contract
 
-- [ ] 1.1 Define the enforced Conventional Commit policy for merges and document the supported release and non-release types
-- [ ] 1.2 Add CI validation that fails before merge when commit metadata cannot be interpreted by `release-please`
+- [x] 1.1 Define the enforced Conventional Commit policy for merges and document the supported release and non-release types
+- [x] 1.2 Add CI validation that fails before merge when commit metadata cannot be interpreted by `release-please`
 
 ## 2. Release automation migration
 
