@@ -36,7 +36,7 @@ The system SHALL provide a GitHub Actions workflow for npm publication that is o
 - **WHEN** the generated release pull request is merged through the configured default branch for a public npm package whose source repository is private
 - **THEN** the workflow runs the required verification steps before executing `npm publish --access public` without `--provenance`
 
-#### Scenario: Maintainer triggers GitHub Actions release publish from a provenance-compatible repository
+#### Scenario: Maintainer inspects a provenance-compatible follow-up path
 - **WHEN** the source repository visibility and npm capabilities support provenance for the package being published
 - **THEN** the documented release contract may enable provenance in a follow-up change without weakening the required verification gates
 
