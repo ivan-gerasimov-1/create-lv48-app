@@ -7,6 +7,20 @@ await main();
 async function main() {
   const workflowChecks = [
     {
+      name: 'release intent validation workflow',
+      workflowPath: path.join(process.cwd(), '.github', 'workflows', 'validateReleaseIntent.yml'),
+      requiredSnippets: [
+        'pull_request_target:',
+        '- synchronize',
+        '- edited',
+        '- ready_for_review',
+        'pull-requests: read',
+        'ref: ${{ github.event.pull_request.base.sha }}',
+        'uses: actions/github-script@v7',
+        'run: node ./scripts/validateReleaseIntent.mjs',
+      ],
+    },
+    {
       name: 'publish workflow',
       workflowPath: path.join(process.cwd(), '.github', 'workflows', 'publish.yml'),
       requiredSnippets: [
@@ -40,6 +54,13 @@ async function main() {
       ],
     },
   ];
+  const configChecks = [
+    {
+      name: 'conventional commit policy',
+      configPath: path.join(process.cwd(), '.github', 'conventionalCommitPolicy.json'),
+      requiredSnippets: ['"mergeStrategy": "squash"', '"feat"', '"fix"', '"docs"'],
+    },
+  ];
   const failures = [];
 
   for (const workflowCheck of workflowChecks) {
@@ -51,6 +72,20 @@ async function main() {
     if (missingSnippets.length > 0) {
       failures.push({
         name: workflowCheck.name,
+        missingSnippets,
+      });
+    }
+  }
+
+  for (const configCheck of configChecks) {
+    const configContents = await readFile(configCheck.configPath, 'utf8');
+    const missingSnippets = configCheck.requiredSnippets.filter(
+      (snippet) => !configContents.includes(snippet),
+    );
+
+    if (missingSnippets.length > 0) {
+      failures.push({
+        name: configCheck.name,
         missingSnippets,
       });
     }

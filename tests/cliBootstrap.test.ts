@@ -237,6 +237,10 @@ describe('bootstrap modules', () => {
   });
 
   it('documents changesets-driven release workflows with OIDC permissions', async () => {
+    const releaseIntentWorkflowContents = await readFile(
+      path.join(process.cwd(), '.github/workflows/validateReleaseIntent.yml'),
+      'utf8',
+    );
     const publishWorkflowContents = await readFile(
       path.join(process.cwd(), '.github/workflows/publish.yml'),
       'utf8',
@@ -249,7 +253,14 @@ describe('bootstrap modules', () => {
     const releaseAutomationConfig = await readUtf8File(
       path.join(process.cwd(), '.github/releaseAutomation.json'),
     );
+    const conventionalCommitPolicy = await readUtf8File(
+      path.join(process.cwd(), '.github/conventionalCommitPolicy.json'),
+    );
 
+    assertContains(releaseIntentWorkflowContents, 'pull_request_target:');
+    assertContains(releaseIntentWorkflowContents, 'ref: ${{ github.event.pull_request.base.sha }}');
+    assertContains(releaseIntentWorkflowContents, 'uses: actions/github-script@v7');
+    assertContains(releaseIntentWorkflowContents, 'run: node ./scripts/validateReleaseIntent.mjs');
     assertContains(publishWorkflowContents, 'push:');
     assertContains(publishWorkflowContents, 'id-token: write');
     assertContains(publishWorkflowContents, 'pull-requests: write');
@@ -265,6 +276,9 @@ describe('bootstrap modules', () => {
     assertContains(packageManifest, '"release:publish": "node ./scripts/releasePublish.mjs"');
     assertContains(packageManifest, '"release:validate-workflow": "node ./scripts/validatePublishWorkflow.mjs"');
     assertContains(releaseAutomationConfig, '"release:none": "none"');
+    assertContains(conventionalCommitPolicy, '"mergeStrategy": "squash"');
+    assertContains(conventionalCommitPolicy, '"feat"');
+    assertContains(conventionalCommitPolicy, '"fix"');
   });
 
   it('creates isolated directories for packed-artifact smoke verification', async () => {

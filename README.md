@@ -20,9 +20,36 @@ This runs:
 - `npm run release:verify-pack`
 - `npm run release:smoke`
 
-### Pull request release intent
+### Conventional release intent
 
-Every pull request must carry exactly one supported release label:
+Every merge that should remain compatible with `release-please` must expose release intent through Conventional Commit metadata that CI can validate before merge.
+
+Enforced merge policy:
+
+- merge pull requests with squash so the final pull request title becomes the canonical Conventional Commit on `main`
+- if maintainers intentionally use a non-squash merge path, every commit message in that branch must follow the same contract
+- add `!` or a `BREAKING CHANGE:` footer when the next release must be major
+
+Supported releasing types:
+
+- `feat` -> minor
+- `fix` -> patch
+
+Supported non-releasing types:
+
+- `build`
+- `chore`
+- `ci`
+- `docs`
+- `refactor`
+- `style`
+- `test`
+
+The workflow at `.github/workflows/validateReleaseIntent.yml` validates the pull request title first and falls back to commit-message validation when the title is not canonical.
+
+### Current pre-migration release labels
+
+Until the release automation migration is finished, every pull request must also carry exactly one supported release label:
 
 - `release:none`
 - `release:patch`
