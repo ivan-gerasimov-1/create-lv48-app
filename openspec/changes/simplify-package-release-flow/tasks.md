@@ -5,9 +5,9 @@
 
 ## 2. Release automation migration
 
-- [ ] 2.1 Add `release-please` configuration and workflow for the single published package
-- [ ] 2.2 Refactor the publish workflow so release PR creation and final publish run through the existing repository release gates
-- [ ] 2.3 Align repository release assets, scripts, and tests with the single `release-please` workflow
+- [x] 2.1 Add `release-please` configuration and workflow for the single published package
+- [x] 2.2 Refactor the publish workflow so release PR creation and final publish run through the existing repository release gates
+- [x] 2.3 Align repository release assets, scripts, and tests with the single `release-please` workflow
 
 ## 3. Documentation and regression coverage
 
