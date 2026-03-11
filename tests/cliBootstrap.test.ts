@@ -237,6 +237,9 @@ describe('bootstrap modules', () => {
   });
 
   it('documents release-please workflows with OIDC permissions', async () => {
+    const readmeContents = await readUtf8File(path.join(process.cwd(), 'README.md'));
+    const prdContents = await readUtf8File(path.join(process.cwd(), 'docs/PRD.md'));
+    const srdContents = await readUtf8File(path.join(process.cwd(), 'docs/SRD.md'));
     const releaseIntentWorkflowContents = await readFile(
       path.join(process.cwd(), '.github/workflows/validateReleaseIntent.yml'),
       'utf8',
@@ -280,6 +283,19 @@ describe('bootstrap modules', () => {
     assertContains(conventionalCommitPolicy, '"mergeStrategy": "squash"');
     assertContains(conventionalCommitPolicy, '"feat"');
     assertContains(conventionalCommitPolicy, '"fix"');
+    assertContains(readmeContents, 'release-please');
+    assertContains(
+      readmeContents,
+      'The generated release pull request is the only automation-owned release artifact in the repository.',
+    );
+    assertContains(prdContents, 'release-please');
+    assertContains(
+      srdContents,
+      'повторный запуск publish workflow для того же merged release commit должен оставаться возможным',
+    );
+    assertNotContains(readmeContents, 'release:none');
+    assertNotContains(readmeContents, 'prReleaseChangeset');
+    assertNotContains(readmeContents, 'changesets');
 
     await assert.rejects(
       readFile(path.join(process.cwd(), '.github/workflows/prReleaseChangeset.yml'), 'utf8'),

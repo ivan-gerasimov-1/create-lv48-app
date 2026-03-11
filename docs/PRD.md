@@ -251,7 +251,7 @@ Initializer должен уметь:
 - содержать корректные package metadata для registry-facing использования, включая лицензию `MIT`
 - проверять release tarball до публикации
 - подтверждать, что packed artifact реально запускает CLI и видит runtime templates
-- поддерживать `release-please`-driven GitHub Actions workflow, который собирает release PR из conventional commits и публикует пакет только после успешных release checks
+- поддерживать `release-please`-driven GitHub Actions workflow, который собирает release PR из conventional commits, оставляет этот PR единственной review-точкой release diff и публикует пакет только после успешных release checks
 
 ## 10. Preset strategy
 

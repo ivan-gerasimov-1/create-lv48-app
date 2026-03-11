@@ -47,29 +47,19 @@ Supported non-releasing types:
 
 The workflow at `.github/workflows/validateReleaseIntent.yml` validates the pull request title first and falls back to commit-message validation when the title is not canonical.
 
-### Current pre-migration release labels
-
-Until the release automation migration is finished, every pull request must also carry exactly one supported release label:
-
-- `release:none`
-- `release:patch`
-- `release:minor`
-- `release:major`
-
-The workflow at `.github/workflows/prReleaseChangeset.yml` turns that label into a managed `.changeset/release-pr-<number>.md` file and keeps it in sync when the pull request title, labels, or commits change.
-
 ### Release pull request and publish
 
 Publishing uses the workflow at `.github/workflows/publish.yml`.
 
 Publish flow:
 
-1. Merge pull requests into `main` with their release label already set.
-2. Changesets automation on `main` creates or updates the release pull request with generated version bump and changelog changes.
+1. Merge pull requests into `main` with Conventional Commit metadata that `release-please` can interpret.
+2. `release-please` on `main` creates or updates the generated release pull request with version bump and changelog changes.
 3. Merge the generated release pull request.
-4. GitHub Actions runs `npm ci`.
-5. GitHub Actions runs the publish script, which first executes `npm run release:check`.
-6. After all verification gates pass, GitHub Actions publishes with `npm publish --access public`.
+4. The merged release commit on `main` triggers GitHub Actions publish.
+5. GitHub Actions runs `npm ci`.
+6. GitHub Actions runs `npm run release:publish`, which first executes `npm run release:check`.
+7. After all verification gates pass, GitHub Actions publishes with `npm publish --access public`.
 
 Required GitHub Actions setup:
 
@@ -82,7 +72,7 @@ Notes:
 - Public npm packages can be published from a private GitHub repository.
 - npm provenance is not supported for GitHub Actions publishes from private repositories, so this workflow intentionally does not pass `--provenance`.
 - Keep npm trusted publishing configured for the repository. If trusted publishing is unavailable, use an `NPM_TOKEN`-based publish path instead of re-enabling provenance.
-- The managed `release-pr-<number>.md` changeset files are automation-owned and should not be edited manually.
-- Fork pull requests only support `release:none`; releasable changes must be merged from a repository branch so automation can commit the managed changeset file.
+- The generated release pull request is the only automation-owned release artifact in the repository.
+- Re-running publish for the same merged release commit remains valid if a previous attempt failed after the release PR was created.
 
 If any verification step fails, publish does not run.

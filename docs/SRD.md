@@ -223,6 +223,7 @@ CLI должен уметь спрашивать:
 - release intent выражается через conventional commits или merge title, совместимый с Conventional Commits
 - `release-please` автоматически собирает version bump и changelog в release PR
 - финальный publish запускается только после merge generated release PR
+- повторный запуск publish workflow для того же merged release commit должен оставаться возможным, если предыдущий publish завершился ошибкой после создания release PR
 
 ## 8. File generation requirements
 
