@@ -6,10 +6,10 @@ import { describe, it } from 'node:test';
 describe('release please assets', () => {
   it('defines a single-package release-please contract', async () => {
     const config = JSON.parse(
-      await readFile(path.join(process.cwd(), '.release-please-config.json'), 'utf8'),
+      await readFile(path.join(process.cwd(), '.release-please', 'config.json'), 'utf8'),
     );
     const manifest = JSON.parse(
-      await readFile(path.join(process.cwd(), '.release-please-manifest.json'), 'utf8'),
+      await readFile(path.join(process.cwd(), '.release-please', 'manifest.json'), 'utf8'),
     );
 
     assert.deepEqual(config, {

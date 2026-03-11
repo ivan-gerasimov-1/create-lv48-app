@@ -245,10 +245,10 @@ describe('bootstrap modules', () => {
       'utf8',
     );
     const releasePleaseConfig = await readUtf8File(
-      path.join(process.cwd(), '.release-please-config.json'),
+      path.join(process.cwd(), '.release-please', 'config.json'),
     );
     const releasePleaseManifest = await readUtf8File(
-      path.join(process.cwd(), '.release-please-manifest.json'),
+      path.join(process.cwd(), '.release-please', 'manifest.json'),
     );
     const publishWorkflowContents = await readFile(
       path.join(process.cwd(), '.github/workflows/publish.yml'),
@@ -256,7 +256,7 @@ describe('bootstrap modules', () => {
     );
     const packageManifest = await readUtf8File(path.join(process.cwd(), 'package.json'));
     const conventionalCommitPolicy = await readUtf8File(
-      path.join(process.cwd(), '.github/conventionalCommitPolicy.json'),
+      path.join(process.cwd(), '.conventional-commits', 'policy.json'),
     );
 
     assertContains(releaseIntentWorkflowContents, 'pull_request_target:');
@@ -270,8 +270,10 @@ describe('bootstrap modules', () => {
     assertContains(publishWorkflowContents, 'id-token: write');
     assertContains(publishWorkflowContents, 'pull-requests: write');
     assertContains(publishWorkflowContents, 'uses: googleapis/release-please-action@v4');
-    assertContains(publishWorkflowContents, 'config-file: .release-please-config.json');
-    assertContains(publishWorkflowContents, 'manifest-file: .release-please-manifest.json');
+    assertContains(publishWorkflowContents, 'config-file: .release-please/config.json');
+    assertContains(publishWorkflowContents, 'manifest-file: .release-please/manifest.json');
+    assertContains(publishWorkflowContents, 'publish:');
+    assertContains(publishWorkflowContents, 'needs:');
     assertContains(
       publishWorkflowContents,
       "if: ${{ startsWith(github.event.head_commit.message, 'chore(main): release ') }}",

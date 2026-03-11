@@ -30,8 +30,9 @@ async function main() {
         'id-token: write',
         'pull-requests: write',
         'uses: googleapis/release-please-action@v4',
-        'config-file: .release-please-config.json',
-        'manifest-file: .release-please-manifest.json',
+        'config-file: .release-please/config.json',
+        'manifest-file: .release-please/manifest.json',
+        'needs:',
         "if: ${{ startsWith(github.event.head_commit.message, 'chore(main): release ') }}",
         'run: npm ci',
         'run: npm run release:publish',
@@ -42,17 +43,17 @@ async function main() {
   const configChecks = [
     {
       name: 'conventional commit policy',
-      configPath: path.join(process.cwd(), '.github', 'conventionalCommitPolicy.json'),
+      configPath: path.join(process.cwd(), '.conventional-commits', 'policy.json'),
       requiredSnippets: ['"mergeStrategy": "squash"', '"feat"', '"fix"', '"docs"'],
     },
     {
       name: 'release please config',
-      configPath: path.join(process.cwd(), '.release-please-config.json'),
+      configPath: path.join(process.cwd(), '.release-please', 'config.json'),
       requiredSnippets: ['"release-type": "node"', '"package-name": "create-lv48-app"', '"changelog-path": "CHANGELOG.md"'],
     },
     {
       name: 'release please manifest',
-      configPath: path.join(process.cwd(), '.release-please-manifest.json'),
+      configPath: path.join(process.cwd(), '.release-please', 'manifest.json'),
       requiredSnippets: ['".": "0.3.1"'],
     },
   ];

@@ -3,7 +3,7 @@ import path from 'node:path';
 import process from 'node:process';
 
 export async function loadConventionalCommitPolicy(cwd = process.cwd()) {
-  const configPath = path.join(cwd, '.github', 'conventionalCommitPolicy.json');
+  const configPath = path.join(cwd, '.conventional-commits', 'policy.json');
   const configContents = await readFile(configPath, 'utf8');
 
   return JSON.parse(configContents);
