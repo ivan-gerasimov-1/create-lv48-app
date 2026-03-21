@@ -26,10 +26,10 @@ The system SHALL provide a reproducible pre-publish workflow that builds the pac
 - **THEN** the verification workflow reports the packaging failure and the maintainer does not proceed to `npm publish`
 
 ### Requirement: GitHub Actions publish reuses the verified release workflow
-The system SHALL provide a GitHub Actions workflow for npm publication that is orchestrated through `changesets`, uses npm trusted publishing through OIDC, runs the same release gates as the local release-check path, and only publishes after build, test, tarball verification, and packed-artifact smoke verification succeed. The publish command SHALL remain compatible with the repository visibility used for the release. When the source repository is private and the package is public, the workflow SHALL publish without npm provenance generation.
+The system SHALL provide a GitHub Actions workflow for npm publication that is orchestrated through `release-please`, uses npm trusted publishing through OIDC, runs the same release gates as the local release-check path, and only publishes after build, test, tarball verification, and packed-artifact smoke verification succeed. The publish command SHALL remain compatible with the repository visibility used for the release. When the source repository is private and the package is public, the workflow SHALL publish without npm provenance generation.
 
 #### Scenario: Automation prepares a release without publishing yet
-- **WHEN** unreleased changesets exist on the default branch
+- **WHEN** unreleased conventional commits exist on the default branch
 - **THEN** GitHub Actions updates the generated release pull request and does not publish to npm before that pull request is merged
 
 #### Scenario: Release commit reaches the default branch in a private repository

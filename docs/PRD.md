@@ -125,7 +125,7 @@ The initializer must:
 - optionally execute `git init`
 - print clear next steps
 - be published as a public npm package under the `MIT` license with a reproducible release check
-- have a GitHub Actions-based release path via a changesets-driven release PR and trusted publishing after verification gates pass
+- have a GitHub Actions-based release path via a `release-please` release PR and trusted publishing after verification gates pass
 
 ### 7.2 In scope for phase 2
 
@@ -251,7 +251,7 @@ The initializer delivery system must:
 - contain correct package metadata for registry-facing use, including the `MIT` license
 - verify the release tarball before publishing
 - confirm that the packed artifact actually runs the CLI and can see runtime templates
-- support a changesets-driven GitHub Actions workflow that builds a release PR from label-managed changesets and publishes the package only after successful release checks
+- support a `release-please`-driven GitHub Actions workflow that builds a release PR from conventional commits, makes this PR the single review point for the release diff, and publishes the package only after successful release checks
 
 ## 10. Preset strategy
 

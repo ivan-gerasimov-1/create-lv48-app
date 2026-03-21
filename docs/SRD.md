@@ -48,7 +48,7 @@ The CLI runs in a Node.js runtime and uses the local filesystem for project gene
 
 ### 3.4 Release model
 
-Package publishing must rely on a reproducible release pipeline: the local release-check and GitHub Actions workflow must use the same set of verification gates before `npm publish`. The automation path is fixed as: PR labels → managed changeset files → changesets release PR → npm trusted publishing via OIDC after release PR merge.
+Package publishing must rely on a reproducible release pipeline: the local release-check and GitHub Actions workflow must use the same set of verification gates before `npm publish`. The automation path is fixed as: conventional commits → `release-please` release PR → npm trusted publishing via OIDC after release PR merge.
 
 ### 3.3 Internal architecture
 
@@ -218,11 +218,12 @@ The published npm artifact must:
 
 ### 7.5 Release trigger requirement
 
-Publishing via GitHub Actions must only be triggered from a merged release commit in `main` that was prepared by changesets automation:
+Publishing via GitHub Actions must only be triggered from a merged release commit in `main` that was prepared by `release-please` automation:
 
-- PR release intent is set by exactly one label from `release:none|patch|minor|major`
-- managed changeset is generated and updated automatically at the PR level
+- release intent is expressed via conventional commits or a merge title compatible with Conventional Commits
+- `release-please` automatically assembles a version bump and changelog in the release PR
 - final publish is triggered only after the generated release PR is merged
+- re-running the publish workflow for the same merged release commit must remain possible if a previous publish failed after the release PR was created
 
 ## 8. File generation requirements
 

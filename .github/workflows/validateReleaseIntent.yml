@@ -1,0 +1,49 @@
+name: Validate Release Intent
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - edited
+      - ready_for_review
+
+jobs:
+  validate-release-intent:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - name: Check out base branch automation
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Collect pull request commits
+        id: collect-commits
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const commits = await github.paginate(github.rest.pulls.listCommits, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              per_page: 100,
+            });
+
+            const commitMessages = commits.map((commit) => commit.commit.message);
+
+            core.setOutput('messages-json', JSON.stringify(commitMessages));
+
+      - name: Validate conventional release intent
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_COMMITS_JSON: ${{ steps.collect-commits.outputs.messages-json }}
+        run: node ./.github/scripts/validateReleaseIntent.mjs
