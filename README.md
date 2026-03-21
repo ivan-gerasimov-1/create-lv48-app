@@ -2,6 +2,59 @@
 
 Opinionated initializer for TS-first SaaS projects.
 
+## Requirements
+
+Node.js 24 or newer is required before installing dependencies.
+
+## Usage
+
+```bash
+npm init lv48-app
+# or
+npx create-lv48-app
+```
+
+The initializer prompts for:
+
+- project name
+- target directory (defaults to the project name)
+- whether to install dependencies
+- whether to initialize a git repository
+
+The `base` preset is applied automatically. The package manager is `npm`.
+
+## What it scaffolds
+
+The `base` preset generates an npm workspaces monorepo:
+
+```
+<project>/
+├── apps/
+│   ├── web/        # React + Vite + Tailwind CSS v4, shadcn-ready
+│   ├── site/       # Astro
+│   └── api/        # Node + Hono
+├── packages/       # reserved for future shared workspaces
+└── package.json    # root workspace manifest
+```
+
+All generated package manifests declare `engines.node` as `>=24.0.0`. The git repository is initialized with `main` as the initial branch when git initialization is selected.
+
+## Development
+
+Run the test suite:
+
+```bash
+npm test
+```
+
+Watch mode:
+
+```bash
+npm run test:watch
+```
+
+Tests run through the built-in `node:test` runner.
+
 ## Release workflow
 
 ### Local pre-publish checks
