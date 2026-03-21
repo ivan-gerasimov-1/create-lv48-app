@@ -6,7 +6,7 @@ import process from 'node:process';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 
-import { verifyPackedFiles } from '../dist/release/verifyPack.js';
+import { buildExpectedPackedFiles, verifyPackedFiles } from '../dist/release/verifyPack.js';
 
 const execFileAsync = promisify(execFile);
 
@@ -15,7 +15,8 @@ async function main() {
 
   try {
     const files = await loadPackedFiles(cacheDirectory);
-    const result = verifyPackedFiles(files);
+    const expectedFiles = await buildExpectedPackedFiles(process.cwd());
+    const result = verifyPackedFiles(files, expectedFiles);
 
     if (result.missingFiles.length > 0 || result.unexpectedFiles.length > 0) {
       printFailure(result);

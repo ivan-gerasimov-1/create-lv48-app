@@ -12,7 +12,7 @@ import { createGenerationRunner } from '../src/generate/index.js';
 import { createPresetRegistry } from '../src/presets/index.js';
 import { createPromptController } from '../src/prompts/index.js';
 import { createReleaseSmokePaths, getInstalledSmokeCliPath } from '../src/release/smoke.js';
-import { getExpectedPackedFiles, verifyPackedFiles } from '../src/release/verifyPack.js';
+import { verifyPackedFiles } from '../src/release/verifyPack.js';
 import { createTransformPipeline } from '../src/transforms/index.js';
 import {
   listRelativeDirectories,
@@ -53,6 +53,27 @@ function createPromptIoMock() {
     async close() {},
   };
 }
+
+const CONTRACT_FILES = [
+  'LICENSE',
+  'README.md',
+  'bin/create-lv48-app.js',
+  'dist/cli.d.ts',
+  'dist/cli.js',
+  'dist/cli.js.map',
+  'dist/generate/index.js',
+  'dist/presets/index.js',
+  'dist/prompts/index.js',
+  'dist/transforms/index.js',
+  'dist/utils/fs.js',
+  'package.json',
+  'templates/base/_meta/template.json',
+  'templates/base/README.md',
+  'templates/base/apps/api/package.json',
+  'templates/base/apps/site/package.json',
+  'templates/base/apps/web/package.json',
+  'templates/base/package.json',
+].sort();
 
 let cleanupPaths: string[] = [];
 
@@ -217,18 +238,21 @@ describe('bootstrap modules', () => {
       { path: 'package/templates/base/package.json' },
     ];
 
-    const result = verifyPackedFiles(files);
+    const result = verifyPackedFiles(files, CONTRACT_FILES);
 
     assert.deepEqual(result.missingFiles, []);
     assert.deepEqual(result.unexpectedFiles, []);
   });
 
   it('flags unexpected packed files outside the public contract', () => {
-    const result = verifyPackedFiles([
-      { path: 'package/bin/create-lv48-app.js' },
-      { path: 'package/dist/cli.js' },
-      { path: 'package/src/cli.ts' },
-    ]);
+    const result = verifyPackedFiles(
+      [
+        { path: 'package/bin/create-lv48-app.js' },
+        { path: 'package/dist/cli.js' },
+        { path: 'package/src/cli.ts' },
+      ],
+      CONTRACT_FILES,
+    );
 
     assert.deepEqual(result.unexpectedFiles, ['src/cli.ts']);
     assert.ok(result.missingFiles.length > 0, 'Partial input should report missing files');
