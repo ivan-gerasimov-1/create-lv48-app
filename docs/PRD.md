@@ -250,7 +250,7 @@ The initializer delivery system must:
 - publish `create-lv48-app` as a public npm package
 - contain correct package metadata for registry-facing use, including the `MIT` license
 - verify the release tarball before publishing
-- confirm that the packed artifact actually runs the CLI and can see runtime templates
+- confirm that the packed artifact actually runs the CLI and has access to bundled templates
 - support a `release-please`-driven GitHub Actions workflow that builds a release PR from conventional commits, makes this PR the single review point for the release diff, and publishes the package only after successful release checks
 
 ## 10. Preset strategy
@@ -265,7 +265,7 @@ Baseline SaaS project with the architecture:
 - empty reserved `packages/` container for future shared packages
 - root README and project-level READMEs with instructions for apps
 
-### 10.2 Future Convex preset
+### 10.2 Future `convex-realtime` preset
 
 A separate preset for realtime-first scenarios.
 
@@ -287,7 +287,7 @@ The initializer must be:
 
 - easy to maintain
 - clear in structure
-- not overloaded with unnecessary abstraction
+- free of unnecessary abstraction
 - extensible through presets without pain
 
 ### 11.2 Predictability
@@ -298,7 +298,7 @@ The same input must produce predictable output.
 
 The CLI version and the generated template output version must be sufficiently transparently linked.
 
-### 11.5 Release safety
+### 11.4 Release safety
 
 The publish path must be:
 
@@ -306,7 +306,7 @@ The publish path must be:
 - verifiable before actual publish
 - identical in release gates locally and in GitHub Actions
 
-### 11.4 Developer experience
+### 11.5 Developer experience
 
 The usage experience must be:
 

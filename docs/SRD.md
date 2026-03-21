@@ -46,11 +46,11 @@ The initializer must be published as an npm package of the form:
 
 The CLI runs in a Node.js runtime and uses the local filesystem for project generation.
 
-### 3.4 Release model
+### 3.3 Release model
 
 Package publishing must rely on a reproducible release pipeline: the local release-check and GitHub Actions workflow must use the same set of verification gates before `npm publish`. The automation path is fixed as: conventional commits → `release-please` release PR → npm trusted publishing via OIDC after release PR merge.
 
-### 3.3 Internal architecture
+### 3.4 Internal architecture
 
 The system must consist of the following logical layers:
 
@@ -174,7 +174,7 @@ templates/base/
 
 ### 6.2 Template metadata requirements
 
-`template.json` must describe at minimum:
+`template.json` must describe at a minimum:
 
 - preset id
 - preset display name
@@ -201,7 +201,7 @@ The CLI must be able to ask:
 - install dependencies? (`yes/no`)
 - initialize git? (`yes/no`)
 
-In phase 1, the `base` preset is applied by default without a separate prompt; some values may have defaults and not be asked during non-interactive runs.
+In Phase 1, the `base` preset is applied by default without a separate prompt; some values may have defaults and not be asked during non-interactive runs, if supported.
 
 ### 7.3 Non-interactive support
 
@@ -315,7 +315,7 @@ Generated README files must be aligned with the generated structure and setup pa
 
 ### 9.3 Baseline stack verification
 
-Smoke verification for phase 1 must confirm not only the presence of starter files, but also that:
+Smoke verification for Phase 1 must confirm not only the presence of starter files, but also that:
 
 - `apps/web` contains the expected Vite + React + Tailwind CSS v4 entry pattern (`index.html`, `src/main.tsx`, `src/App.tsx`, `src/index.css`, `vite.config.ts`) and shadcn-ready wiring (`components.json`, alias config, utility helper, starter UI component)
 - `apps/site` contains the expected Astro entry pattern (`astro.config.mjs`, `src/pages/index.astro`)
