@@ -11,7 +11,7 @@ export async function pathExists(targetPath: string): Promise<boolean> {
 }
 
 export async function ensureDirectory(targetPath: string): Promise<boolean> {
-  const exists = await pathExists(targetPath);
+  let exists = await pathExists(targetPath);
 
   if (exists) {
     return false;
@@ -30,11 +30,11 @@ export async function listRelativeDirectories(rootDirectory: string): Promise<st
 }
 
 async function walkDirectory(rootDirectory: string, currentDirectory: string): Promise<string[]> {
-  const entries = await readdir(currentDirectory, { withFileTypes: true });
-  const files: string[] = [];
+  let entries = await readdir(currentDirectory, { withFileTypes: true });
+  let files: string[] = [];
 
-  for (const entry of entries) {
-    const absolutePath = path.join(currentDirectory, entry.name);
+  for (let entry of entries) {
+    let absolutePath = path.join(currentDirectory, entry.name);
 
     if (entry.isDirectory()) {
       files.push(...(await walkDirectory(rootDirectory, absolutePath)));
@@ -53,15 +53,15 @@ async function walkDirectories(
   rootDirectory: string,
   currentDirectory: string,
 ): Promise<string[]> {
-  const entries = await readdir(currentDirectory, { withFileTypes: true });
-  const directories: string[] = [];
+  let entries = await readdir(currentDirectory, { withFileTypes: true });
+  let directories: string[] = [];
 
-  for (const entry of entries) {
+  for (let entry of entries) {
     if (!entry.isDirectory()) {
       continue;
     }
 
-    const absolutePath = path.join(currentDirectory, entry.name);
+    let absolutePath = path.join(currentDirectory, entry.name);
     directories.push(path.relative(rootDirectory, absolutePath));
     directories.push(...(await walkDirectories(rootDirectory, absolutePath)));
   }
@@ -78,7 +78,7 @@ export async function writeUtf8File(targetPath: string, contents: string): Promi
 }
 
 export async function removePaths(targetPaths: string[]): Promise<void> {
-  for (const targetPath of [...targetPaths].reverse()) {
+  for (let targetPath of [...targetPaths].reverse()) {
     await rm(targetPath, { recursive: true, force: true });
   }
 }

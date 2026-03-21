@@ -1,62 +1,58 @@
-import type { GenerationRecord } from '../generate/types.js';
+import type { TGenerationRecord } from '../generate/types.js';
+import type { TPromptController } from '../prompts/types.js';
+import type { TLogger } from '../utils/logging.js';
 
-import type { PromptController } from '../prompts/types.js';
+export type TPostSetupActionName = 'installDependencies' | 'initializeGit';
 
-export type PostSetupActionName = 'installDependencies' | 'initializeGit';
-
-export type PostSetupActionStatus = {
-  name: PostSetupActionName;
+export type TPostSetupActionStatus = {
+  name: TPostSetupActionName;
   selected: boolean;
   ok: boolean;
   detail: string;
 };
 
-export type PostSetupActionStart = {
-  name: PostSetupActionName;
+export type TPostSetupActionStart = {
+  name: TPostSetupActionName;
   detail: string;
   message: string;
 };
 
-export type InitializationSummary = {
+export type TInitializationSummary = {
   projectName: string;
   targetDirectory: string;
   scaffold: {
     ok: boolean;
     filesCreated: number;
   };
-  postSetup: PostSetupActionStatus[];
+  postSetup: TPostSetupActionStatus[];
   nextSteps: string[];
 };
 
-export type CommandExecutor = (
+export type TCommandExecutor = (
   command: string,
   args: string[],
   cwd: string,
 ) => Promise<void>;
 
-export type PostSetupExecutor = {
+export type TPostSetupExecutor = {
   run(options: {
     targetRoot: string;
     installDependencies: boolean;
     initializeGit: boolean;
-    onActionStart?(action: PostSetupActionStart): void;
-  }): Promise<PostSetupActionStatus[]>;
+    onActionStart?(action: TPostSetupActionStart): void;
+  }): Promise<TPostSetupActionStatus[]>;
 };
 
-export type CliDependencies = {
-  commandExecutor?: CommandExecutor;
+export type TCliDependencies = {
+  commandExecutor?: TCommandExecutor;
   cwd?: string;
-  promptController?: PromptController;
-  logger?: {
-    info(message: string): void;
-    debug(payload: unknown): void;
-    error(message: string): void;
-  };
+  promptController?: TPromptController;
+  logger?: TLogger;
 };
 
-export type BuildSummaryOptions = {
+export type TBuildSummaryOptions = {
   projectName: string;
   targetDirectory: string;
-  record: GenerationRecord;
-  postSetup: PostSetupActionStatus[];
+  record: TGenerationRecord;
+  postSetup: TPostSetupActionStatus[];
 };

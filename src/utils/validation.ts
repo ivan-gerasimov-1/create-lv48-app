@@ -1,11 +1,11 @@
 import path from 'node:path';
 
-import type { ValidationResult } from './types.js';
+import type { TValidationResult } from './types.js';
 
 const PROJECT_NAME_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
-export function validateProjectName(input: string): ValidationResult<string> {
-  const value = input.trim();
+export function validateProjectName(input: string): TValidationResult<string> {
+  let value = input.trim();
 
   if (value.length === 0) {
     return {
@@ -28,12 +28,12 @@ export function validateProjectName(input: string): ValidationResult<string> {
   };
 }
 
-export function validatePackageName(input: string): ValidationResult<string> {
+export function validatePackageName(input: string): TValidationResult<string> {
   return validateProjectName(input);
 }
 
-export function validateTargetDirectory(input: string): ValidationResult<string> {
-  const trimmedValue = input.trim();
+export function validateTargetDirectory(input: string): TValidationResult<string> {
+  let trimmedValue = input.trim();
 
   if (trimmedValue.length === 0) {
     return {
@@ -42,7 +42,7 @@ export function validateTargetDirectory(input: string): ValidationResult<string>
     };
   }
 
-  const normalizedValue = path.normalize(trimmedValue);
+  let normalizedValue = path.normalize(trimmedValue);
 
   if (path.isAbsolute(normalizedValue)) {
     return {

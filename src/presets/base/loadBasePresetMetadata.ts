@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import type { PresetMetadata } from '../types.js';
+import type { TPresetMetadata } from '../types.js';
 
 const CURRENT_DIRECTORY = path.dirname(fileURLToPath(import.meta.url));
 const METADATA_PATH = path.resolve(
@@ -10,9 +10,9 @@ const METADATA_PATH = path.resolve(
   '../../../templates/base/_meta/template.json',
 );
 
-export function loadBasePresetMetadata(): PresetMetadata {
-  const fileContents = readFileSync(METADATA_PATH, 'utf8');
-  const parsedValue = JSON.parse(fileContents);
+export function loadBasePresetMetadata(): TPresetMetadata {
+  let fileContents = readFileSync(METADATA_PATH, 'utf8');
+  let parsedValue = JSON.parse(fileContents);
 
   if (!isPresetMetadata(parsedValue)) {
     throw new Error('Base preset metadata is invalid.');
@@ -21,7 +21,7 @@ export function loadBasePresetMetadata(): PresetMetadata {
   return parsedValue;
 }
 
-function isPresetMetadata(value: unknown): value is PresetMetadata {
+function isPresetMetadata(value: unknown): value is TPresetMetadata {
   if (!value || typeof value !== 'object') {
     return false;
   }
@@ -62,7 +62,7 @@ function isPresetMetadata(value: unknown): value is PresetMetadata {
     return false;
   }
 
-  const postGeneration = value.postGeneration;
+  let postGeneration = value.postGeneration;
 
   if (
     !postGeneration ||

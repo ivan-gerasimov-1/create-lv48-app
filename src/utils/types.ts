@@ -1,11 +1,11 @@
-export type ValidationSuccess<T> = {
+export type TValidationSuccess<T> = {
   ok: true;
   value: T;
 };
 
-export type ValidationFailure = {
+export type TValidationFailure = {
   ok: false;
   reason: string;
 };
 
-export type ValidationResult<T> = ValidationSuccess<T> | ValidationFailure;
+export type TValidationResult<T> = TValidationSuccess<T> | TValidationFailure;

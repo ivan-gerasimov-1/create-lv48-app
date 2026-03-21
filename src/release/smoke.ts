@@ -2,7 +2,7 @@ import { mkdir, mkdtemp } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 
-export type ReleaseSmokePaths = {
+export type TReleaseSmokePaths = {
   workspaceRoot: string;
   npmCacheDirectory: string;
   packDirectory: string;
@@ -13,13 +13,13 @@ export type ReleaseSmokePaths = {
 
 const WINDOWS_NPM_BIN_SUFFIX = '.cmd';
 
-export async function createReleaseSmokePaths(): Promise<ReleaseSmokePaths> {
-  const workspaceRoot = await mkdtemp(path.join(os.tmpdir(), 'lv48-release-smoke-'));
-  const npmCacheDirectory = path.join(workspaceRoot, 'npm-cache');
-  const packDirectory = path.join(workspaceRoot, 'packed');
-  const installDirectory = path.join(workspaceRoot, 'install-root');
-  const runDirectory = path.join(workspaceRoot, 'run-root');
-  const generatedProjectRoot = path.join(runDirectory, 'smoke-app');
+export async function createReleaseSmokePaths(): Promise<TReleaseSmokePaths> {
+  let workspaceRoot = await mkdtemp(path.join(os.tmpdir(), 'lv48-release-smoke-'));
+  let npmCacheDirectory = path.join(workspaceRoot, 'npm-cache');
+  let packDirectory = path.join(workspaceRoot, 'packed');
+  let installDirectory = path.join(workspaceRoot, 'install-root');
+  let runDirectory = path.join(workspaceRoot, 'run-root');
+  let generatedProjectRoot = path.join(runDirectory, 'smoke-app');
 
   await mkdir(npmCacheDirectory, { recursive: true });
   await mkdir(packDirectory, { recursive: true });
@@ -40,7 +40,7 @@ export function getInstalledSmokeCliPath(
   installDirectory: string,
   platform: NodeJS.Platform = process.platform,
 ): string {
-  const executableName =
+  let executableName =
     platform === 'win32'
       ? `create-lv48-app${WINDOWS_NPM_BIN_SUFFIX}`
       : 'create-lv48-app';

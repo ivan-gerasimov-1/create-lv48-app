@@ -1,7 +1,7 @@
-import type { PromptAnswers } from '../prompts/types.js';
-import type { PlaceholderValues } from '../generate/types.js';
+import type { TPromptAnswers } from '../prompts/types.js';
+import type { TPlaceholderValues } from '../generate/types.js';
 
-export function createPlaceholderValues(answers: PromptAnswers): PlaceholderValues {
+export function createPlaceholderValues(answers: TPromptAnswers): TPlaceholderValues {
   return {
     projectName: answers.projectName,
     packageName: answers.packageName,

@@ -1,10 +1,10 @@
-import type { PackageManager } from '../prompts/types.js';
+import type { TPackageManager } from '../prompts/types.js';
 
-export type PresetMetadata = {
+export type TPresetMetadata = {
   id: 'base';
   displayName: string;
   description: string;
-  packageManagers: PackageManager[];
+  packageManagers: TPackageManager[];
   templateDirectory: string;
   reservedDirectories?: string[];
   placeholderKeys: string[];
@@ -14,8 +14,8 @@ export type PresetMetadata = {
   };
 };
 
-export type PresetRegistry = {
+export type TPresetRegistry = {
   defaultPresetId: 'base';
-  getDefaultPreset(): PresetMetadata;
-  getPresetById(presetId: string): PresetMetadata;
+  getDefaultPreset(): TPresetMetadata;
+  getPresetById(presetId: string): TPresetMetadata;
 };

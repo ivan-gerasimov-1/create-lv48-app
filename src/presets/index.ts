@@ -1,8 +1,8 @@
 import { loadBasePresetMetadata } from './base/loadBasePresetMetadata.js';
-import type { PresetMetadata, PresetRegistry } from './types.js';
+import type { TPresetMetadata, TPresetRegistry } from './types.js';
 
-export function createPresetRegistry(): PresetRegistry {
-  const defaultPreset = loadBasePresetMetadata();
+export function createPresetRegistry(): TPresetRegistry {
+  let defaultPreset = loadBasePresetMetadata();
 
   return {
     defaultPresetId: 'base',
@@ -19,4 +19,4 @@ export function createPresetRegistry(): PresetRegistry {
   };
 }
 
-export type { PresetMetadata, PresetRegistry };
+export type { TPresetMetadata, TPresetRegistry };

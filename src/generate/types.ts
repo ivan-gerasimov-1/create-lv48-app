@@ -1,29 +1,23 @@
-import type { PromptAnswers } from '../prompts/types.js';
-import type { PresetMetadata } from '../presets/types.js';
+import type { TPromptAnswers } from '../prompts/types.js';
+import type { TPresetMetadata } from '../presets/types.js';
 
-export type PlaceholderValues = Record<string, string>;
+export type TPlaceholderValues = Record<string, string>;
 
-export type GenerationContext = {
+export type TGenerationContext = {
   cwd: string;
   templateBaseDirectory: string;
   targetRoot: string;
-  answers: PromptAnswers;
-  preset: PresetMetadata;
-  placeholders: PlaceholderValues;
+  answers: TPromptAnswers;
+  preset: TPresetMetadata;
+  placeholders: TPlaceholderValues;
 };
 
-export type GenerationRecord = {
+export type TGenerationRecord = {
   createdDirectories: string[];
   createdFiles: string[];
 };
 
-export type DirectoryPreflightResult = {
-  targetRoot: string;
-  isEmpty: boolean;
-};
-
-export type GenerationRunner = {
-  status: 'ready';
-  prepare(context: GenerationContext): Promise<DirectoryPreflightResult>;
-  scaffold(context: GenerationContext): Promise<GenerationRecord>;
+export type TGenerationRunner = {
+  prepare(context: TGenerationContext): Promise<void>;
+  scaffold(context: TGenerationContext): Promise<TGenerationRecord>;
 };

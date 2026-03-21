@@ -1,10 +1,10 @@
-export type Logger = {
+export type TLogger = {
   info(message: string): void;
   debug(payload: unknown): void;
   error(message: string): void;
 };
 
-export function createLogger(): Logger {
+export function createLogger(): TLogger {
   return {
     info(message) {
       console.log(message);

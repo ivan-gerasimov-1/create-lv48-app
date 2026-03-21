@@ -2,10 +2,9 @@ import path from 'node:path';
 import { mkdir, readdir } from 'node:fs/promises';
 
 import type {
-  DirectoryPreflightResult,
-  GenerationContext,
-  GenerationRecord,
-  GenerationRunner,
+  TGenerationContext,
+  TGenerationRecord,
+  TGenerationRunner,
 } from './types.js';
 import {
   listRelativeDirectories,
@@ -15,15 +14,14 @@ import {
   removePaths,
   writeUtf8File,
 } from '../utils/fs.js';
-import type { TransformPipeline } from '../transforms/index.js';
+import type { TTransformPipeline } from '../transforms/index.js';
 
 export function createGenerationRunner(
-  transformPipeline: TransformPipeline,
-): GenerationRunner {
+  transformPipeline: TTransformPipeline,
+): TGenerationRunner {
   return {
-    status: 'ready',
     async prepare(context) {
-      return ensureTargetDirectoryIsSafe(context);
+      await ensureTargetDirectoryIsSafe(context);
     },
     async scaffold(context) {
       return scaffoldTemplate(context, transformPipeline);
@@ -32,36 +30,28 @@ export function createGenerationRunner(
 }
 
 async function ensureTargetDirectoryIsSafe(
-  context: GenerationContext,
-): Promise<DirectoryPreflightResult> {
-  const targetExists = await pathExists(context.targetRoot);
+  context: TGenerationContext,
+): Promise<void> {
+  let targetExists = await pathExists(context.targetRoot);
 
   if (!targetExists) {
-    return {
-      targetRoot: context.targetRoot,
-      isEmpty: true,
-    };
+    return;
   }
 
-  const entries = await readdir(context.targetRoot);
+  let entries = await readdir(context.targetRoot);
 
   if (entries.length > 0) {
     throw new Error(
       `Target directory ${context.answers.targetDirectory} already contains files that would conflict with the scaffold.`,
     );
   }
-
-  return {
-    targetRoot: context.targetRoot,
-    isEmpty: true,
-  };
 }
 
 async function scaffoldTemplate(
-  context: GenerationContext,
-  transformPipeline: TransformPipeline,
-): Promise<GenerationRecord> {
-  const templateRoot = path.resolve(
+  context: TGenerationContext,
+  transformPipeline: TTransformPipeline,
+): Promise<TGenerationRecord> {
+  let templateRoot = path.resolve(
     context.templateBaseDirectory,
     context.preset.templateDirectory,
   );
@@ -70,17 +60,17 @@ async function scaffoldTemplate(
     throw new Error(`Template directory not found: ${templateRoot}`);
   }
 
-  const templateDirectories = await listRelativeDirectories(templateRoot);
-  const relativeDirectories = [
+  let templateDirectories = await listRelativeDirectories(templateRoot);
+  let relativeDirectories = [
     ...templateDirectories.filter(isPublicTemplatePath),
     ...(context.preset.reservedDirectories ?? []),
   ].sort();
-  const relativeFiles = (await listRelativeFiles(templateRoot)).filter(
+  let relativeFiles = (await listRelativeFiles(templateRoot)).filter(
     isPublicTemplatePath,
   );
-  const targetRootExisted = await pathExists(context.targetRoot);
-  const createdDirectories = new Set<string>();
-  const createdFiles: string[] = [];
+  let targetRootExisted = await pathExists(context.targetRoot);
+  let createdDirectories = new Set<string>();
+  let createdFiles: string[] = [];
 
   await mkdir(context.targetRoot, { recursive: true });
 
@@ -89,11 +79,11 @@ async function scaffoldTemplate(
   }
 
   try {
-    for (const relativeDirectory of relativeDirectories) {
-      const destinationRelativePath = transformPipeline.mapDestinationPath(relativeDirectory);
-      const destinationPath = path.join(context.targetRoot, destinationRelativePath);
-      const wasCreated = createdDirectories.has(destinationPath);
-      const isPreexistingTargetRoot = destinationPath === context.targetRoot && targetRootExisted;
+    for (let relativeDirectory of relativeDirectories) {
+      let destinationRelativePath = transformPipeline.mapDestinationPath(relativeDirectory);
+      let destinationPath = path.join(context.targetRoot, destinationRelativePath);
+      let wasCreated = createdDirectories.has(destinationPath);
+      let isPreexistingTargetRoot = destinationPath === context.targetRoot && targetRootExisted;
 
       if (wasCreated || isPreexistingTargetRoot) {
         continue;
@@ -103,13 +93,13 @@ async function scaffoldTemplate(
       createdDirectories.add(destinationPath);
     }
 
-    for (const relativeFile of relativeFiles) {
-      const sourcePath = path.join(templateRoot, relativeFile);
-      const destinationRelativePath = transformPipeline.mapDestinationPath(relativeFile);
-      const destinationPath = path.join(context.targetRoot, destinationRelativePath);
-      const destinationDirectory = path.dirname(destinationPath);
-      const destinationDirectoryWasCreated = createdDirectories.has(destinationDirectory);
-      const isPreexistingTargetRoot =
+    for (let relativeFile of relativeFiles) {
+      let sourcePath = path.join(templateRoot, relativeFile);
+      let destinationRelativePath = transformPipeline.mapDestinationPath(relativeFile);
+      let destinationPath = path.join(context.targetRoot, destinationRelativePath);
+      let destinationDirectory = path.dirname(destinationPath);
+      let destinationDirectoryWasCreated = createdDirectories.has(destinationDirectory);
+      let isPreexistingTargetRoot =
         destinationDirectory === context.targetRoot && targetRootExisted;
 
       if (!destinationDirectoryWasCreated && !isPreexistingTargetRoot) {
@@ -117,8 +107,8 @@ async function scaffoldTemplate(
         createdDirectories.add(destinationDirectory);
       }
 
-      const fileContents = await readUtf8File(sourcePath);
-      const transformedContents = transformPipeline.transformTextFile(
+      let fileContents = await readUtf8File(sourcePath);
+      let transformedContents = transformPipeline.transformTextFile(
         destinationRelativePath,
         fileContents,
         context,
@@ -128,6 +118,8 @@ async function scaffoldTemplate(
       createdFiles.push(destinationPath);
     }
   } catch (error) {
+    // Rollback: removePaths reverses the array internally, so files are removed
+    // before directories. This relies on rm using { recursive: true, force: true }.
     try {
       await removePaths([...createdFiles, ...createdDirectories]);
     } catch {
@@ -147,9 +139,8 @@ function isPublicTemplatePath(relativePath: string): boolean {
 }
 
 export type {
-  DirectoryPreflightResult,
-  GenerationContext,
-  GenerationRecord,
-  GenerationRunner,
-  PlaceholderValues,
+  TGenerationContext,
+  TGenerationRecord,
+  TGenerationRunner,
+  TPlaceholderValues,
 } from './types.js';

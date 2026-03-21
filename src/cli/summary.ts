@@ -1,9 +1,9 @@
-import type { BuildSummaryOptions, InitializationSummary } from './types.js';
+import type { TBuildSummaryOptions, TInitializationSummary } from './types.js';
 
 export function buildInitializationSummary(
-  options: BuildSummaryOptions,
-): InitializationSummary {
-  const hasPostSetupFailure = options.postSetup.some((status) => !status.ok);
+  options: TBuildSummaryOptions,
+): TInitializationSummary {
+  let hasPostSetupFailure = options.postSetup.some((status) => !status.ok);
 
   return {
     projectName: options.projectName,
@@ -27,12 +27,12 @@ export function buildInitializationSummary(
   };
 }
 
-export function formatInitializationSummary(summary: InitializationSummary): string {
-  const postSetupLines = summary.postSetup.map((status) => {
-    const label = status.ok ? 'OK' : 'FAILED';
+export function formatInitializationSummary(summary: TInitializationSummary): string {
+  let postSetupLines = summary.postSetup.map((status) => {
+    let label = status.ok ? 'OK' : 'FAILED';
     return `- ${status.name}: ${label} (${status.detail})`;
   });
-  const nextStepLines = summary.nextSteps.map((step) => `- ${step}`);
+  let nextStepLines = summary.nextSteps.map((step) => `- ${step}`);
 
   return [
     '',

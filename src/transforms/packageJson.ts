@@ -1,9 +1,11 @@
-import type { GenerationContext } from '../generate/types.js';
+import path from 'node:path';
+
+import type { TGenerationContext } from '../generate/types.js';
 
 export function transformPackageJson(
   relativePath: string,
   fileContents: string,
-  context: GenerationContext,
+  context: TGenerationContext,
 ): string {
   let parsedValue: unknown;
 
@@ -19,15 +21,16 @@ export function transformPackageJson(
     throw new Error(`Invalid package.json template at ${relativePath}`);
   }
 
-  const nextValue = { ...parsedValue };
+  let nextValue = { ...parsedValue };
+  let segments = relativePath.split(path.sep);
 
   if (relativePath === 'package.json') {
     nextValue.name = context.answers.packageName;
     nextValue.packageManager = 'npm';
   }
 
-  if (relativePath.startsWith(`apps/`) || relativePath.startsWith(`packages/`)) {
-    const segmentName = relativePath.split('/')[1];
+  if (segments[0] === 'apps' || segments[0] === 'packages') {
+    let segmentName = segments[1];
 
     if (typeof segmentName === 'string' && segmentName.length > 0) {
       nextValue.name = `@${context.answers.packageName}/${segmentName}`;

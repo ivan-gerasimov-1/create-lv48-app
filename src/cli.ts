@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { buildInitializationSummary, formatInitializationSummary } from './cli/summary.js';
 import { createPlaceholderValues } from './cli/placeholders.js';
 import { createPostSetupExecutor } from './cli/postSetup.js';
-import type { CliDependencies } from './cli/types.js';
+import type { TCliDependencies } from './cli/types.js';
 import { createGenerationRunner } from './generate/index.js';
 import { createPresetRegistry } from './presets/index.js';
 import { createPromptController } from './prompts/index.js';
@@ -14,25 +14,27 @@ import { createLogger } from './utils/logging.js';
 
 const PACKAGE_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
-export async function runCli(dependencies: CliDependencies = {}) {
+export async function runCli(dependencies: TCliDependencies = {}) {
   if (process.argv.includes('--version')) {
-    const raw = JSON.parse(await readUtf8File(path.join(PACKAGE_ROOT, 'package.json')));
-    const version = typeof raw?.version === 'string' ? raw.version : 'unknown';
+    let raw = JSON.parse(await readUtf8File(path.join(PACKAGE_ROOT, 'package.json')));
+    let version = typeof raw?.version === 'string' ? raw.version : 'unknown';
     console.log(version);
     return;
   }
 
-  const logger = dependencies.logger ?? createLogger();
-  const prompts = dependencies.promptController ?? createPromptController();
-  const presets = createPresetRegistry();
-  const transforms = createTransformPipeline();
-  const generation = createGenerationRunner(transforms);
-  const postSetupExecutor = createPostSetupExecutor(dependencies.commandExecutor);
-  const cwd = dependencies.cwd ?? process.cwd();
-  const answers = await prompts.collectAnswers();
-  const preset = presets.getDefaultPreset();
-  const targetRoot = path.resolve(cwd, answers.targetDirectory);
-  const placeholders = createPlaceholderValues(answers);
+  let logger = dependencies.logger ?? createLogger();
+  let prompts = dependencies.promptController ?? createPromptController();
+  let presets = createPresetRegistry();
+  let transforms = createTransformPipeline();
+  let generation = createGenerationRunner(transforms);
+  let postSetupExecutor = createPostSetupExecutor(dependencies.commandExecutor);
+  let cwd = dependencies.cwd ?? process.cwd();
+  let answers = await prompts.collectAnswers();
+  let preset = presets.getDefaultPreset();
+  let targetRoot = path.resolve(cwd, answers.targetDirectory);
+  let placeholders = createPlaceholderValues(answers);
+
+  logger.info(`create-lv48-app will scaffold ${answers.projectName} with ${preset.id}.`);
 
   await generation.prepare({
     cwd,
@@ -43,7 +45,7 @@ export async function runCli(dependencies: CliDependencies = {}) {
     placeholders,
   });
 
-  const record = await generation.scaffold({
+  let record = await generation.scaffold({
     cwd,
     templateBaseDirectory: PACKAGE_ROOT,
     targetRoot,
@@ -51,7 +53,7 @@ export async function runCli(dependencies: CliDependencies = {}) {
     preset,
     placeholders,
   });
-  const postSetup = await postSetupExecutor.run({
+  let postSetup = await postSetupExecutor.run({
     targetRoot,
     installDependencies: answers.installDependencies,
     initializeGit: answers.initializeGit,
@@ -59,14 +61,13 @@ export async function runCli(dependencies: CliDependencies = {}) {
       logger.info(action.message);
     },
   });
-  const summary = buildInitializationSummary({
+  let summary = buildInitializationSummary({
     projectName: answers.projectName,
     targetDirectory: answers.targetDirectory,
     record,
     postSetup,
   });
 
-  logger.info(`create-lv48-app will scaffold ${answers.projectName} with ${preset.id}.`);
   logger.info(formatInitializationSummary(summary));
   logger.debug({
     answers,

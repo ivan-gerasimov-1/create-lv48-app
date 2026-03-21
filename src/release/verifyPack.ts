@@ -1,7 +1,7 @@
 import path from 'node:path';
 
 import { listRelativeFiles } from '../utils/fs.js';
-import type { PackedFile, ReleaseVerificationResult } from './types.js';
+import type { TPackedFile, TReleaseVerificationResult } from './types.js';
 
 const STATIC_EXPECTED_PACKED_FILES = [
   'LICENSE',
@@ -20,8 +20,8 @@ const ALLOWED_TOP_LEVEL_DIRECTORIES = new Set([
 ]);
 
 export async function buildExpectedPackedFiles(repositoryRoot: string): Promise<string[]> {
-  const distFiles = await listRelativeFiles(path.join(repositoryRoot, 'dist'));
-  const templateFiles = await listRelativeFiles(path.join(repositoryRoot, 'templates'));
+  let distFiles = await listRelativeFiles(path.join(repositoryRoot, 'dist'));
+  let templateFiles = await listRelativeFiles(path.join(repositoryRoot, 'templates'));
 
   return [
     ...STATIC_EXPECTED_PACKED_FILES,
@@ -31,18 +31,18 @@ export async function buildExpectedPackedFiles(repositoryRoot: string): Promise<
 }
 
 export function verifyPackedFiles(
-  files: PackedFile[],
+  files: TPackedFile[],
   expectedFiles: string[],
-): ReleaseVerificationResult {
-  const actualFiles = files
+): TReleaseVerificationResult {
+  let actualFiles = files
     .map((file) => normalizePackedPath(file.path))
     .filter((filePath) => filePath.length > 0)
     .sort();
 
-  const actualSet = new Set(actualFiles);
-  const sortedExpectedFiles = [...expectedFiles].sort();
-  const missingFiles = sortedExpectedFiles.filter((expectedFile) => !actualSet.has(expectedFile));
-  const unexpectedFiles = actualFiles.filter((actualFile) => !isAllowedPackedFile(actualFile));
+  let actualSet = new Set(actualFiles);
+  let sortedExpectedFiles = [...expectedFiles].sort();
+  let missingFiles = sortedExpectedFiles.filter((expectedFile) => !actualSet.has(expectedFile));
+  let unexpectedFiles = actualFiles.filter((actualFile) => !isAllowedPackedFile(actualFile));
 
   return {
     expectedFiles: sortedExpectedFiles,
@@ -60,7 +60,7 @@ function normalizePackedPath(filePath: string): string {
 }
 
 function isAllowedPackedFile(filePath: string): boolean {
-  const [topLevelSegment] = filePath.split('/');
+  let [topLevelSegment] = filePath.split('/');
 
   if (typeof topLevelSegment !== 'string') {
     return false;
