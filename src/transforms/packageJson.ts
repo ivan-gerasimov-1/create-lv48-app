@@ -5,9 +5,17 @@ export function transformPackageJson(
   fileContents: string,
   context: GenerationContext,
 ): string {
-  const parsedValue = JSON.parse(fileContents);
+  let parsedValue: unknown;
 
-  if (!parsedValue || typeof parsedValue !== 'object' || Array.isArray(parsedValue)) {
+  try {
+    parsedValue = JSON.parse(fileContents);
+  } catch (error) {
+    throw new Error(
+      `Failed to parse package.json template at ${relativePath}: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  if (!isJsonObject(parsedValue)) {
     throw new Error(`Invalid package.json template at ${relativePath}`);
   }
 
@@ -27,4 +35,8 @@ export function transformPackageJson(
   }
 
   return `${JSON.stringify(nextValue, null, 2)}\n`;
+}
+
+function isJsonObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
