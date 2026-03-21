@@ -1,15 +1,22 @@
 {
   "name": "create-lv48-app",
   "version": "0.3.1",
-  "description": "Opinionated initializer for TS-first SaaS projects.",
+  "description": "Opinionated monorepo scaffold for TS-first SaaS: React/Vite, Astro, Hono",
   "license": "MIT",
   "type": "module",
   "keywords": [
     "create",
     "initializer",
     "scaffold",
+    "monorepo",
     "typescript",
-    "saas"
+    "saas",
+    "react",
+    "vite",
+    "astro",
+    "hono",
+    "tailwind",
+    "npm-init"
   ],
   "repository": {
     "type": "git",
