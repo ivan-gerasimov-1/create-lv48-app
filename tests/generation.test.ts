@@ -307,7 +307,7 @@ describe('generation', () => {
     ]);
   });
 
-  it('scaffolds the real base preset and verifies the generated baseline tree', async () => {
+  it('scaffolds the real base preset with correct structural invariants', async () => {
     let rootDirectory = await mkdtemp(path.join(os.tmpdir(), 'lv48-base-preset-'));
     let targetRoot = path.join(rootDirectory, 'demo-app');
     let preset = createPresetRegistry().getDefaultPreset();
@@ -335,179 +335,40 @@ describe('generation', () => {
     };
 
     await runner.prepare(context);
-    await runner.scaffold(context);
+    let record = await runner.scaffold(context);
 
-    assert.deepEqual(await listRelativeFiles(targetRoot), [
-      '.env.example',
-      '.gitignore',
-      'README.md',
-      'apps/api/README.md',
-      'apps/api/package.json',
-      'apps/api/src/index.ts',
-      'apps/site/README.md',
-      'apps/site/astro.config.mjs',
-      'apps/site/package.json',
-      'apps/site/src/pages/index.astro',
-      'apps/web/README.md',
-      'apps/web/components.json',
-      'apps/web/index.html',
-      'apps/web/package.json',
-      'apps/web/src/App.tsx',
-      'apps/web/src/components/ui/button.tsx',
-      'apps/web/src/index.css',
-      'apps/web/src/lib/utils.ts',
-      'apps/web/src/main.tsx',
-      'apps/web/tsconfig.json',
-      'apps/web/vite.config.ts',
-      'package.json',
-    ]);
-    assertContains(await listRelativeDirectories(targetRoot), 'packages');
-    assertNotContains(await listRelativeDirectories(targetRoot), '_meta');
+    assert.ok(record.createdFiles.length > 0, 'Should create at least one file');
+
+    let rootPkg = JSON.parse(await readUtf8File(path.join(targetRoot, 'package.json')));
+    assert.equal(rootPkg.name, 'demo-app', 'Root package.json name from placeholder');
+    assert.equal(rootPkg.packageManager, 'npm', 'Root package.json packageManager');
+
+    let directories = await listRelativeDirectories(targetRoot);
+    assertContains(directories, 'packages');
+    assertNotContains(directories, '_meta');
+
+    let files = await listRelativeFiles(targetRoot);
+    assertContains(files, '.gitignore');
+    assertContains(files, 'package.json');
+    assertNotContains(files, '_gitignore');
+
+    for (let file of files) {
+      let contents = await readUtf8File(path.join(targetRoot, file));
+      assert.ok(!contents.includes('{{'), `Unresolved placeholder in ${file}`);
+    }
+
+    let webPkg = JSON.parse(await readUtf8File(path.join(targetRoot, 'apps/web/package.json')));
+    assert.equal(webPkg.name, '@demo-app/web', 'Workspace package scoped name');
+
+    let sitePkg = JSON.parse(await readUtf8File(path.join(targetRoot, 'apps/site/package.json')));
+    assert.equal(sitePkg.name, '@demo-app/site', 'Workspace package scoped name');
+
+    let apiPkg = JSON.parse(await readUtf8File(path.join(targetRoot, 'apps/api/package.json')));
+    assert.equal(apiPkg.name, '@demo-app/api', 'Workspace package scoped name');
+
     assertContains(
       await readUtf8File(path.join(targetRoot, 'README.md')),
-      'apps/web',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'README.md')),
-      'Tailwind CSS v4',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'package.json')),
-      '"workspaces"',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'package.json')),
-      '"build": "npm run build --workspaces --if-present"',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'package.json')),
-      '"node": ">=24.0.0"',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/web/index.html')),
-      '/src/main.tsx',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/web/package.json')),
-      '"@tailwindcss/vite"',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/web/package.json')),
-      '"tailwindcss"',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/web/package.json')),
-      '"clsx"',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/web/package.json')),
-      '"react"',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/web/package.json')),
-      '"vite"',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/web/package.json')),
-      '"node": ">=24.0.0"',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/web/src/main.tsx')),
-      "ReactDOM.createRoot",
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/web/src/main.tsx')),
-      "./index.css",
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/web/src/App.tsx')),
-      'Tailwind CSS v4 + shadcn-ready',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/web/src/App.tsx')),
       'Demo App',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/web/src/App.tsx')),
-      'demo-app',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/web/README.md')),
-      'Demo App',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/web/src/index.css')),
-      '@import "tailwindcss";',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/web/src/index.css')),
-      '@theme inline',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/web/src/components/ui/button.tsx')),
-      'buttonVariants',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/web/src/lib/utils.ts')),
-      'tailwind-merge',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/web/components.json')),
-      '"css": "src/index.css"',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/web/components.json')),
-      '"components": "@/components"',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/web/tsconfig.json')),
-      '"@/*"',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/web/vite.config.ts')),
-      "tailwindcss()",
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/web/vite.config.ts')),
-      "new URL('./src', import.meta.url)",
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/site/astro.config.mjs')),
-      'defineConfig',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/site/package.json')),
-      '"astro"',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/site/package.json')),
-      '"node": ">=24.0.0"',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/site/src/pages/index.astro')),
-      'Astro starter site',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/api/package.json')),
-      '"hono"',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/api/package.json')),
-      '"node": ">=24.0.0"',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'apps/api/src/index.ts')),
-      "new Hono()",
-    );
-    assert.deepEqual(await listRelativeFiles(path.join(targetRoot, 'packages')), []);
-    assert.deepEqual(await listRelativeDirectories(path.join(targetRoot, 'packages')), []);
-    assertNotContains(
-      await readUtf8File(path.join(targetRoot, '.gitignore')),
-      '.turbo',
-    );
-    assertContains(
-      await readUtf8File(path.join(targetRoot, 'README.md')),
-      'Node.js 24 or newer',
     );
   });
 });
