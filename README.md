@@ -1,4 +1,4 @@
-# create-lv48-app
+# Create LV48 App
 
 > **Disclaimer:** This project is fully generated with AI and OpenSpec in order to try agentic engineering. No code is verified by a human.
 
