@@ -9,11 +9,19 @@ import { createGenerationRunner } from './generate/index.js';
 import { createPresetRegistry } from './presets/index.js';
 import { createPromptController } from './prompts/index.js';
 import { createTransformPipeline } from './transforms/index.js';
+import { readUtf8File } from './utils/fs.js';
 import { createLogger } from './utils/logging.js';
 
 const PACKAGE_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 export async function runCli(dependencies: CliDependencies = {}) {
+  if (process.argv.includes('--version')) {
+    const raw = JSON.parse(await readUtf8File(path.join(PACKAGE_ROOT, 'package.json')));
+    const version = typeof raw?.version === 'string' ? raw.version : 'unknown';
+    console.log(version);
+    return;
+  }
+
   const logger = dependencies.logger ?? createLogger();
   const prompts = dependencies.promptController ?? createPromptController();
   const presets = createPresetRegistry();
