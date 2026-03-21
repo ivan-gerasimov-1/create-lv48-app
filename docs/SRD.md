@@ -215,6 +215,8 @@ The published npm artifact must:
 - contain compiled runtime output
 - contain template assets needed for scaffold generation
 - not depend on files that exist only in the source repository
+- be published under the MIT license
+- be verified before publish with a smoke check confirming that the CLI entrypoint runs and bundled templates are accessible
 
 ### 7.5 Release trigger requirement
 
@@ -241,9 +243,14 @@ The system must replace placeholders in template files, for example:
 
 - `{{projectName}}`
 - `{{packageName}}`
+- `{{displayName}}`
 - `{{webName}}`
 - `{{siteName}}`
 - `{{apiName}}`
+- `{{projectUrl}}`
+- `{{repositoryUrl}}`
+
+Environment-related placeholders (e.g. example env values) must also be substituted where present in template files.
 
 The list of placeholders must be centralized and validated.
 
@@ -380,6 +387,7 @@ If generation was interrupted, the CLI must:
 - explicitly report what happened
 - where possible, indicate which files had already been created
 - not pretend that everything succeeded
+- where feasible, roll back partially created output; otherwise, honestly report the partial state
 
 ## 12. Preset extensibility requirements
 
@@ -487,6 +495,14 @@ If the Convex preset is made superficially, it will be architecturally dishonest
 ### 17.6 Release path drift
 
 The local release-check and GitHub Actions publish may diverge in steps and produce different results.
+
+### 17.7 Demo-template appearance
+
+The generated project may look and feel like a toy demo rather than a production-ready baseline, discouraging adoption.
+
+### 17.8 Packaging drift on first release
+
+The first public npm publish may be broken if the packed artifact does not include all required runtime output or template assets, or if the bin entrypoint is misconfigured.
 
 ## 18. Recommended implementation guardrails
 
