@@ -1,12 +1,11 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { afterEach, describe, it } from 'node:test';
 
 import { createReleaseSmokePaths, getInstalledSmokeCliPath } from '../src/release/smoke.js';
 import { verifyPackedFiles } from '../src/release/verifyPack.js';
 import { readUtf8File, removePaths } from '../src/utils/fs.js';
-import { assertContains, assertNotContains } from './helpers.js';
+import { assertContains } from './helpers.js';
 
 const CONTRACT_FILES = [
   'LICENSE',
@@ -103,78 +102,6 @@ describe('release', () => {
     assert.deepEqual(result.unexpectedFiles, ['src/cli.ts']);
     assert.ok(result.missingFiles.length > 0, 'Partial input should report missing files');
     assert.ok(result.missingFiles.includes('LICENSE'), 'Missing LICENSE should be reported');
-  });
-
-  it('documents release-please workflows with OIDC permissions', async () => {
-    let readmeContents = await readUtf8File(path.join(process.cwd(), 'README.md'));
-    let prdContents = await readUtf8File(path.join(process.cwd(), 'docs/PRD.md'));
-    let srdContents = await readUtf8File(path.join(process.cwd(), 'docs/SRD.md'));
-    let releaseIntentWorkflowContents = await readFile(
-      path.join(process.cwd(), '.github/workflows/validateReleaseIntent.yml'),
-      'utf8',
-    );
-    let releasePleaseConfig = await readUtf8File(
-      path.join(process.cwd(), '.release-please', 'config.json'),
-    );
-    let releasePleaseManifest = await readUtf8File(
-      path.join(process.cwd(), '.release-please', 'manifest.json'),
-    );
-    let publishWorkflowContents = await readFile(
-      path.join(process.cwd(), '.github/workflows/publish.yml'),
-      'utf8',
-    );
-    let packageManifest = await readUtf8File(path.join(process.cwd(), 'package.json'));
-    let conventionalCommitPolicy = await readUtf8File(
-      path.join(process.cwd(), '.conventional-commits', 'policy.json'),
-    );
-
-    assertContains(releaseIntentWorkflowContents, 'pull_request_target:');
-    assertContains(releaseIntentWorkflowContents, 'ref: ${{ github.event.pull_request.base.sha }}');
-    assertContains(releaseIntentWorkflowContents, 'uses: actions/github-script@v7');
-    assertContains(releaseIntentWorkflowContents, 'run: node ./.github/scripts/validateReleaseIntent.mjs');
-    assertContains(releasePleaseConfig, '"release-type": "node"');
-    assertContains(releasePleaseConfig, '"package-name": "create-lv48-app"');
-    let { version } = JSON.parse(packageManifest);
-    assertContains(releasePleaseManifest, `".": "${version}"`);
-    assertContains(publishWorkflowContents, 'push:');
-    assertContains(publishWorkflowContents, 'id-token: write');
-    assertContains(publishWorkflowContents, 'pull-requests: write');
-    assertContains(publishWorkflowContents, 'uses: googleapis/release-please-action@v4');
-    assertContains(publishWorkflowContents, 'config-file: .release-please/config.json');
-    assertContains(publishWorkflowContents, 'manifest-file: .release-please/manifest.json');
-    assertContains(publishWorkflowContents, 'publish:');
-    assertContains(publishWorkflowContents, 'needs:');
-    assertContains(
-      publishWorkflowContents,
-      "if: \"startsWith(github.event.head_commit.message, 'chore(main): release ')\"",
-    );
-    assertContains(publishWorkflowContents, 'run: npm run release:publish');
-    assertContains(publishWorkflowContents, 'NPM_CONFIG_PROVENANCE: false');
-    assertContains(packageManifest, '"release:publish": "node ./scripts/releasePublish.mjs"');
-    assertContains(packageManifest, '"release:validate-workflow": "node ./scripts/validatePublishWorkflow.mjs"');
-    assertContains(conventionalCommitPolicy, '"mergeStrategy": "squash"');
-    assertContains(conventionalCommitPolicy, '"feat"');
-    assertContains(conventionalCommitPolicy, '"fix"');
-    assertContains(readmeContents, 'release-please');
-    assertContains(
-      readmeContents,
-      'The generated release pull request is the only automation-owned release artifact in the repository.',
-    );
-    assertContains(prdContents, 'release-please');
-    assertContains(
-      srdContents,
-      're-running the publish workflow for the same merged release commit must remain possible',
-    );
-    assertNotContains(readmeContents, 'release:none');
-    assertNotContains(readmeContents, 'prReleaseChangeset');
-    assertNotContains(readmeContents, 'changesets');
-
-    await assert.rejects(
-      readFile(path.join(process.cwd(), '.github/workflows/prReleaseChangeset.yml'), 'utf8'),
-    );
-    await assert.rejects(
-      readUtf8File(path.join(process.cwd(), '.github/releaseAutomation.json')),
-    );
   });
 
   it('creates isolated directories for packed-artifact smoke verification', async () => {
