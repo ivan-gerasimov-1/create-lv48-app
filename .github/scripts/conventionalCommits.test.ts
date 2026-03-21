@@ -1,14 +1,19 @@
 import assert from 'node:assert/strict';
-import { describe, it } from 'node:test';
+import { before, describe, it } from 'node:test';
 
+import type { ConventionalCommitPolicy } from './conventionalCommits.d.mts';
 import {
   loadConventionalCommitPolicy,
   parseConventionalCommit,
   validateReleaseIntent,
 } from './conventionalCommits.mjs';
 
-describe('conventional commit policy', async () => {
-  const policy = await loadConventionalCommitPolicy(process.cwd());
+describe('conventional commit policy', () => {
+  let policy: ConventionalCommitPolicy;
+
+  before(async () => {
+    policy = await loadConventionalCommitPolicy(process.cwd());
+  });
 
   it('parses a releasing pull request title', () => {
     const parsedCommit = parseConventionalCommit('feat(cli): add release intent validation', policy);
