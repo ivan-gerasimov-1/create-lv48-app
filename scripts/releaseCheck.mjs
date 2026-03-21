@@ -1,7 +1,5 @@
-import { execFile } from 'node:child_process';
-import { promisify } from 'node:util';
-
-const execFileAsync = promisify(execFile);
+import { spawn } from 'node:child_process';
+import process from 'node:process';
 
 const steps = [
   { label: 'typecheck', command: 'npm', args: ['run', 'typecheck'] },
@@ -20,10 +18,21 @@ async function main() {
   }
 }
 
-async function execStep(command, args) {
-  await execFileAsync(command, args, {
-    cwd: process.cwd(),
-    env: process.env,
-    stdio: 'inherit',
+function execStep(command, args) {
+  return new Promise((resolve, reject) => {
+    let child = spawn(command, args, {
+      cwd: process.cwd(),
+      stdio: 'inherit',
+    });
+
+    child.on('error', reject);
+    child.on('close', (code) => {
+      if (code !== 0) {
+        reject(new Error(`${command} ${args.join(' ')} exited with code ${code}`));
+        return;
+      }
+
+      resolve();
+    });
   });
 }

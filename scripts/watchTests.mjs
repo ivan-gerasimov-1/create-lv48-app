@@ -5,7 +5,7 @@ import path from 'node:path';
 import process from 'node:process';
 
 const fileExtensions = new Set(['.cts', '.json', '.mjs', '.mts', '.ts']);
-const scanRoots = ['scripts', 'src', 'tests'];
+const scanRoots = ['.github/scripts', 'scripts', 'src', 'tests'];
 const watchedFiles = new Map();
 const scanIntervalMs = 1000;
 const watchIntervalMs = 300;
@@ -128,7 +128,7 @@ function scheduleRerun() {
 function runTests() {
   currentRun = spawn(
     process.execPath,
-    ['--loader', './scripts/tsTestLoader.mjs', './scripts/runTests.mjs'],
+    ['--import', './scripts/tsTestRegister.mjs', '--test', 'tests/**/*.test.ts', '.github/scripts/**/*.test.ts'],
     {
       cwd: process.cwd(),
       stdio: 'inherit',

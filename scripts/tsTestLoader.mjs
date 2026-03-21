@@ -37,7 +37,7 @@ export async function load(url, context, nextLoad) {
   const result = transpileModule(source, {
     compilerOptions: {
       module: ModuleKind.ESNext,
-      sourceMap: true,
+      inlineSourceMap: true,
       target: ScriptTarget.ES2022,
       verbatimModuleSyntax: true,
     },

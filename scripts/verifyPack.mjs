@@ -10,6 +10,8 @@ import { buildExpectedPackedFiles, verifyPackedFiles } from '../dist/release/ver
 
 const execFileAsync = promisify(execFile);
 
+await main();
+
 async function main() {
   const cacheDirectory = await mkdtemp(path.join(os.tmpdir(), 'lv48-npm-cache-'));
 
@@ -72,5 +74,3 @@ function printFailure(result) {
     }
   }
 }
-
-await main();
