@@ -291,7 +291,7 @@ describe('bootstrap modules', () => {
     assertContains(publishWorkflowContents, 'needs:');
     assertContains(
       publishWorkflowContents,
-      "if: ${{ startsWith(github.event.head_commit.message, 'chore(main): release ') }}",
+      "if: \"startsWith(github.event.head_commit.message, 'chore(main): release ')\"",
     );
     assertContains(publishWorkflowContents, 'run: npm run release:publish');
     assertContains(publishWorkflowContents, 'NPM_CONFIG_PROVENANCE: false');
