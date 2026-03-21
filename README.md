@@ -1,5 +1,7 @@
 # create-lv48-app
 
+> **Disclaimer:** This project is fully generated with AI and OpenSpec in order to try agentic engineering. No code is verified by a human.
+
 Opinionated initializer for TS-first SaaS projects.
 
 ## Requirements
