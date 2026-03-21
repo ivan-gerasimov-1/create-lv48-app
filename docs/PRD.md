@@ -2,168 +2,168 @@
 
 ## 1. Product overview
 
-Продукт — это npm initializer / scaffolding CLI, который позволяет одной командой создавать новый проект по заранее заданной архитектуре.
+The product is an npm initializer / scaffolding CLI that lets you create a new project based on a pre-defined architecture with a single command.
 
-Примеры целевого UX:
+Target UX examples:
 
 ```bash
 npm init lv48-app
 ```
 
-или
+or
 
 ```bash
 npx create-lv48-app
 ```
 
-Если итоговая команда будет другой, документы всё равно остаются валидными: меняется только naming initializer package и invocation syntax.
+If the final command name differs, the documents remain valid — only the initializer package naming and invocation syntax change.
 
-На первом этапе initializer должен создавать baseline-проект для TS-first SaaS:
+In the first phase, the initializer must create a baseline project for TS-first SaaS:
 
-- `web` — product web app на React + Vite с Tailwind CSS v4 и shadcn-ready baseline
-- `site` — public site на Astro
-- `api` — backend на Node + Hono
-- пустую зарезервированную директорию `packages/` для будущих shared workspaces
-- root README и README внутри сгенерированных apps с инструкциями
+- `web` — product web app on React + Vite with Tailwind CSS v4 and shadcn-ready baseline
+- `site` — public site on Astro
+- `api` — backend on Node + Hono
+- an empty reserved `packages/` directory for future shared workspaces
+- root README and READMEs inside generated apps with instructions
 
-На следующем этапе должен появиться отдельный preset для Convex / realtime-first приложений.
+In the next phase, a separate preset for Convex / realtime-first applications must be added.
 
 ## 2. Problem statement
 
-Сейчас старт нового проекта требует ручной сборки одних и тех же вещей:
+Currently, starting a new project requires manually assembling the same things every time:
 
-- создание монорепы
-- настройка монорепы на основе npm workspaces
-- раскладка `web` / `site` / `api`
-- перенос общих config-файлов
-- перенос архитектурных документов
-- повторение одинаковых conventions
-- ручное выравнивание структуры под выбранную архитектуру
+- creating a monorepo
+- configuring the monorepo based on npm workspaces
+- laying out `web` / `site` / `api`
+- copying shared config files
+- copying architectural documents
+- repeating the same conventions
+- manually aligning the structure to the chosen architecture
 
-Это замедляет старт, плодит шум и повышает шанс ранних структурных ошибок.
+This slows down the start, creates noise, and increases the chance of early structural mistakes.
 
 ## 3. Product goals
 
-Initializer должен:
+The initializer must:
 
-- позволять создать новый проект одной командой
-- давать стабильный архитектурный baseline
-- снижать объём ручного setup
-- кодировать архитектурные решения прямо в scaffold
-- готовить основу для дальнейшей реализации через OpenSpec
-- поддерживать расширение через presets без поломки базового пути
+- allow creating a new project with a single command
+- provide a stable architectural baseline
+- reduce the volume of manual setup
+- encode architectural decisions directly in the scaffold
+- prepare the foundation for further implementation via OpenSpec
+- support extension through presets without breaking the base path
 
 ## 4. Non-goals
 
-На первом этапе initializer не должен:
+In the first phase, the initializer must not:
 
-- генерировать production-ready бизнес-функционал
-- покрывать все возможные архитектурные варианты
-- становиться универсальным low-code конструктором
-- поддерживать десятки несовместимых флагов
-- иметь plugin ecosystem
-- выполнять полный cloud provisioning
-- автоматически деплоить проект
-- заменять полноценное проектирование доменной модели
+- generate production-ready business functionality
+- cover all possible architectural variants
+- become a universal low-code builder
+- support dozens of incompatible flags
+- have a plugin ecosystem
+- perform full cloud provisioning
+- automatically deploy the project
+- replace proper domain model design
 
 ## 5. Target users
 
 ### 5.1 Primary user
 
-Разработчик или продуктовый инженер, который:
+A developer or product engineer who:
 
-- регулярно стартует новые SaaS-проекты
-- хочет единый архитектурный baseline
-- предпочитает TypeScript-first стек
-- хочет запускать scaffold одной командой
-- хочет затем продолжать работу через OpenSpec pipeline
+- regularly starts new SaaS projects
+- wants a unified architectural baseline
+- prefers a TypeScript-first stack
+- wants to run the scaffold with a single command
+- wants to continue working via OpenSpec pipeline afterwards
 
 ### 5.2 Secondary user
 
-Команда, которая:
+A team that:
 
-- хочет стандартизировать старт новых проектов
-- хочет уменьшить ручной setup
-- хочет фиксировать архитектурные правила прямо в шаблоне
+- wants to standardize the start of new projects
+- wants to reduce manual setup
+- wants to fix architectural rules directly in the template
 
 ## 6. Core product principles
 
 ### 6.1 Scaffold, not magic
 
-Initializer должен создавать понятный проект, а не скрывать структуру за генераторной магией.
+The initializer must create a transparent project, not hide the structure behind generator magic.
 
 ### 6.2 Opinionated baseline
 
-Продукт должен быть осознанно opinionated, а не пытаться понравиться всем сразу.
+The product must be intentionally opinionated, rather than trying to please everyone.
 
 ### 6.3 One happy path first
 
-Сначала — один сильный baseline path. Расширение — только после стабилизации ядра.
+First — one strong baseline path. Extension — only after the core is stable.
 
 ### 6.4 Architecture encoded in files
 
-Архитектурные решения должны быть зашиты в generated structure, README-инструкции и config, а не жить только в голове автора.
+Architectural decisions must be embedded in the generated structure, README instructions, and config — not live only in the author's head.
 
 ### 6.5 Presets over toggle explosion
 
-Новые архитектурные варианты должны добавляться как presets, а не как бесконечная матрица флагов.
+New architectural variants must be added as presets, not as an endless matrix of flags.
 
 ## 7. Product scope
 
 ### 7.1 In scope for phase 1
 
-Initializer должен:
+The initializer must:
 
-- создавать проект из baseline preset
-- работать как `npm init …` и `npx create-…`
-- спрашивать минимально необходимую информацию
-- генерировать монорепу на основе npm workspaces
-- копировать template files
-- подставлять project-specific значения
-- генерировать root README и project-level README для apps
-- опционально устанавливать зависимости
-- опционально выполнять `git init`
-- печатать понятные next steps
-- публиковаться как публичный npm package под лицензией `MIT` с воспроизводимой release-проверкой
-- иметь GitHub Actions-based release path через changesets-driven release PR и trusted publishing после прохождения verification gates
+- create a project from the baseline preset
+- work as `npm init …` and `npx create-…`
+- ask for the minimum necessary information
+- generate a monorepo based on npm workspaces
+- copy template files
+- substitute project-specific values
+- generate a root README and project-level READMEs for apps
+- optionally install dependencies
+- optionally execute `git init`
+- print clear next steps
+- be published as a public npm package under the `MIT` license with a reproducible release check
+- have a GitHub Actions-based release path via a changesets-driven release PR and trusted publishing after verification gates pass
 
 ### 7.2 In scope for phase 2
 
-Initializer должен поддержать второй preset:
+The initializer must support a second preset:
 
 - `convex-realtime`
 
-Этот preset должен отражать отдельную архитектурную ветку, а не просто добавлять одну библиотеку поверх base.
+This preset must represent a separate architectural branch, not just add one library on top of base.
 
 ### 7.3 Out of scope for phase 1
 
-- удалённое скачивание шаблонов из произвольных репозиториев
-- web UI для генерации проекта
+- remote downloading of templates from arbitrary repositories
+- web UI for project generation
 - template marketplace
 - enterprise account features
 - telemetry platform
 - deep infrastructure provisioning
-- auto-deploy в облако из коробки
+- auto-deploy to cloud out of the box
 
 ## 8. User experience
 
 ### 8.1 Main flow
 
-Пользователь запускает команду и проходит короткий сценарий:
+The user runs the command and goes through a short scenario:
 
-1. выбирает или подтверждает имя проекта
-2. выбирает директорию
-3. решает, устанавливать ли зависимости
-4. решает, делать ли `git init`
-5. получает сгенерированный проект
-6. получает summary и next steps
+1. selects or confirms the project name
+2. selects the directory
+3. decides whether to install dependencies
+4. decides whether to run `git init`
+5. receives the generated project
+6. receives a summary and next steps
 
 ### 8.2 Phase 1 expected default flow
 
-Минимальный baseline flow:
+Minimal baseline flow:
 
 - project name
-- preset = `base` по умолчанию без отдельного prompt
+- preset = `base` by default with no separate prompt
 - package manager = `npm`
 - install dependencies = optional
 - git init = optional
@@ -172,104 +172,104 @@ Initializer должен поддержать второй preset:
 
 ### 9.1 CLI entrypoint
 
-Система должна:
+The system must:
 
-- запускаться через `npm init <name>`
-- запускаться через `npx create-<name>`
-- иметь понятный `bin` entrypoint
-- поддерживать запуск в пустой директории или создание новой директории
+- run via `npm init <name>`
+- run via `npx create-<name>`
+- have a clear `bin` entrypoint
+- support running in an empty directory or creating a new directory
 
 ### 9.2 Template generation
 
-Система должна:
+The system must:
 
-- уметь копировать baseline template
-- поддерживать placeholder replacement
-- корректно переименовывать служебные файлы (`_gitignore` → `.gitignore` и подобные)
-- корректно обновлять `package.json`
-- генерировать workspace-конфигурацию на основе root `package.json` с `workspaces`
+- be able to copy the baseline template
+- support placeholder replacement
+- correctly rename special files (`_gitignore` → `.gitignore` and similar)
+- correctly update `package.json`
+- generate workspace configuration based on root `package.json` with `workspaces`
 
 ### 9.3 Presets
 
-Система должна:
+The system must:
 
-- поддерживать хотя бы один preset в phase 1: `base`
-- быть спроектированной так, чтобы позже добавить `convex-realtime`
-- не смешивать разные архитектуры в один большой if/else-комбайн
+- support at least one preset in phase 1: `base`
+- be designed so that `convex-realtime` can be added later
+- not mix different architectures into one large if/else combinator
 
 ### 9.4 Project metadata interpolation
 
-Система должна подставлять:
+The system must substitute:
 
 - project name
 - package names
 - display name
 - placeholder URLs / domains
 - env values / examples
-- repository metadata, где это уместно
+- repository metadata where appropriate
 
 ### 9.5 Generated architecture
 
-Phase 1 scaffold должен включать:
+Phase 1 scaffold must include:
 
 - `apps/web`
 - `apps/site`
 - `apps/api`
-- пустую зарезервированную директорию `packages/` для будущих shared workspaces
-- `package.json` для root workspace и каждого app
-- минимальные starter files для `React + Vite + Tailwind CSS v4` с shadcn-ready wiring, `Astro` и `Node + Hono`
+- an empty reserved `packages/` directory for future shared workspaces
+- `package.json` for the root workspace and each app
+- minimal starter files for `React + Vite + Tailwind CSS v4` with shadcn-ready wiring, `Astro`, and `Node + Hono`
 
 ### 9.6 Generated documentation
 
-Initializer должен генерировать или копировать в проект:
+The initializer must generate or copy into the project:
 
 - `README.md`
-- `README.md` внутри сгенерированных приложений
+- `README.md` inside the generated applications
 
 ### 9.7 Post-generation actions
 
-Initializer должен уметь:
+The initializer must be able to:
 
-- устанавливать зависимости по выбору пользователя
-- инициализировать git по выбору пользователя
-- выводить итоговые команды для старта работы
+- install dependencies at the user's choice
+- initialize git at the user's choice
+- print final commands for getting started
 
 ### 9.8 Error handling
 
-Система должна:
+The system must:
 
-- аккуратно обрабатывать конфликт директории
-- валидировать project name / package name
-- объяснять ошибки понятным языком
-- откатывать процесс или честно сообщать о частично завершённой генерации
+- gracefully handle directory conflicts
+- validate project name / package name
+- explain errors in clear language
+- roll back the process or honestly report partially completed generation
 
 ### 9.9 Package release and distribution
 
-Система доставки initializer должна:
+The initializer delivery system must:
 
-- публиковать `create-lv48-app` как публичный npm package
-- содержать корректные package metadata для registry-facing использования, включая лицензию `MIT`
-- проверять release tarball до публикации
-- подтверждать, что packed artifact реально запускает CLI и видит runtime templates
-- поддерживать changesets-driven GitHub Actions workflow, который собирает release PR из label-managed changesets и публикует пакет только после успешных release checks
+- publish `create-lv48-app` as a public npm package
+- contain correct package metadata for registry-facing use, including the `MIT` license
+- verify the release tarball before publishing
+- confirm that the packed artifact actually runs the CLI and can see runtime templates
+- support a changesets-driven GitHub Actions workflow that builds a release PR from label-managed changesets and publishes the package only after successful release checks
 
 ## 10. Preset strategy
 
 ### 10.1 Base preset
 
-Baseline SaaS-проект с архитектурой:
+Baseline SaaS project with the architecture:
 
-- React + Vite product web app с Tailwind CSS v4 и shadcn-ready baseline
+- React + Vite product web app with Tailwind CSS v4 and shadcn-ready baseline
 - Astro public site
 - Node backend
-- пустой зарезервированный контейнер `packages/` для будущих shared packages
-- root README и project-level README с инструкциями для apps
+- empty reserved `packages/` container for future shared packages
+- root README and project-level READMEs with instructions for apps
 
 ### 10.2 Future Convex preset
 
-Отдельный preset для realtime-first сценариев.
+A separate preset for realtime-first scenarios.
 
-Этот preset может менять:
+This preset may change:
 
 - data layer assumptions
 - backend responsibilities
@@ -277,66 +277,66 @@ Baseline SaaS-проект с архитектурой:
 - generated README instructions
 - runtime structure
 
-Convex preset не должен быть “галочкой сверху” поверх base, если архитектурно это уже другой фундамент.
+The Convex preset must not be a "checkbox on top" of base if it is architecturally a different foundation.
 
 ## 11. Non-functional requirements
 
 ### 11.1 Maintainability
 
-Initializer должен быть:
+The initializer must be:
 
-- простым для сопровождения
-- понятным по структуре
-- не перегруженным лишней абстракцией
-- расширяемым через presets без боли
+- easy to maintain
+- clear in structure
+- not overloaded with unnecessary abstraction
+- extensible through presets without pain
 
 ### 11.2 Predictability
 
-Одинаковый input должен давать предсказуемый output.
+The same input must produce predictable output.
 
 ### 11.3 Versioning clarity
 
-Версия CLI и версия generated template output должны быть достаточно прозрачно связаны.
+The CLI version and the generated template output version must be sufficiently transparently linked.
 
 ### 11.5 Release safety
 
-Путь публикации должен быть:
+The publish path must be:
 
-- воспроизводимым
-- проверяемым до фактического publish
-- одинаковым по release gates локально и в GitHub Actions
+- reproducible
+- verifiable before actual publish
+- identical in release gates locally and in GitHub Actions
 
 ### 11.4 Developer experience
 
-Опыт использования должен быть:
+The usage experience must be:
 
-- быстрым
-- понятным
-- без лишних вопросов
-- без архитектурной каши после генерации
+- fast
+- clear
+- without unnecessary questions
+- without architectural mess after generation
 
 ## 12. Risks
 
-Основные риски:
+Main risks:
 
-- initializer станет слишком универсальным и сложным
-- presets начнут течь друг в друга
-- template drift между README-инструкциями и actual files
-- generated project будет выглядеть слишком “демо-шаблонно”
-- CLI будет сложно обновлять вместе с шаблонами
-- Convex preset будет недооценён как отдельная архитектура
-- первый публичный npm release может оказаться битым из-за packaging drift
-- GitHub Actions release path может разъехаться с локальной проверкой
+- the initializer becomes too universal and complex
+- presets start leaking into each other
+- template drift between README instructions and actual files
+- the generated project looks too "demo-template"
+- the CLI becomes difficult to update alongside templates
+- the Convex preset is undervalued as a separate architecture
+- the first public npm release may be broken due to packaging drift
+- the GitHub Actions release path may diverge from the local check
 
 ## 13. Success criteria
 
-Продукт можно считать успешным, если:
+The product can be considered successful if:
 
-- новый проект создаётся одной командой
-- baseline-проект готов к дальнейшей работе без ручного пересоздания структуры
-- generated files отражают архитектурные правила
-- generated README-инструкции совпадают с generated structure
-- добавление второго preset не ломает первый
-- после генерации можно сразу переходить к OpenSpec-этапу и реализации
-- npm package публикуется с корректным tarball и рабочим entrypoint
-- GitHub Actions publish не обходит обязательные release checks
+- a new project is created with a single command
+- the baseline project is ready for further work without manually reconstructing the structure
+- generated files reflect architectural rules
+- generated README instructions match the generated structure
+- adding a second preset does not break the first
+- after generation, work can immediately proceed to the OpenSpec phase and implementation
+- the npm package is published with a correct tarball and working entrypoint
+- GitHub Actions publish does not bypass the mandatory release checks
