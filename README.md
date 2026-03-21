@@ -30,12 +30,12 @@ Enforced merge policy:
 - if maintainers intentionally use a non-squash merge path, every commit message in that branch must follow the same contract
 - add `!` or a `BREAKING CHANGE:` footer when the next release must be major
 
-Supported releasing types:
+Supported release types:
 
 - `feat` -> minor
 - `fix` -> patch
 
-Supported non-releasing types:
+Non-release types:
 
 - `build`
 - `chore`
