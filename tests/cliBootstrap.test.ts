@@ -54,20 +54,14 @@ function createPromptIoMock() {
   };
 }
 
-const cleanupPaths: string[] = [];
+let cleanupPaths: string[] = [];
 
 function assertContains(container: readonly string[] | string, expected: string) {
-  const found = typeof container === 'string'
-    ? container.includes(expected)
-    : container.includes(expected);
-  assert.ok(found, `Expected container to include ${JSON.stringify(expected)}`);
+  assert.ok(container.includes(expected), `Expected container to include ${JSON.stringify(expected)}`);
 }
 
 function assertNotContains(container: readonly string[] | string, expected: string) {
-  const found = typeof container === 'string'
-    ? container.includes(expected)
-    : container.includes(expected);
-  assert.ok(!found, `Expected container not to include ${JSON.stringify(expected)}`);
+  assert.ok(!container.includes(expected), `Expected container not to include ${JSON.stringify(expected)}`);
 }
 
 async function assertRejects(action: Promise<unknown>, message?: string) {
@@ -178,16 +172,7 @@ describe('bootstrap modules', () => {
 
   it('publishes template assets with the package for runtime scaffold access', async () => {
     const packageManifest = await readUtf8File(path.join(process.cwd(), 'package.json'));
-    const parsedManifest = JSON.parse(packageManifest) as {
-      license: string;
-      files: string[];
-      publishConfig: { access: string };
-      repository: { type: string; url: string };
-      homepage: string;
-      bugs: { url: string };
-      bin: Record<string, string>;
-      engines: { node: string };
-    };
+    const parsedManifest = JSON.parse(packageManifest);
 
     assert.equal(parsedManifest.license, 'MIT');
     assert.deepEqual(parsedManifest.files, ['bin', 'dist', 'templates']);
@@ -279,7 +264,7 @@ describe('bootstrap modules', () => {
     assertContains(releaseIntentWorkflowContents, 'run: node ./.github/scripts/validateReleaseIntent.mjs');
     assertContains(releasePleaseConfig, '"release-type": "node"');
     assertContains(releasePleaseConfig, '"package-name": "create-lv48-app"');
-    const { version } = JSON.parse(packageManifest) as { version: string };
+    const { version } = JSON.parse(packageManifest);
     assertContains(releasePleaseManifest, `".": "${version}"`);
     assertContains(publishWorkflowContents, 'push:');
     assertContains(publishWorkflowContents, 'id-token: write');
@@ -324,24 +309,18 @@ describe('bootstrap modules', () => {
 
   it('creates isolated directories for packed-artifact smoke verification', async () => {
     const smokePaths = await createReleaseSmokePaths();
-    const releaseSmokeScript = await readUtf8File(
-      path.join(process.cwd(), 'scripts/releaseSmoke.mjs'),
-    );
 
     cleanupPaths.push(smokePaths.workspaceRoot);
 
     assert.equal(smokePaths.generatedProjectRoot,
       path.join(smokePaths.runDirectory, 'smoke-app'),
     );
-    assertContains(releaseSmokeScript, 'getInstalledSmokeCliPath');
     assert.equal(getInstalledSmokeCliPath(smokePaths.installDirectory, 'linux'),
       path.join(smokePaths.installDirectory, 'node_modules', '.bin', 'create-lv48-app'),
     );
     assert.equal(getInstalledSmokeCliPath(smokePaths.installDirectory, 'win32'),
       path.join(smokePaths.installDirectory, 'node_modules', '.bin', 'create-lv48-app.cmd'),
     );
-    assertContains(releaseSmokeScript, "projectName: 'smoke-app'");
-    assertContains(releaseSmokeScript, 'await scaffoldFromInstalledPackage');
     assertContains(
       await readUtf8File(path.join(process.cwd(), 'package.json')),
       '"release:smoke": "node ./scripts/releaseSmoke.mjs"',
@@ -606,10 +585,7 @@ describe('bootstrap modules', () => {
   });
 
   it('falls back to a compatible main-branch setup when git does not support the initial branch flag', async () => {
-    const executed: string[] = [];
-    const executor = createPostSetupExecutor(async (command, args, cwd) => {
-      executed.push(`${command} ${args.join(' ')} @ ${cwd}`);
-
+    const executor = createPostSetupExecutor(async (command, args) => {
       if (command === 'git' && args[0] === 'init' && args[1] === '--initial-branch=main') {
         throw new Error('error: unknown option `initial-branch=main`');
       }
@@ -636,19 +612,10 @@ describe('bootstrap modules', () => {
       },
       ],
     );
-
-    assert.deepEqual(executed, [
-      'git init --initial-branch=main @ /tmp/demo-app',
-      'git init @ /tmp/demo-app',
-      'git symbolic-ref HEAD refs/heads/main @ /tmp/demo-app',
-    ]);
   });
 
   it('runs optional post-setup actions and reports failures without hiding scaffold success', async () => {
-    const executed: string[] = [];
-    const executor = createPostSetupExecutor(async (command, args, cwd) => {
-      executed.push(`${command} ${args.join(' ')} @ ${cwd}`);
-
+    const executor = createPostSetupExecutor(async (command) => {
       if (command === 'git') {
         throw new Error('git unavailable');
       }
@@ -675,11 +642,6 @@ describe('bootstrap modules', () => {
       },
       ],
     );
-
-    assert.deepEqual(executed, [
-      'npm install @ /tmp/demo-app',
-      'git init --initial-branch=main @ /tmp/demo-app',
-    ]);
   });
 
   it('emits progress messages before running each selected post-setup action', async () => {

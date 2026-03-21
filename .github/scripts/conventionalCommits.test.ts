@@ -1,22 +1,26 @@
 import assert from 'node:assert/strict';
-import { before, describe, it } from 'node:test';
+import { describe, it } from 'node:test';
 
 import type { ConventionalCommitPolicy } from './conventionalCommits.d.mts';
 import {
-  loadConventionalCommitPolicy,
   parseConventionalCommit,
   validateReleaseIntent,
 } from './conventionalCommits.mjs';
 
+const fixturePolicy: ConventionalCommitPolicy = {
+  mergeStrategy: 'squash',
+  breakingChangeFooter: 'BREAKING CHANGE:',
+  types: {
+    feat: { release: 'minor', description: 'user-visible functionality' },
+    fix: { release: 'patch', description: 'user-visible fixes' },
+    docs: { release: 'none', description: 'documentation-only changes' },
+    test: { release: 'none', description: 'test-only changes' },
+  },
+};
+
 describe('conventional commit policy', () => {
-  let policy: ConventionalCommitPolicy;
-
-  before(async () => {
-    policy = await loadConventionalCommitPolicy(process.cwd());
-  });
-
   it('parses a releasing pull request title', () => {
-    const parsedCommit = parseConventionalCommit('feat(cli): add release intent validation', policy);
+    const parsedCommit = parseConventionalCommit('feat(cli): add release intent validation', fixturePolicy);
 
     assert.deepEqual(parsedCommit, {
       description: 'add release intent validation',
@@ -30,7 +34,7 @@ describe('conventional commit policy', () => {
   it('treats breaking markers as a major release', () => {
     const parsedCommit = parseConventionalCommit(
       'fix!: remove legacy release label flow\n\nBREAKING CHANGE: labels are no longer supported',
-      policy,
+      fixturePolicy,
     );
 
     assert.deepEqual(parsedCommit, {
@@ -48,7 +52,7 @@ describe('conventional commit policy', () => {
         prTitle: 'docs: document release intent contract',
         commitMessages: ['not a conventional commit'],
       },
-      policy,
+      fixturePolicy,
     );
 
     assert.deepEqual(result, {
@@ -69,7 +73,7 @@ describe('conventional commit policy', () => {
         prTitle: 'Release automation follow-up',
         commitMessages: ['fix: validate release intent before merge', 'test: cover fallback path'],
       },
-      policy,
+      fixturePolicy,
     );
 
     assert.deepEqual(result, {
@@ -86,7 +90,7 @@ describe('conventional commit policy', () => {
             prTitle: 'Release automation follow-up',
             commitMessages: ['update stuff', 'another message'],
           },
-          policy,
+          fixturePolicy,
         ),
       /Release intent must be expressed as a Conventional Commit/,
     );
