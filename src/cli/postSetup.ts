@@ -117,6 +117,7 @@ function isUnsupportedInitialBranchError(error: unknown): boolean {
 
   const message = error.message.toLowerCase();
 
+  // git < 2.28 uses various phrasings depending on version and platform
   return (
     message.includes('initial-branch') &&
     (message.includes('unknown option') ||
@@ -154,6 +155,7 @@ function executeCommand(command: string, args: string[], cwd: string): Promise<v
 
       const message = stderrOutput.trim();
 
+      // exitCode is null when the process was killed by a signal
       reject(
         new Error(message.length > 0 ? message : `${command} exited with code ${exitCode ?? 'unknown'}`),
       );
