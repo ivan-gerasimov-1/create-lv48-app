@@ -8,6 +8,11 @@ export function interpolatePlaceholders(
 ): string {
   return templateContents.replace(PLACEHOLDER_PATTERN, (_match, rawKey: string) => {
     const value = placeholders[rawKey];
-    return value ?? `{{${rawKey}}}`;
+
+    if (value === undefined) {
+      throw new Error(`Unresolved placeholder: {{${rawKey}}}`);
+    }
+
+    return value;
   });
 }
