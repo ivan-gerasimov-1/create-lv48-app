@@ -65,6 +65,11 @@ async function scaffoldTemplate(
     context.templateBaseDirectory,
     context.preset.templateDirectory,
   );
+
+  if (!(await pathExists(templateRoot))) {
+    throw new Error(`Template directory not found: ${templateRoot}`);
+  }
+
   const templateDirectories = await listRelativeDirectories(templateRoot);
   const relativeDirectories = [
     ...templateDirectories.filter(isPublicTemplatePath),
@@ -74,20 +79,20 @@ async function scaffoldTemplate(
     isPublicTemplatePath,
   );
   const targetRootExisted = await pathExists(context.targetRoot);
-  const createdDirectories: string[] = [];
+  const createdDirectories = new Set<string>();
   const createdFiles: string[] = [];
 
   await mkdir(context.targetRoot, { recursive: true });
 
   if (!targetRootExisted) {
-    createdDirectories.push(context.targetRoot);
+    createdDirectories.add(context.targetRoot);
   }
 
   try {
     for (const relativeDirectory of relativeDirectories) {
       const destinationRelativePath = transformPipeline.mapDestinationPath(relativeDirectory);
       const destinationPath = path.join(context.targetRoot, destinationRelativePath);
-      const wasCreated = createdDirectories.includes(destinationPath);
+      const wasCreated = createdDirectories.has(destinationPath);
       const isPreexistingTargetRoot = destinationPath === context.targetRoot && targetRootExisted;
 
       if (wasCreated || isPreexistingTargetRoot) {
@@ -95,7 +100,7 @@ async function scaffoldTemplate(
       }
 
       await mkdir(destinationPath, { recursive: true });
-      createdDirectories.push(destinationPath);
+      createdDirectories.add(destinationPath);
     }
 
     for (const relativeFile of relativeFiles) {
@@ -103,13 +108,13 @@ async function scaffoldTemplate(
       const destinationRelativePath = transformPipeline.mapDestinationPath(relativeFile);
       const destinationPath = path.join(context.targetRoot, destinationRelativePath);
       const destinationDirectory = path.dirname(destinationPath);
-      const destinationDirectoryWasCreated = createdDirectories.includes(destinationDirectory);
+      const destinationDirectoryWasCreated = createdDirectories.has(destinationDirectory);
       const isPreexistingTargetRoot =
         destinationDirectory === context.targetRoot && targetRootExisted;
 
       if (!destinationDirectoryWasCreated && !isPreexistingTargetRoot) {
         await mkdir(destinationDirectory, { recursive: true });
-        createdDirectories.push(destinationDirectory);
+        createdDirectories.add(destinationDirectory);
       }
 
       const fileContents = await readUtf8File(sourcePath);
@@ -123,12 +128,16 @@ async function scaffoldTemplate(
       createdFiles.push(destinationPath);
     }
   } catch (error) {
-    await removePaths([...createdFiles, ...createdDirectories]);
+    try {
+      await removePaths([...createdFiles, ...createdDirectories]);
+    } catch {
+      // cleanup failure must not suppress the original scaffolding error
+    }
     throw error;
   }
 
   return {
-    createdDirectories,
+    createdDirectories: [...createdDirectories],
     createdFiles,
   };
 }
