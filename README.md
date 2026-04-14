@@ -1,49 +1,54 @@
 # Create LV48 App
 
-> **Disclaimer:** This project is fully generated with AI and OpenSpec in order to try agentic engineering. No code is verified by a human.
+> Generated with AI. Human verification is not the default assumption.
 
 Opinionated initializer for TS-first SaaS projects.
 
 ## Requirements
 
-Node.js 24 or newer is required before installing dependencies.
+- Node.js 24 or newer
+- npm
 
 ## Usage
 
 ```bash
 npm init lv48-app
-# or
+```
+
+```bash
 npx create-lv48-app
 ```
 
 The initializer prompts for:
 
 - project name
-- target directory (defaults to the project name)
-- whether to install dependencies
-- whether to initialize a git repository
+- target directory
+- install dependencies
+- initialize git
 
-The `base` preset is applied automatically. The package manager is `npm`.
+`base` preset is applied by default. Package manager is `npm`.
 
-## What it scaffolds
+## Scaffold
 
 The `base` preset generates an npm workspaces monorepo:
 
-```
+```txt
 <project>/
 ├── apps/
-│   ├── web/        # React + Vite + Tailwind CSS v4, shadcn-ready
-│   ├── site/       # Astro
-│   └── api/        # Node + Hono
-├── packages/       # reserved for future shared workspaces
-└── package.json    # root workspace manifest
+│   ├── web/     # React + Vite + Tailwind CSS v4, shadcn-ready
+│   ├── site/    # Astro
+│   └── api/     # Node + Hono
+├── packages/    # reserved for future shared workspaces
+└── package.json # root workspace manifest
 ```
 
-All generated package manifests declare `engines.node` as `>=24.0.0`. The git repository is initialized with `main` as the initial branch when git initialization is selected.
+Generated package manifests set `engines.node` to `>=24.0.0`.
+
+If git init is selected, the repository starts on `main`.
 
 ## Development
 
-Run the test suite:
+Run tests:
 
 ```bash
 npm test
@@ -55,13 +60,13 @@ Watch mode:
 npm run test:watch
 ```
 
-Tests run through the built-in `node:test` runner.
+Tests use built-in `node:test`.
 
-## Release workflow
+## Release
 
-### Local pre-publish checks
+### Local Check
 
-Run the full release gate locally before merge or before debugging a release issue:
+Run the full release gate locally:
 
 ```bash
 npm run release:check
@@ -75,15 +80,16 @@ This runs:
 - `npm run release:verify-pack`
 - `npm run release:smoke`
 
-### Conventional release intent
+### Release Intent
 
-Every merge that should remain compatible with `release-please` must expose release intent through Conventional Commit metadata that CI can validate before merge.
+Release intent MUST stay compatible with `release-please`.
 
-Enforced merge policy:
+Rules:
 
-- merge pull requests with squash so the final pull request title becomes the canonical Conventional Commit on `main`
-- if maintainers intentionally use a non-squash merge path, every commit message in that branch must follow the same contract
-- add `!` or a `BREAKING CHANGE:` footer when the next release must be major
+- use Conventional Commit metadata on merges to `main`
+- prefer squash merge so PR title becomes canonical commit message
+- if not using squash merge, every commit on branch MUST follow same contract
+- use `!` or `BREAKING CHANGE:` for major release intent
 
 Supported release types:
 
@@ -100,34 +106,34 @@ Non-release types:
 - `style`
 - `test`
 
-The workflow at `.github/workflows/validateReleaseIntent.yml` validates the pull request title first and falls back to commit-message validation when the title is not canonical.
+`validateReleaseIntent.yml` checks PR title first, then commit messages when title is not canonical.
 
-### Release pull request and publish
+### Publish Flow
 
-Publishing uses the workflow at `.github/workflows/publish.yml`.
+Publishing uses `.github/workflows/publish.yml`.
 
-Publish flow:
+Flow:
 
-1. Merge pull requests into `main` with Conventional Commit metadata that `release-please` can interpret.
-2. `release-please` on `main` creates or updates the generated release pull request with version bump and changelog changes.
-3. Merge the generated release pull request.
-4. The merged release commit on `main` triggers GitHub Actions publish.
+1. Merge changes to `main` with Conventional Commit metadata.
+2. `release-please` creates or updates release PR.
+3. Merge generated release PR.
+4. Merged release commit on `main` triggers publish.
 5. GitHub Actions runs `npm ci`.
-6. GitHub Actions runs `npm run release:publish`, which first executes `npm run release:check`.
-7. After all verification gates pass, GitHub Actions publishes with `npm publish --access public`.
+6. GitHub Actions runs `npm run release:publish`, which starts with `npm run release:check`.
+7. After all gates pass, GitHub Actions publishes with `npm publish --access public`.
 
-Required GitHub Actions setup:
+GitHub Actions setup:
 
-- configure npm trusted publishing for this repository in npm
+- configure npm trusted publishing for this repository
 - allow GitHub Actions OIDC for npm publish
 - keep workflow permissions `id-token: write`, `contents: write`, and `pull-requests: write`
 
 Notes:
 
 - Public npm packages can be published from a private GitHub repository.
-- npm provenance is not supported for GitHub Actions publishes from private repositories, so this workflow intentionally does not pass `--provenance`.
-- Keep npm trusted publishing configured for the repository. If trusted publishing is unavailable, use an `NPM_TOKEN`-based publish path instead of re-enabling provenance.
-- The generated release pull request is the only automation-owned release artifact in the repository.
-- Re-running publish for the same merged release commit remains valid if a previous attempt failed after the release PR was created.
+- npm provenance is not supported for GitHub Actions publishes from private repositories, so this workflow does not pass `--provenance`.
+- If trusted publishing is unavailable, use `NPM_TOKEN` publish path instead of re-enabling provenance.
+- Generated release PR is the only automation-owned release artifact in repository.
+- Re-running publish for same merged release commit remains valid if previous attempt failed after release PR was created.
 
 If any verification step fails, publish does not run.
