@@ -53,11 +53,12 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "release:publish": "npm publish",
-    "test": "node --import ./scripts/tsTestRegister.js --test \"tests/**/*.test.ts\" \".github/scripts/**/*.test.ts\"",
-    "test:watch": "node ./scripts/watchTests.js"
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "devDependencies": {
     "@types/node": "24.6.1",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "vitest": "4.1.4"
   }
 }

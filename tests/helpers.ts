@@ -1,17 +1,17 @@
-import assert from 'node:assert/strict';
+import { expect } from "vitest";
 
-import type { TPromptIO } from '../src/prompts/types.js';
+import type { TPromptIO } from "../src/prompts/types.js";
 
 export function createPromptIoMock(): TPromptIO {
-  let answers = ['demo-app', 'demo-directory'];
+  let answers = ["demo-app", "demo-directory"];
   let confirmations = [true, false];
 
   return {
     async askText() {
       let value = answers.shift();
 
-      if (typeof value !== 'string') {
-        throw new Error('Missing text answer');
+      if (typeof value !== "string") {
+        throw new Error("Missing text answer");
       }
 
       return value;
@@ -19,8 +19,8 @@ export function createPromptIoMock(): TPromptIO {
     async askConfirm() {
       let value = confirmations.shift();
 
-      if (typeof value !== 'boolean') {
-        throw new Error('Missing confirm answer');
+      if (typeof value !== "boolean") {
+        throw new Error("Missing confirm answer");
       }
 
       return value;
@@ -29,20 +29,31 @@ export function createPromptIoMock(): TPromptIO {
   };
 }
 
-export function assertContains(container: readonly string[] | string, expected: string) {
-  assert.ok(container.includes(expected), `Expected container to include ${JSON.stringify(expected)}`);
+export function assertContains(
+  container: readonly string[] | string,
+  expected: string,
+) {
+  expect(container.includes(expected)).toBe(true);
 }
 
-export function assertNotContains(container: readonly string[] | string, expected: string) {
-  assert.ok(!container.includes(expected), `Expected container not to include ${JSON.stringify(expected)}`);
+export function assertNotContains(
+  container: readonly string[] | string,
+  expected: string,
+) {
+  expect(container.includes(expected)).toBe(false);
 }
 
-export async function assertRejects(action: Promise<unknown>, message?: string) {
-  await assert.rejects(action, (error) => {
-    assert.ok(error instanceof Error);
+export async function assertRejects(
+  action: Promise<unknown>,
+  message?: string,
+) {
+  await expect(action).rejects.toSatisfy((error: unknown) => {
+    if (!(error instanceof Error)) {
+      return false;
+    }
 
-    if (typeof message === 'string') {
-      assert.equal(error.message, message);
+    if (typeof message === "string") {
+      return error.message === message;
     }
 
     return true;

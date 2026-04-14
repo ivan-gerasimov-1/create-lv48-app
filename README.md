@@ -60,7 +60,7 @@ Watch mode:
 npm run test:watch
 ```
 
-Tests use built-in `node:test`.
+Tests use Vitest.
 
 ## Release
 
