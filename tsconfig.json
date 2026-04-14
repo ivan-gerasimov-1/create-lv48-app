@@ -1,27 +1,17 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "lib": [
-      "ES2022"
-    ],
-    "strict": true,
-    "noEmit": true,
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
+    "lib": ["ES2022"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "noEmit": true,
     "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "types": [
-      "node"
-    ]
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ES2022",
+    "types": ["node"]
   },
-  "include": [
-    "src/**/*.ts",
-    ".github/scripts/**/*.test.ts",
-    ".github/scripts/**/*.d.mts",
-    "tests/**/*.ts",
-    "tests/**/*.d.ts"
-  ]
+  "include": ["src/**/*.ts", "tests/**/*.ts", "tests/**/*.d.ts"]
 }

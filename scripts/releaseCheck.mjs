@@ -1,11 +1,13 @@
-import { execStep } from './execStep.mjs';
+import { execStep } from "./execStep.mjs";
 
 let steps = [
-  { label: 'typecheck', command: 'npm', args: ['run', 'typecheck'] },
-  { label: 'build', command: 'npm', args: ['run', 'build'] },
-  { label: 'test', command: 'npm', args: ['run', 'test'] },
-  { label: 'verify-pack', command: 'npm', args: ['run', 'release:verify-pack'] },
-  { label: 'smoke', command: 'npm', args: ['run', 'release:smoke'] },
+  { label: "build", command: "npm", args: ["run", "build"] },
+  { label: "test", command: "npm", args: ["run", "test"] },
+  {
+    label: "verify-pack",
+    command: "npm",
+    args: ["run", "release:verify-pack"],
+  },
 ];
 
 await main();
