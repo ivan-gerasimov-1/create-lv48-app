@@ -1,16 +1,14 @@
 # SRD — System Requirements Document for npm Initializer / Scaffold CLI
 
-## 1. System overview
+## System Overview
 
-The system is a `create-*` format CLI package designed to generate new projects from pre-built templates.
+`create-*` CLI package for generating new projects from pre-built templates.
 
 Primary invocation:
 
 ```bash
 npm init lv48-app
 ```
-
-or:
 
 ```bash
 npx create-lv48-app
@@ -24,35 +22,39 @@ The CLI must:
 - apply transformations
 - execute optional post-setup steps
 
-## 2. System goals
+## System Goals
 
 The system must:
 
-- create a baseline SaaS monorepo based on npm workspaces with a single command
+- create a baseline SaaS monorepo based on npm workspaces with one command
 - support preset-based architecture
 - minimize manual setup
-- embed README instructions into the generated project
-- serve as a foundation for further implementation via OpenSpec
+- embed README instructions into generated project
+- serve as a foundation for OpenSpec implementation
 
-## 3. High-level architecture
+## High-Level Architecture
 
-### 3.1 Package type
+### Package Type
 
-The initializer must be published as an npm package of the form:
+The initializer must be published as:
 
 - `create-lv48-app`
 
-### 3.2 Runtime model
+### Runtime Model
 
-The CLI runs in a Node.js runtime and uses the local filesystem for project generation.
+The CLI runs in Node.js and uses local filesystem for project generation.
 
-### 3.3 Release model
+### Release Model
 
-Package publishing must rely on a reproducible release pipeline: the local release-check and GitHub Actions workflow must use the same set of verification gates before `npm publish`. The automation path is fixed as: conventional commits → `release-please` release PR → npm trusted publishing via OIDC after release PR merge.
+Package publishing must rely on a reproducible release pipeline. Local release-check and GitHub Actions workflow must use same verification gates before `npm publish`.
 
-### 3.4 Internal architecture
+Automation path:
 
-The system must consist of the following logical layers:
+`conventional commits` → `release-please` release PR → npm trusted publishing via OIDC after release PR merge
+
+### Internal Architecture
+
+The system must consist of these logical layers:
 
 - CLI entrypoint
 - prompt/input layer
@@ -63,7 +65,7 @@ The system must consist of the following logical layers:
 - post-setup executor
 - output logger / summary layer
 
-## 4. Package structure requirements
+## Package Structure Requirements
 
 Recommended structure:
 
@@ -94,41 +96,41 @@ create-lv48-app/
   README.md
 ```
 
-It is acceptable to merge `src/presets` and `templates` if it simplifies implementation, but presets must remain an explicit entity.
+`src/presets` and `templates` may be merged if that simplifies implementation, but presets must remain an explicit entity.
 
-The package must also include repository-level release-related assets:
+Repository-level release assets must also exist:
 
 - `.github/workflows/` for publish workflow
 - documented release procedure
 
-## 5. Preset model
+## Preset Model
 
-### 5.1 Phase 1 preset support
+### Phase 1
 
-In the first phase, the system must support the preset:
+Support preset:
 
 - `base`
 
-### 5.2 Phase 2 preset support
+### Phase 2
 
-In the second phase, support must be added for:
+Add preset:
 
 - `convex-realtime`
 
-### 5.3 Preset isolation requirement
+### Preset Isolation
 
 Each preset must:
 
 - have its own template structure
-- have its own metadata/rules
+- have its own metadata and rules
 - have its own README assets and instructions where needed
-- not depend on a chaotic matrix of feature flags
+- avoid a chaotic matrix of feature flags
 
-## 6. Template structure requirements
+## Template Structure Requirements
 
 Each template must contain a complete starter monorepo.
 
-### 6.1 Base template expected structure
+### Base Template Expected Structure
 
 ```txt
 templates/base/
@@ -170,11 +172,11 @@ templates/base/
   .env.example
 ```
 
-`packages/` must exist in the scaffold as an empty directory with no marker files, reserved for future shared workspaces.
+`packages/` must exist as an empty directory with no marker files. It is reserved for future shared workspaces.
 
-### 6.2 Template metadata requirements
+### Template Metadata Requirements
 
-`template.json` must describe at a minimum:
+`template.json` must describe at minimum:
 
 - preset id
 - preset display name
@@ -182,17 +184,17 @@ templates/base/
 - placeholder keys
 - optional post-generation rules
 
-## 7. CLI requirements
+## CLI Requirements
 
-### 7.1 Invocation
+### Invocation
 
 The CLI must support running:
 
-- via `npm init …`
-- via `npx create-…`
-- directly via the `bin` entrypoint
+- via `npm init ...`
+- via `npx create-...`
+- directly through the `bin` entrypoint
 
-### 7.2 Prompts
+### Prompts
 
 The CLI must be able to ask:
 
@@ -201,43 +203,43 @@ The CLI must be able to ask:
 - install dependencies? (`yes/no`)
 - initialize git? (`yes/no`)
 
-In Phase 1, the `base` preset is applied by default without a separate prompt; some values may have defaults and not be asked during non-interactive runs, if supported.
+In Phase 1, `base` must be the default preset without a separate prompt. Some values may default and remain unasked during non-interactive runs, if supported.
 
-### 7.3 Non-interactive support
+### Non-Interactive Support
 
-It is desirable to provide non-interactive mode support later, but it is not required for the first version.
+Non-interactive mode is desirable later, but not required for the first version.
 
-### 7.4 Published artifact requirement
+### Published Artifact Requirements
 
 The published npm artifact must:
 
 - contain a working `bin` entrypoint
 - contain compiled runtime output
-- contain template assets needed for scaffold generation
-- not depend on files that exist only in the source repository
-- be published under the MIT license
-- be verified before publish with a smoke check confirming that the CLI entrypoint runs and bundled templates are accessible
+- contain template assets required for scaffold generation
+- not depend on source-only files
+- be published under `MIT`
+- be verified before publish with a smoke check that confirms CLI entrypoint runs and bundled templates are accessible
 
-### 7.5 Release trigger requirement
+### Release Trigger Requirements
 
-Publishing via GitHub Actions must only be triggered from a merged release commit in `main` that was prepared by `release-please` automation:
+Publishing via GitHub Actions must only be triggered from a merged release commit in `main` prepared by `release-please`:
 
 - release intent is expressed via conventional commits or a merge title compatible with Conventional Commits
-- `release-please` automatically assembles a version bump and changelog in the release PR
-- final publish is triggered only after the generated release PR is merged
-- re-running the publish workflow for the same merged release commit must remain possible if a previous publish failed after the release PR was created
+- `release-please` assembles the version bump and changelog in release PR
+- final publish is triggered only after generated release PR is merged
+- rerunning publish workflow for same merged release commit must remain possible if a previous publish failed after release PR creation
 
-## 8. File generation requirements
+## File Generation Requirements
 
-### 8.1 Copy behavior
+### Copy Behavior
 
 The system must:
 
 - copy template files recursively
 - preserve directory structure
-- correctly create missing directories
+- create missing directories correctly
 
-### 8.2 Placeholder replacement
+### Placeholder Replacement
 
 The system must replace placeholders in template files, for example:
 
@@ -250,11 +252,11 @@ The system must replace placeholders in template files, for example:
 - `{{projectUrl}}`
 - `{{repositoryUrl}}`
 
-Environment-related placeholders (e.g. example env values) must also be substituted where present in template files.
+Environment-related placeholders, such as example env values, must also be substituted where present.
 
-The list of placeholders must be centralized and validated.
+The placeholder list must be centralized and validated.
 
-### 8.3 Special file rename
+### Special File Rename
 
 The system must support renaming special files, for example:
 
@@ -262,7 +264,7 @@ The system must support renaming special files, for example:
 - `_npmrc` → `.npmrc`
 - similar cases as needed
 
-### 8.4 JSON transforms
+### JSON Transforms
 
 The system must be able to structurally modify:
 
@@ -273,11 +275,11 @@ The system must be able to structurally modify:
 
 Avoid brittle string replace where parse/write is possible.
 
-## 9. Generated project requirements
+## Generated Project Requirements
 
-### 9.1 Baseline output structure
+### Baseline Output Structure
 
-The generated project in phase 1 must contain:
+Generated project in Phase 1 must contain:
 
 ```txt
 apps/
@@ -316,20 +318,20 @@ package.json
 README.md
 ```
 
-### 9.2 Baseline generated documents
+### Baseline Generated Documents
 
-Generated README files must be aligned with the generated structure and setup path.
+Generated README files must match generated structure and setup path.
 
-### 9.3 Baseline stack verification
+### Baseline Stack Verification
 
-Smoke verification for Phase 1 must confirm not only the presence of starter files, but also that:
+Smoke verification for Phase 1 must confirm not only starter files, but also that:
 
 - `apps/web` contains the expected Vite + React + Tailwind CSS v4 entry pattern (`index.html`, `src/main.tsx`, `src/App.tsx`, `src/index.css`, `vite.config.ts`) and shadcn-ready wiring (`components.json`, alias config, utility helper, starter UI component)
 - `apps/site` contains the expected Astro entry pattern (`astro.config.mjs`, `src/pages/index.astro`)
 - `apps/api` contains the expected minimal Hono entry pattern (`src/index.ts` with Hono app bootstrap)
 - `packages/` is created as an empty reserved directory with no additional files
 
-### 9.4 Package manager assumption
+### Package Manager Assumption
 
 Phase 1 package manager:
 
@@ -337,13 +339,13 @@ Phase 1 package manager:
 
 The CLI may run via npm/npx, and the output project must be designed for a monorepo based on npm workspaces.
 
-## 10. Post-setup requirements
+## Post-Setup Requirements
 
-### 10.1 Dependency installation
+### Dependency Installation
 
 If the user agrees, the CLI must execute dependency installation via `npm install`.
 
-### 10.2 Git initialization
+### Git Initialization
 
 If the user agrees, the CLI must:
 
@@ -351,20 +353,20 @@ If the user agrees, the CLI must:
 - create an initial `.gitignore` where possible
 - not fail silently on git errors
 
-### 10.3 Final summary
+### Final Summary
 
 After generation, the CLI must print:
 
 - what was created
-- that the baseline `base` preset was applied
+- that `base` preset was applied
 - that the project uses `npm`
 - whether dependencies were installed
 - whether git was initialized
-- what commands to run next
+- next commands to run
 
-## 11. Validation requirements
+## Validation Requirements
 
-### 11.1 Name validation
+### Name Validation
 
 The system must validate:
 
@@ -372,60 +374,60 @@ The system must validate:
 - npm-compatible package name
 - target directory conflicts
 
-### 11.2 Directory safety
+### Directory Safety
 
 The system must:
 
-- warn if the directory is not empty
+- warn if directory is not empty
 - allow safely aborting the process
 - avoid silently overwriting files
 
-### 11.3 Partial generation handling
+### Partial Generation Handling
 
 If generation was interrupted, the CLI must:
 
 - explicitly report what happened
-- where possible, indicate which files had already been created
-- not pretend that everything succeeded
-- where feasible, roll back partially created output; otherwise, honestly report the partial state
+- indicate which files were already created, where possible
+- not pretend everything succeeded
+- roll back partial output where feasible, otherwise honestly report partial state
 
-## 12. Preset extensibility requirements
+## Preset Extensibility Requirements
 
-The system must be structured so that a new preset can be added via:
+The system must be structured so a new preset can be added via:
 
 - a new template directory
 - a new preset metadata file
 - optional preset-specific transforms
 - optional preset-specific README instructions
 
-Without rewriting the entire generator.
+No full generator rewrite should be needed.
 
-## 13. Documentation generation requirements
+## Documentation Generation Requirements
 
-The generated project must contain:
+Generated project must contain:
 
 - root README
 - project-level README files for generated apps and packages
-- instructions aligned with the generated structure and setup path
+- instructions aligned with generated structure and setup path
 
-These README assets must be versioned template assets, not just strings hardcoded in the generator.
+These README assets must be versioned template assets, not strings hardcoded in generator.
 
-## 14. Implementation constraints
+## Implementation Constraints
 
-### 14.1 Simplicity first
+### Simplicity First
 
-The first phase does not require:
+Phase 1 does not require:
 
 - plugin system
 - remote template registry
 - template inheritance engine
 - complex migration system for previously generated projects
 
-### 14.2 Template-local truth
+### Template-Local Truth
 
-Where possible, the template must be self-contained. The generator must not assemble half the project from random string fragments scattered throughout the code.
+Where possible, the template must be self-contained. The generator must not assemble half the project from random string fragments scattered through code.
 
-### 14.3 Structured transforms over text hacks
+### Structured Transforms Over Text Hacks
 
 Where possible, prefer:
 
@@ -435,13 +437,13 @@ Where possible, prefer:
 
 over brittle regexp hacks on large files.
 
-## 15. Operational requirements
+## Operational Requirements
 
 The system must work in a normal local development environment:
 
 - macOS
 - Linux
-- Windows, where practically feasible
+- Windows, where practical
 
 Minimum requirements:
 
@@ -449,16 +451,16 @@ Minimum requirements:
 - filesystem access
 - package manager commands available for optional install steps
 
-For automated publishing, the following are also required:
+For automated publishing, these are also required:
 
 - GitHub Actions runner
 - npm trusted publishing via OIDC between GitHub Actions and npm
 
-## 16. Security and trust considerations
+## Security and Trust Considerations
 
 The initializer must not:
 
-- execute arbitrary remote code without an explicit user decision
+- execute arbitrary remote code without explicit user decision
 - download templates from unknown sources in the first version
 - replace dependency installation commands with opaque behavior
 
@@ -470,62 +472,51 @@ The GitHub Actions publish path must not:
 - store registry credentials in the repository or as a long-lived npm token for this workflow
 - execute publish from an unverified workflow path
 
-## 17. Main technical risks
+## Main Technical Risks
 
-### 17.1 Template drift
+### Template Drift
 
-README instructions and the actual template structure may begin to diverge.
+README instructions and actual template structure may diverge.
 
-### 17.2 Preset sprawl
+### Preset Sprawl
 
-As the number of presets grows, the generator may become difficult to maintain.
+As presets grow, the generator may become difficult to maintain.
 
-### 17.3 Over-abstraction
+### Over-Abstraction
 
-Premature "generator architecture" may make the code more complex than the task itself.
+Premature generator architecture may make the code more complex than the task.
 
-### 17.4 Coupling between CLI and templates
+### Coupling Between CLI and Templates
 
-If template logic is too deeply embedded in the generator code, it will become difficult to evolve templates independently.
+If template logic is too deeply embedded in generator code, template evolution becomes hard.
 
-### 17.5 Convex preset under-modeling
+### Convex Preset Under-Modeling
 
 If the Convex preset is made superficially, it will be architecturally dishonest.
 
-### 17.6 Release path drift
+### Release Path Drift
 
-The local release-check and GitHub Actions publish may diverge in steps and produce different results.
+Local release-check and GitHub Actions publish may diverge in steps and produce different results.
 
-### 17.7 Demo-template appearance
+### Demo-Template Appearance
 
-The generated project may look and feel like a toy demo rather than a production-ready baseline, discouraging adoption.
+Generated project may look like a toy demo instead of a production-ready baseline.
 
-### 17.8 Packaging drift on first release
+### Packaging Drift on First Release
 
-The first public npm publish may be broken if the packed artifact does not include all required runtime output or template assets, or if the bin entrypoint is misconfigured.
+First public npm publish may break if packed artifact misses required runtime output or template assets, or if the bin entrypoint is misconfigured.
 
-## 18. Recommended implementation guardrails
+## Recommended Implementation Guardrails
 
 1. One create-package.
-2. One strong `base` preset in the first version.
-3. Add `convex-realtime` as a separate preset, not a flag.
-4. Store templates inside the package at the start.
-5. Minimize the number of required questions to the user.
-6. Root and project-level READMEs must reside alongside the generated code.
+2. One strong `base` preset in first version.
+3. Add `convex-realtime` as separate preset, not a flag.
+4. Store templates inside package at start.
+5. Minimize number of required user questions.
+6. Root and project-level READMEs must live alongside generated code.
 7. Structural transforms are preferred over string hacks.
-8. Package manager for phase 1 — `npm`.
+8. Phase 1 package manager is `npm`.
 9. Phase 1 baseline relies only on npm workspaces.
-10. Errors must be clear and must not be masked.
-11. The generator must create a baseline, not attempt to generate the entire world.
-12. GitHub Actions publish must use the same release gates as the local release-check.
-
-## 19. Suggested next implementation step
-
-The next practical step after these documents:
-
-- design the structure of the CLI repository itself
-- create the `base` template with workspace manifests and starter files for `web/site/api`
-- implement prompts + copy + transforms + post-setup
-- verify the end-to-end `npm init …` scenario
-- add release-check and GitHub Actions publish workflow for the public npm package
-- after stabilization, add the `convex-realtime` preset
+10. Errors must be clear and not masked.
+11. Generator must create a baseline, not attempt to generate everything.
+12. GitHub Actions publish must use same release gates as local release-check.
