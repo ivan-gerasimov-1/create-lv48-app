@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.1](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.7.0...create-lv48-app-v0.7.1) (2026-04-14)
+
+
+### Bug Fixes
+
+* add build step to publish workflow before npm release ([0526a6a](https://github.com/ivan-gerasimov-1/create-lv48-app/commit/0526a6af1aed050da891c0c18b6bb1473d5e380f))
+
 ## [0.7.0](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.6.0...create-lv48-app-v0.7.0) (2026-04-14)
 
 
