@@ -1,29 +1,12 @@
 import { describe, it, expect } from "vitest";
 
-import { createPromptController } from "../src/prompts/index.js";
 import {
   validatePackageName,
   validateProjectName,
   validateTargetDirectory,
-} from "../src/utils/validation.js";
-import { createPromptIoMock } from "./helpers.js";
+} from "./validation.js";
 
-describe("prompts", () => {
-  it("collects phase 1 prompt answers without package manager or preset prompts", async () => {
-    let controller = createPromptController(createPromptIoMock());
-
-    expect(await controller.collectAnswers("fallback-name")).toEqual({
-      projectName: "demo-app",
-      packageName: "demo-app",
-      displayName: "Demo App",
-      targetDirectory: "demo-directory",
-      packageManager: "npm",
-      presetId: "base",
-      installDependencies: true,
-      initializeGit: false,
-    });
-  });
-
+describe("validation", () => {
   it("validates project, package, and target directory inputs", () => {
     expect(validateProjectName("demo-app")).toEqual({
       ok: true,
