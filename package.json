@@ -52,11 +52,9 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "release:publish": "node ./scripts/releasePublish.mjs",
-    "release:check": "node ./scripts/releaseCheck.mjs",
-    "release:verify-pack": "node ./scripts/verifyPack.mjs",
-    "test": "node --import ./scripts/tsTestRegister.mjs --test \"tests/**/*.test.ts\" \".github/scripts/**/*.test.ts\"",
-    "test:watch": "node ./scripts/watchTests.mjs"
+    "release:publish": "npm publish",
+    "test": "node --import ./scripts/tsTestRegister.js --test \"tests/**/*.test.ts\" \".github/scripts/**/*.test.ts\"",
+    "test:watch": "node ./scripts/watchTests.js"
   },
   "devDependencies": {
     "@types/node": "24.6.1",
