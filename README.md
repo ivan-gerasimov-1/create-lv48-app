@@ -72,14 +72,6 @@ Run the full release gate locally:
 npm run release:check
 ```
 
-This runs:
-
-- `npm run typecheck`
-- `npm run build`
-- `npm run test`
-- `npm run release:verify-pack`
-- `npm run release:smoke`
-
 ### Release Intent
 
 Release intent MUST stay compatible with `release-please`.
@@ -95,18 +87,6 @@ Supported release types:
 
 - `feat` -> minor
 - `fix` -> patch
-
-Non-release types:
-
-- `build`
-- `chore`
-- `ci`
-- `docs`
-- `refactor`
-- `style`
-- `test`
-
-`validateReleaseIntent.yml` checks PR title first, then commit messages when title is not canonical.
 
 ### Publish Flow
 
