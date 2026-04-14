@@ -11,15 +11,17 @@ import {
   getInstalledSmokeCliPath,
 } from '../dist/release/smoke.js';
 
-const execFileAsync = promisify(execFile);
+let execFileAsync = promisify(execFile);
+
+const ENTRYPOINT_TIMEOUT_MS = 30_000;
 
 await main();
 
 async function main() {
-  const smokePaths = await createReleaseSmokePaths();
+  let smokePaths = await createReleaseSmokePaths();
 
   try {
-    const tarballPath = await packArtifact(smokePaths.packDirectory, smokePaths.npmCacheDirectory);
+    let tarballPath = await packArtifact(smokePaths.packDirectory, smokePaths.npmCacheDirectory);
     await installTarball(tarballPath, smokePaths.installDirectory, smokePaths.npmCacheDirectory);
     await verifyPublishedEntrypointStarts(smokePaths.installDirectory, smokePaths.runDirectory);
     await scaffoldFromInstalledPackage(smokePaths.installDirectory, smokePaths.runDirectory);
@@ -31,7 +33,7 @@ async function main() {
 }
 
 async function packArtifact(packDirectory, npmCacheDirectory) {
-  const { stdout } = await execFileAsync(
+  let { stdout } = await execFileAsync(
     'npm',
     ['pack', '--json', '--pack-destination', packDirectory, '--cache', npmCacheDirectory],
     {
@@ -42,13 +44,13 @@ async function packArtifact(packDirectory, npmCacheDirectory) {
       },
     },
   );
-  const parsed = JSON.parse(stdout);
+  let parsed = JSON.parse(stdout);
 
   if (!Array.isArray(parsed) || parsed.length === 0) {
     throw new Error('npm pack did not return tarball metadata.');
   }
 
-  const [firstEntry] = parsed;
+  let [firstEntry] = parsed;
 
   if (!firstEntry || typeof firstEntry.filename !== 'string') {
     throw new Error('npm pack did not return a tarball filename.');
@@ -81,23 +83,31 @@ async function installTarball(tarballPath, installDirectory, npmCacheDirectory) 
 }
 
 async function verifyPublishedEntrypointStarts(installDirectory, runDirectory) {
-  const executablePath = getInstalledSmokeCliPath(installDirectory);
+  let executablePath = getInstalledSmokeCliPath(installDirectory);
 
   await new Promise((resolve, reject) => {
-    const child = spawn(executablePath, {
+    let child = spawn(executablePath, {
       cwd: runDirectory,
       stdio: ['pipe', 'pipe', 'pipe'],
     });
 
     let stdout = '';
     let stderr = '';
-    let resolved = false;
+    let started = false;
+
+    let timer = setTimeout(() => {
+      child.kill();
+      reject(new Error(
+        `CLI did not produce expected output within ${ENTRYPOINT_TIMEOUT_MS}ms.\nstdout: ${stdout}\nstderr: ${stderr}`,
+      ));
+    }, ENTRYPOINT_TIMEOUT_MS);
 
     child.stdout.on('data', (chunk) => {
       stdout += String(chunk);
 
-      if (!resolved && stdout.includes('Project name')) {
-        resolved = true;
+      if (!started && stdout.includes('Project name')) {
+        started = true;
+        clearTimeout(timer);
         child.kill();
       }
     });
@@ -107,11 +117,14 @@ async function verifyPublishedEntrypointStarts(installDirectory, runDirectory) {
     });
 
     child.on('error', (error) => {
+      clearTimeout(timer);
       reject(error);
     });
 
     child.on('close', (code) => {
-      if (resolved) {
+      clearTimeout(timer);
+
+      if (started) {
         resolve(undefined);
         return;
       }
@@ -126,8 +139,8 @@ async function verifyPublishedEntrypointStarts(installDirectory, runDirectory) {
 }
 
 async function scaffoldFromInstalledPackage(installDirectory, runDirectory) {
-  const cliModulePath = path.join(installDirectory, 'node_modules', 'create-lv48-app', 'dist', 'cli.js');
-  const { runCli } = await import(pathToFileURL(cliModulePath).href);
+  let cliModulePath = path.join(installDirectory, 'node_modules', 'create-lv48-app', 'dist', 'cli.js');
+  let { runCli } = await import(pathToFileURL(cliModulePath).href);
 
   await runCli({
     cwd: runDirectory,
@@ -155,7 +168,7 @@ async function scaffoldFromInstalledPackage(installDirectory, runDirectory) {
 }
 
 async function verifyGeneratedProject(generatedProjectRoot) {
-  const expectedPaths = [
+  let expectedPaths = [
     'README.md',
     'apps/api/src/index.ts',
     'apps/site/src/pages/index.astro',
@@ -163,9 +176,9 @@ async function verifyGeneratedProject(generatedProjectRoot) {
     'package.json',
   ];
 
-  for (const relativePath of expectedPaths) {
-    const targetPath = path.join(generatedProjectRoot, relativePath);
-    const fileStats = await stat(targetPath);
+  for (let relativePath of expectedPaths) {
+    let targetPath = path.join(generatedProjectRoot, relativePath);
+    let fileStats = await stat(targetPath);
 
     if (!fileStats.isFile()) {
       throw new Error(`Expected generated file is missing: ${targetPath}`);

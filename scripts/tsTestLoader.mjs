@@ -4,7 +4,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 import typescript from 'typescript';
 
-const { ModuleKind, ScriptTarget, transpileModule } = typescript;
+let { ModuleKind, ScriptTarget, transpileModule } = typescript;
 
 export async function resolve(specifier, context, nextResolve) {
   if (hasTypeScriptExtension(specifier)) {
@@ -15,7 +15,7 @@ export async function resolve(specifier, context, nextResolve) {
   }
 
   if (isRelativeOrAbsolute(specifier) && specifier.endsWith('.js')) {
-    const typeScriptUrl = await resolveTypeScriptSibling(specifier, context.parentURL);
+    let typeScriptUrl = await resolveTypeScriptSibling(specifier, context.parentURL);
 
     if (typeScriptUrl !== undefined) {
       return {
@@ -33,19 +33,20 @@ export async function load(url, context, nextLoad) {
     return nextLoad(url, context);
   }
 
-  const source = await readFile(fileURLToPath(url), 'utf8');
-  const result = transpileModule(source, {
+  let isCts = url.endsWith('.cts');
+  let source = await readFile(fileURLToPath(url), 'utf8');
+  let result = transpileModule(source, {
     compilerOptions: {
-      module: ModuleKind.ESNext,
+      module: isCts ? ModuleKind.CommonJS : ModuleKind.ESNext,
       inlineSourceMap: true,
       target: ScriptTarget.ES2022,
-      verbatimModuleSyntax: true,
+      verbatimModuleSyntax: !isCts,
     },
     fileName: fileURLToPath(url),
   });
 
   return {
-    format: 'module',
+    format: isCts ? 'commonjs' : 'module',
     shortCircuit: true,
     source: result.outputText,
   };
@@ -72,15 +73,19 @@ function resolveTypeScriptSpecifierUrl(specifier, parentUrl) {
 }
 
 async function resolveTypeScriptSibling(specifier, parentUrl) {
-  const resolvedUrl = new URL(specifier, parentUrl);
-  const resolvedPath = fileURLToPath(resolvedUrl);
-  const extension = path.extname(resolvedPath);
-  const basePath = resolvedPath.slice(0, -extension.length);
-  const candidates = ['.ts', '.mts', '.cts'].map((candidateExtension) =>
+  if (typeof parentUrl !== 'string') {
+    return undefined;
+  }
+
+  let resolvedUrl = new URL(specifier, parentUrl);
+  let resolvedPath = fileURLToPath(resolvedUrl);
+  let extension = path.extname(resolvedPath);
+  let basePath = resolvedPath.slice(0, -extension.length);
+  let candidates = ['.ts', '.mts', '.cts'].map((candidateExtension) =>
     pathToFileURL(`${basePath}${candidateExtension}`).href,
   );
 
-  for (const candidateUrl of candidates) {
+  for (let candidateUrl of candidates) {
     if (await fileExists(fileURLToPath(candidateUrl))) {
       return candidateUrl;
     }

@@ -8,22 +8,21 @@ import { promisify } from 'node:util';
 
 import { buildExpectedPackedFiles, verifyPackedFiles } from '../dist/release/verifyPack.js';
 
-const execFileAsync = promisify(execFile);
+let execFileAsync = promisify(execFile);
 
 await main();
 
 async function main() {
-  const cacheDirectory = await mkdtemp(path.join(os.tmpdir(), 'lv48-npm-cache-'));
+  let cacheDirectory = await mkdtemp(path.join(os.tmpdir(), 'lv48-npm-cache-'));
 
   try {
-    const files = await loadPackedFiles(cacheDirectory);
-    const expectedFiles = await buildExpectedPackedFiles(process.cwd());
-    const result = verifyPackedFiles(files, expectedFiles);
+    let files = await loadPackedFiles(cacheDirectory);
+    let expectedFiles = await buildExpectedPackedFiles(process.cwd());
+    let result = verifyPackedFiles(files, expectedFiles);
 
     if (result.missingFiles.length > 0 || result.unexpectedFiles.length > 0) {
       printFailure(result);
-      process.exitCode = 1;
-      return;
+      throw new Error('Packed artifact does not match the expected public file contract.');
     }
 
     console.log('Packed artifact matches the expected public file contract.');
@@ -33,7 +32,7 @@ async function main() {
 }
 
 async function loadPackedFiles(cacheDirectory) {
-  const { stdout } = await execFileAsync(
+  let { stdout } = await execFileAsync(
     'npm',
     ['pack', '--dry-run', '--json', '--cache', cacheDirectory],
     {
@@ -44,13 +43,13 @@ async function loadPackedFiles(cacheDirectory) {
       },
     },
   );
-  const parsed = JSON.parse(stdout);
+  let parsed = JSON.parse(stdout);
 
   if (!Array.isArray(parsed) || parsed.length === 0) {
     throw new Error('npm pack --dry-run returned no tarball metadata.');
   }
 
-  const [firstEntry] = parsed;
+  let [firstEntry] = parsed;
 
   if (!firstEntry || !Array.isArray(firstEntry.files)) {
     throw new Error('npm pack --dry-run did not return a files list.');
@@ -62,14 +61,14 @@ async function loadPackedFiles(cacheDirectory) {
 function printFailure(result) {
   if (result.missingFiles.length > 0) {
     console.error('Missing required packed files:');
-    for (const filePath of result.missingFiles) {
+    for (let filePath of result.missingFiles) {
       console.error(`- ${filePath}`);
     }
   }
 
   if (result.unexpectedFiles.length > 0) {
     console.error('Unexpected packed files outside the public contract:');
-    for (const filePath of result.unexpectedFiles) {
+    for (let filePath of result.unexpectedFiles) {
       console.error(`- ${filePath}`);
     }
   }
