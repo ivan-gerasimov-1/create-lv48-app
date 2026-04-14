@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.7.0](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.6.0...create-lv48-app-v0.7.0) (2026-04-14)
+
+
+### Features
+
+* add interactive mode and filters to deps:update script ([5d2bfb7](https://github.com/ivan-gerasimov-1/create-lv48-app/commit/5d2bfb77d6749c573e52076f21bfe57fda326466))
+* enable TypeScript declaration file generation in build config ([8b63835](https://github.com/ivan-gerasimov-1/create-lv48-app/commit/8b63835cc575bb22f74d15e74e4de5dd9c16de8a))
+* multi-project workspace layout support ([#17](https://github.com/ivan-gerasimov-1/create-lv48-app/issues/17)) ([dfda518](https://github.com/ivan-gerasimov-1/create-lv48-app/commit/dfda5189ce6692c7c94beda52a24fc6c8b1c2aee))
+
 ## [0.6.0](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.5.0...create-lv48-app-v0.6.0) (2026-04-14)
 
 
