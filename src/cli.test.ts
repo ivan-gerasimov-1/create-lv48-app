@@ -3,14 +3,14 @@ import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, it, expect } from "vitest";
 
-import { runCli } from "../src/cli.js";
-import { createPromptController } from "../src/prompts/index.js";
+import { runCli } from "./cli.js";
+import { createPromptController } from "./prompts/index.js";
 import {
   listRelativeFiles,
   readUtf8File,
   removePaths,
-} from "../src/utils/fs.js";
-import { assertContains, createPromptIoMock } from "./helpers.js";
+} from "./utils/fs.js";
+import { assertContains, createPromptIoMock } from "../tests/helpers.js";
 
 let cleanupPaths: string[] = [];
 
