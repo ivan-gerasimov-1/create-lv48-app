@@ -2,7 +2,7 @@
 
 ## Overview
 
-CLI initializer for a new project from one predefined architecture.
+CLI initializer for creating a new project from one predefined architecture.
 
 Invocation:
 
@@ -14,7 +14,7 @@ npm init lv48-app
 npx create-lv48-app
 ```
 
-If final package name changes, same document still applies. Only name and invocation syntax change.
+If package name changes, this document still applies. Only name and invocation syntax change.
 
 Phase 1 baseline:
 
@@ -28,7 +28,7 @@ Phase 2 adds separate `convex-realtime` preset.
 
 ## Problem
 
-New project start repeats same work:
+New project start repeats the same work:
 
 - create monorepo
 - configure npm workspaces
@@ -42,7 +42,7 @@ This slows start, adds noise, and increases early structural mistakes.
 
 ## Goals
 
-The initializer must:
+The initializer MUST:
 
 - create project with one command
 - provide stable architectural baseline
@@ -53,7 +53,7 @@ The initializer must:
 
 ## Non-Goals
 
-Phase 1 must not:
+Phase 1 MUST NOT:
 
 - generate production-ready business logic
 - cover every architecture variant
@@ -96,7 +96,7 @@ Team that:
 
 ### Phase 1
 
-The initializer must:
+The initializer MUST:
 
 - create project from baseline preset
 - work as `npm init ...` and `npx create-...`
@@ -114,11 +114,11 @@ The initializer must:
 
 ### Phase 2
 
-Add one preset:
+The initializer MUST support one preset:
 
 - `convex-realtime`
 
-This preset must be separate architectural branch, not one extra library on top of base.
+This preset MUST be separate architectural branch, not one extra library on top of base.
 
 ### Out of Scope
 
@@ -153,7 +153,7 @@ This preset must be separate architectural branch, not one extra library on top 
 
 ### CLI Entrypoint
 
-The system must:
+The system MUST:
 
 - run via `npm init <name>`
 - run via `npx create-<name>`
@@ -162,7 +162,7 @@ The system must:
 
 ### Template Generation
 
-The system must:
+The system MUST:
 
 - copy baseline template
 - support placeholder replacement
@@ -172,7 +172,7 @@ The system must:
 
 ### Presets
 
-The system must:
+The system MUST:
 
 - support `base` in Phase 1
 - allow `convex-realtime` later
@@ -180,7 +180,7 @@ The system must:
 
 ### Metadata Interpolation
 
-The system must substitute:
+The system MUST substitute:
 
 - project name
 - package names
@@ -191,7 +191,7 @@ The system must substitute:
 
 ### Generated Architecture
 
-Phase 1 scaffold must include:
+Phase 1 scaffold MUST include:
 
 - `apps/web`
 - `apps/site`
@@ -202,14 +202,14 @@ Phase 1 scaffold must include:
 
 ### Generated Documentation
 
-The initializer must generate or copy:
+The initializer MUST generate or copy:
 
 - root `README.md`
 - `README.md` inside generated applications
 
 ### Post-Generation Actions
 
-The initializer must be able to:
+The initializer MUST be able to:
 
 - install dependencies at user choice
 - initialize git at user choice
@@ -217,7 +217,7 @@ The initializer must be able to:
 
 ### Error Handling
 
-The system must:
+The system MUST:
 
 - handle directory conflicts gracefully
 - validate project name / package name
@@ -226,7 +226,7 @@ The system must:
 
 ### Package Release and Distribution
 
-The delivery system must:
+The delivery system MUST:
 
 - publish `create-lv48-app` as public npm package
 - include correct registry-facing metadata, including `MIT`
@@ -259,13 +259,13 @@ This preset may change:
 - generated README instructions
 - runtime structure
 
-It must not be a checkbox on top of base if it is architecturally a different foundation.
+It MUST not be a checkbox on top of base if it is architecturally a different foundation.
 
 ## Non-Functional Requirements
 
 ### Maintainability
 
-The initializer must be:
+The initializer MUST be:
 
 - easy to maintain
 - clear in structure
@@ -274,15 +274,15 @@ The initializer must be:
 
 ### Predictability
 
-Same input must produce predictable output.
+Same input MUST produce predictable output.
 
 ### Versioning Clarity
 
-CLI version and generated template output version must be transparently linked.
+CLI version and generated template output version MUST be transparently linked.
 
 ### Release Safety
 
-Publish path must be:
+Publish path MUST be:
 
 - reproducible
 - verifiable before publish
@@ -290,7 +290,7 @@ Publish path must be:
 
 ### Developer Experience
 
-Usage experience must be:
+Usage experience MUST be:
 
 - fast
 - clear

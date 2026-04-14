@@ -14,7 +14,7 @@ npm init lv48-app
 npx create-lv48-app
 ```
 
-The CLI must:
+The CLI MUST:
 
 - accept user input
 - select a preset
@@ -24,7 +24,7 @@ The CLI must:
 
 ## Goals
 
-The system must:
+The system MUST:
 
 - create baseline SaaS monorepo based on npm workspaces with one command
 - support preset-based architecture
@@ -36,7 +36,7 @@ The system must:
 
 ### Package Type
 
-The initializer must be published as:
+The initializer MUST be published as:
 
 - `create-lv48-app`
 
@@ -46,7 +46,7 @@ The CLI runs in Node.js and uses local filesystem for project generation.
 
 ### Release Model
 
-Package publishing must rely on a reproducible release pipeline. Local release-check and GitHub Actions workflow must use same verification gates before `npm publish`.
+Package publishing MUST rely on a reproducible release pipeline. Local release-check and GitHub Actions workflow MUST use same verification gates before `npm publish`.
 
 Automation path:
 
@@ -94,9 +94,9 @@ create-lv48-app/
   README.md
 ```
 
-`src/presets` and `templates` may be merged if that simplifies implementation, but presets must remain explicit.
+`src/presets` and `templates` may be merged if that simplifies implementation, but presets MUST remain explicit.
 
-Repository-level release assets must also exist:
+Repository-level release assets MUST also exist:
 
 - `.github/workflows/` for publish workflow
 - documented release procedure
@@ -117,7 +117,7 @@ Add preset:
 
 ### Isolation
 
-Each preset must:
+Each preset MUST:
 
 - have its own template structure
 - have its own metadata and rules
@@ -126,7 +126,7 @@ Each preset must:
 
 ## Template Structure
 
-Each template must contain a complete starter monorepo.
+Each template MUST contain a complete starter monorepo.
 
 ### Base Template Structure
 
@@ -170,11 +170,11 @@ templates/base/
   .env.example
 ```
 
-`packages/` must exist as empty directory with no marker files. It is reserved for future shared workspaces.
+`packages/` MUST exist as empty directory with no marker files. It is reserved for future shared workspaces.
 
 ### Template Metadata
 
-`template.json` must describe at minimum:
+`template.json` MUST describe at minimum:
 
 - preset id
 - preset display name
@@ -186,7 +186,7 @@ templates/base/
 
 ### Invocation
 
-The CLI must support:
+The CLI MUST support:
 
 - `npm init ...`
 - `npx create-...`
@@ -194,14 +194,14 @@ The CLI must support:
 
 ### Prompts
 
-The CLI must be able to ask:
+The CLI MUST be able to ask:
 
 - project name
 - target directory
 - install dependencies? (`yes/no`)
 - initialize git? (`yes/no`)
 
-In Phase 1, `base` must be default preset without a separate prompt. Some values may default and remain unasked during non-interactive runs, if supported.
+In Phase 1, `base` MUST be default preset without a separate prompt. Some values may default and remain unasked during non-interactive runs, if supported.
 
 ### Non-Interactive Support
 
@@ -209,7 +209,7 @@ Non-interactive mode is desirable later, but not required for the first version.
 
 ### Published Artifact
 
-The published npm artifact must:
+The published npm artifact MUST:
 
 - contain a working `bin` entrypoint
 - contain compiled runtime output
@@ -220,18 +220,18 @@ The published npm artifact must:
 
 ### Release Trigger
 
-Publishing via GitHub Actions must only be triggered from a merged release commit in `main` prepared by `release-please`:
+Publishing via GitHub Actions MUST only be triggered from a merged release commit in `main` prepared by `release-please`:
 
 - release intent is expressed via conventional commits or a merge title compatible with Conventional Commits
 - `release-please` assembles the version bump and changelog in release PR
 - final publish is triggered only after generated release PR is merged
-- rerunning publish workflow for same merged release commit must remain possible if a previous publish failed after release PR creation
+- rerunning publish workflow for same merged release commit MUST remain possible if a previous publish failed after release PR creation
 
 ## File Generation
 
 ### Copy Behavior
 
-The system must:
+The system MUST:
 
 - copy template files recursively
 - preserve directory structure
@@ -239,7 +239,7 @@ The system must:
 
 ### Placeholder Replacement
 
-The system must replace placeholders in template files, for example:
+The system MUST replace placeholders in template files, for example:
 
 - `{{projectName}}`
 - `{{packageName}}`
@@ -250,13 +250,13 @@ The system must replace placeholders in template files, for example:
 - `{{projectUrl}}`
 - `{{repositoryUrl}}`
 
-Environment-related placeholders, such as example env values, must also be substituted where present.
+Environment-related placeholders, such as example env values, MUST also be substituted where present.
 
-The placeholder list must be centralized and validated.
+The placeholder list MUST be centralized and validated.
 
 ### Special File Rename
 
-The system must support renaming special files, for example:
+The system MUST support renaming special files, for example:
 
 - `_gitignore` → `.gitignore`
 - `_npmrc` → `.npmrc`
@@ -264,7 +264,7 @@ The system must support renaming special files, for example:
 
 ### JSON Transforms
 
-The system must be able to structurally modify:
+The system MUST be able to structurally modify:
 
 - root `package.json`
 - workspace package names
@@ -277,7 +277,7 @@ Avoid brittle string replace where parse/write is possible.
 
 ### Baseline Output
 
-Generated project in Phase 1 must contain:
+Generated project in Phase 1 MUST contain:
 
 ```txt
 apps/
@@ -318,11 +318,11 @@ README.md
 
 ### Generated Documents
 
-Generated README files must match generated structure and setup path.
+Generated README files MUST match generated structure and setup path.
 
 ### Stack Verification
 
-Smoke verification for Phase 1 must confirm not only starter files, but also that:
+Smoke verification for Phase 1 MUST confirm not only starter files, but also that:
 
 - `apps/web` contains the expected Vite + React + Tailwind CSS v4 entry pattern (`index.html`, `src/main.tsx`, `src/App.tsx`, `src/index.css`, `vite.config.ts`) and shadcn-ready wiring (`components.json`, alias config, utility helper, starter UI component)
 - `apps/site` contains the expected Astro entry pattern (`astro.config.mjs`, `src/pages/index.astro`)
@@ -335,17 +335,17 @@ Phase 1 package manager:
 
 - `npm`
 
-The CLI may run via npm/npx, and the output project must be designed for a monorepo based on npm workspaces.
+The CLI may run via npm/npx, and the output project MUST be designed for a monorepo based on npm workspaces.
 
 ## Post-Setup
 
 ### Dependency Installation
 
-If the user agrees, the CLI must execute dependency installation via `npm install`.
+If the user agrees, the CLI MUST execute dependency installation via `npm install`.
 
 ### Git Initialization
 
-If the user agrees, the CLI must:
+If the user agrees, the CLI MUST:
 
 - execute `git init`
 - create an initial `.gitignore` where possible
@@ -353,7 +353,7 @@ If the user agrees, the CLI must:
 
 ### Final Summary
 
-After generation, the CLI must print:
+After generation, the CLI MUST print:
 
 - what was created
 - that `base` preset was applied
@@ -366,7 +366,7 @@ After generation, the CLI must print:
 
 ### Name Validation
 
-The system must validate:
+The system MUST validate:
 
 - project name
 - npm-compatible package name
@@ -374,7 +374,7 @@ The system must validate:
 
 ### Directory Safety
 
-The system must:
+The system MUST:
 
 - warn if directory is not empty
 - allow safely aborting the process
@@ -382,7 +382,7 @@ The system must:
 
 ### Partial Generation
 
-If generation was interrupted, the CLI must:
+If generation was interrupted, the CLI MUST:
 
 - explicitly report what happened
 - indicate which files were already created, where possible
@@ -391,7 +391,7 @@ If generation was interrupted, the CLI must:
 
 ## Extensibility
 
-The system must be structured so a new preset can be added via:
+The system MUST be structured so a new preset can be added via:
 
 - a new template directory
 - a new preset metadata file
@@ -402,13 +402,13 @@ No full generator rewrite should be needed.
 
 ## Documentation
 
-Generated project must contain:
+Generated project MUST contain:
 
 - root README
 - project-level README files for generated apps and packages
 - instructions aligned with generated structure and setup path
 
-These README assets must be versioned template assets, not strings hardcoded in generator.
+These README assets MUST be versioned template assets, not strings hardcoded in generator.
 
 ## Implementation Constraints
 
@@ -423,7 +423,7 @@ Phase 1 does not require:
 
 ### Template-Local Truth
 
-Where possible, the template must be self-contained. The generator must not assemble half the project from random string fragments scattered through code.
+Where possible, the template MUST be self-contained. The generator MUST not assemble half the project from random string fragments scattered through code.
 
 ### Structured Transforms Over Text Hacks
 
@@ -437,7 +437,7 @@ over brittle regexp hacks on large files.
 
 ## Operational Requirements
 
-The system must work in a normal local development environment:
+The system MUST work in a normal local development environment:
 
 - macOS
 - Linux
@@ -456,15 +456,15 @@ For automated publishing, these are also required:
 
 ## Security and Trust
 
-The initializer must not:
+The initializer MUST not:
 
 - execute arbitrary remote code without explicit user decision
 - download templates from unknown sources in the first version
 - replace dependency installation commands with opaque behavior
 
-All post-setup actions must be explicit and expected.
+All post-setup actions MUST be explicit and expected.
 
-The GitHub Actions publish path must not:
+The GitHub Actions publish path MUST not:
 
 - publish the package without passing verification gates
 - store registry credentials in the repository or as a long-lived npm token for this workflow
