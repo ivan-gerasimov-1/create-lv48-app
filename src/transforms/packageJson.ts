@@ -1,6 +1,6 @@
-import path from 'node:path';
+import path from "node:path";
 
-import type { TGenerationContext } from '../generate/types.js';
+import type { TGenerationContext } from "../generate/types.js";
 
 export function transformPackageJson(
   relativePath: string,
@@ -24,16 +24,41 @@ export function transformPackageJson(
   let nextValue = { ...parsedValue };
   let segments = relativePath.split(path.sep);
 
-  if (relativePath === 'package.json') {
+  if (relativePath === "package.json") {
     nextValue.name = context.answers.packageName;
-    nextValue.packageManager = 'npm';
+    nextValue.packageManager = "npm";
+
+    if (context.answers.workspaceLayout === "multi") {
+      nextValue.workspaces = ["apps/*/*", "packages/*"];
+    } else {
+      nextValue.workspaces = ["apps/*", "packages/*"];
+    }
   }
 
-  if (segments[0] === 'apps' || segments[0] === 'packages') {
-    let segmentName = segments[1];
+  if (segments[0] === "apps") {
+    if (
+      context.answers.workspaceLayout === "multi" &&
+      context.answers.appProjectName
+    ) {
+      let workspaceName = segments[2];
 
-    if (typeof segmentName === 'string' && segmentName.length > 0) {
-      nextValue.name = `@${context.answers.packageName}/${segmentName}`;
+      if (typeof workspaceName === "string" && workspaceName.length > 0) {
+        nextValue.name = `@${context.answers.appProjectName}/${workspaceName}`;
+      }
+    } else {
+      let workspaceName = segments[1];
+
+      if (typeof workspaceName === "string" && workspaceName.length > 0) {
+        nextValue.name = `@${context.answers.packageName}/${workspaceName}`;
+      }
+    }
+  }
+
+  if (segments[0] === "packages") {
+    let packageName = segments[1];
+
+    if (typeof packageName === "string" && packageName.length > 0) {
+      nextValue.name = `@${context.answers.packageName}/${packageName}`;
     }
   }
 
@@ -41,5 +66,5 @@ export function transformPackageJson(
 }
 
 function isJsonObject(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value);
+  return typeof value === "object" && value !== null && !Array.isArray(value);
 }

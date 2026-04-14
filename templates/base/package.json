@@ -11,9 +11,9 @@
     "packages/*"
   ],
   "scripts": {
-    "dev:web": "npm run dev --workspace @{{packageName}}/web",
-    "dev:site": "npm run dev --workspace @{{packageName}}/site",
-    "dev:api": "npm run dev --workspace @{{packageName}}/api",
+    "dev:web": "npm run dev --workspace {{webPackageName}}",
+    "dev:site": "npm run dev --workspace {{sitePackageName}}",
+    "dev:api": "npm run dev --workspace {{apiPackageName}}",
     "build": "npm run build --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
     "test": "npm run test --workspaces --if-present"

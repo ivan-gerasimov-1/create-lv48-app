@@ -12,7 +12,12 @@
     "targetDirectory",
     "webPackageName",
     "sitePackageName",
-    "apiPackageName"
+    "apiPackageName",
+    "webWorkspacePath",
+    "siteWorkspacePath",
+    "apiWorkspacePath",
+    "workspaceLayout",
+    "appProjectName"
   ],
   "postGeneration": {
     "installDependencies": true,

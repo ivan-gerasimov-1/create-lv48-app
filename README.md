@@ -23,6 +23,8 @@ The initializer prompts for:
 
 - project name
 - target directory
+- workspace layout (single or multi)
+- first app project name (only for multi layout)
 - install dependencies
 - initialize git
 
@@ -30,7 +32,9 @@ The initializer prompts for:
 
 ## Scaffold
 
-The `base` preset generates an npm workspaces monorepo:
+The `base` preset generates an npm workspaces monorepo.
+
+### Single-project layout (default)
 
 ```txt
 <project>/
@@ -41,6 +45,29 @@ The `base` preset generates an npm workspaces monorepo:
 ├── packages/    # reserved for future shared workspaces
 └── package.json # root workspace manifest
 ```
+
+Root workspaces: `["apps/*", "packages/*"]`
+
+App packages: `@<rootPackage>/web`, `@<rootPackage>/site`, `@<rootPackage>/api`
+
+### Multi-project layout
+
+```txt
+<project>/
+├── apps/
+│   └── <appProjectName>/
+│       ├── web/     # React + Vite + Tailwind CSS v4, shadcn-ready
+│       ├── site/    # Astro
+│       └── api/     # Node + Hono
+├── packages/        # reserved for future shared workspaces
+└── package.json     # root workspace manifest
+```
+
+Root workspaces: `["apps/*/*", "packages/*"]`
+
+App packages: `@<appProjectName>/web`, `@<appProjectName>/site`, `@<appProjectName>/api`
+
+Shared packages always use `@<rootPackage>/<packageFolder>` regardless of layout.
 
 Generated package manifests set `engines.node` to `>=24.0.0`.
 

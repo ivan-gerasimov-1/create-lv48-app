@@ -1,11 +1,11 @@
-import path from 'node:path';
-import { mkdir, readdir } from 'node:fs/promises';
+import path from "node:path";
+import { mkdir, readdir } from "node:fs/promises";
 
 import type {
   TGenerationContext,
   TGenerationRecord,
   TGenerationRunner,
-} from './types.js';
+} from "./types.js";
 import {
   listRelativeDirectories,
   listRelativeFiles,
@@ -13,8 +13,8 @@ import {
   readUtf8File,
   removePaths,
   writeUtf8File,
-} from '../utils/fs.js';
-import type { TTransformPipeline } from '../transforms/index.js';
+} from "../utils/fs.js";
+import type { TTransformPipeline } from "../transforms/index.js";
 
 export function createGenerationRunner(
   transformPipeline: TTransformPipeline,
@@ -80,10 +80,17 @@ async function scaffoldTemplate(
 
   try {
     for (let relativeDirectory of relativeDirectories) {
-      let destinationRelativePath = transformPipeline.mapDestinationPath(relativeDirectory);
-      let destinationPath = path.join(context.targetRoot, destinationRelativePath);
+      let destinationRelativePath = transformPipeline.mapDestinationPath(
+        relativeDirectory,
+        context,
+      );
+      let destinationPath = path.join(
+        context.targetRoot,
+        destinationRelativePath,
+      );
       let wasCreated = createdDirectories.has(destinationPath);
-      let isPreexistingTargetRoot = destinationPath === context.targetRoot && targetRootExisted;
+      let isPreexistingTargetRoot =
+        destinationPath === context.targetRoot && targetRootExisted;
 
       if (wasCreated || isPreexistingTargetRoot) {
         continue;
@@ -95,10 +102,17 @@ async function scaffoldTemplate(
 
     for (let relativeFile of relativeFiles) {
       let sourcePath = path.join(templateRoot, relativeFile);
-      let destinationRelativePath = transformPipeline.mapDestinationPath(relativeFile);
-      let destinationPath = path.join(context.targetRoot, destinationRelativePath);
+      let destinationRelativePath = transformPipeline.mapDestinationPath(
+        relativeFile,
+        context,
+      );
+      let destinationPath = path.join(
+        context.targetRoot,
+        destinationRelativePath,
+      );
       let destinationDirectory = path.dirname(destinationPath);
-      let destinationDirectoryWasCreated = createdDirectories.has(destinationDirectory);
+      let destinationDirectoryWasCreated =
+        createdDirectories.has(destinationDirectory);
       let isPreexistingTargetRoot =
         destinationDirectory === context.targetRoot && targetRootExisted;
 
@@ -135,7 +149,7 @@ async function scaffoldTemplate(
 }
 
 function isPublicTemplatePath(relativePath: string): boolean {
-  return relativePath !== '_meta' && !relativePath.startsWith('_meta/');
+  return relativePath !== "_meta" && !relativePath.startsWith("_meta/");
 }
 
 export type {
@@ -143,4 +157,4 @@ export type {
   TGenerationRecord,
   TGenerationRunner,
   TPlaceholderValues,
-} from './types.js';
+} from "./types.js";
