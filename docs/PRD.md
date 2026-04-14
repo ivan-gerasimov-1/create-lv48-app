@@ -1,10 +1,10 @@
 # PRD — npm Template Initializer for TS-first SaaS
 
-## Product Overview
+## Overview
 
-CLI initializer for creating a new project from a predefined architecture with one command.
+CLI initializer for a new project from one predefined architecture.
 
-Invocation examples:
+Invocation:
 
 ```bash
 npm init lv48-app
@@ -14,7 +14,7 @@ npm init lv48-app
 npx create-lv48-app
 ```
 
-If final command name changes, this document still applies. Only package naming and invocation syntax change.
+If final package name changes, same document still applies. Only name and invocation syntax change.
 
 Phase 1 baseline:
 
@@ -22,13 +22,13 @@ Phase 1 baseline:
 - `site` - Astro public site
 - `api` - Node + Hono backend
 - `packages/` - empty reserved directory for future shared workspaces
-- root README and app-level READMEs with setup instructions
+- root README and app READMEs with setup instructions
 
-Phase 2 adds a separate preset for Convex / realtime-first apps.
+Phase 2 adds separate `convex-realtime` preset.
 
-## Problem Statement
+## Problem
 
-Starting a new project now means repeating the same setup work:
+New project start repeats same work:
 
 - create monorepo
 - configure npm workspaces
@@ -38,14 +38,14 @@ Starting a new project now means repeating the same setup work:
 - repeat conventions
 - align structure to chosen architecture
 
-That slows project start, adds noise, and increases early structural mistakes.
+This slows start, adds noise, and increases early structural mistakes.
 
-## Product Goals
+## Goals
 
 The initializer must:
 
-- create a project with one command
-- provide a stable architectural baseline
+- create project with one command
+- provide stable architectural baseline
 - reduce manual setup
 - encode architectural decisions in scaffold
 - prepare foundation for OpenSpec implementation
@@ -56,7 +56,7 @@ The initializer must:
 Phase 1 must not:
 
 - generate production-ready business logic
-- cover every possible architecture variant
+- cover every architecture variant
 - become a universal low-code builder
 - support lots of incompatible flags
 - ship a plugin ecosystem
@@ -64,9 +64,9 @@ Phase 1 must not:
 - auto-deploy the project
 - replace proper domain model design
 
-## Target Users
+## Users
 
-### Primary User
+### Primary
 
 Developer or product engineer who:
 
@@ -76,7 +76,7 @@ Developer or product engineer who:
 - wants one-command scaffold
 - continues work via OpenSpec pipeline
 
-### Secondary User
+### Secondary
 
 Team that:
 
@@ -84,7 +84,7 @@ Team that:
 - wants less manual setup
 - wants architectural rules fixed in template
 
-## Core Product Principles
+## Principles
 
 - Scaffold, not magic.
 - Opinionated baseline.
@@ -92,7 +92,7 @@ Team that:
 - Architecture encoded in files.
 - Presets over toggle explosion.
 
-## Product Scope
+## Scope
 
 ### Phase 1
 
@@ -114,13 +114,13 @@ The initializer must:
 
 ### Phase 2
 
-The initializer must support one more preset:
+Add one preset:
 
 - `convex-realtime`
 
-This preset must be a separate architectural branch, not a single extra library on top of base.
+This preset must be separate architectural branch, not one extra library on top of base.
 
-### Out of Scope for Phase 1
+### Out of Scope
 
 - remote template downloads from arbitrary repos
 - web UI for generation
@@ -130,7 +130,7 @@ This preset must be a separate architectural branch, not a single extra library 
 - deep infrastructure provisioning
 - cloud auto-deploy out of the box
 
-## User Experience
+## UX
 
 ### Main Flow
 
@@ -141,7 +141,7 @@ This preset must be a separate architectural branch, not a single extra library 
 5. Receive generated project.
 6. Receive summary and next steps.
 
-### Default Phase 1 Flow
+### Default Flow
 
 - project name
 - preset = `base` by default, with no separate prompt
@@ -164,21 +164,21 @@ The system must:
 
 The system must:
 
-- copy the baseline template
+- copy baseline template
 - support placeholder replacement
-- rename special files correctly, such as `_gitignore` → `.gitignore`
-- update `package.json` correctly
+- rename special files, such as `_gitignore` → `.gitignore`
+- update `package.json`
 - generate workspace config from root `package.json` with `workspaces`
 
 ### Presets
 
 The system must:
 
-- support at least one preset in Phase 1: `base`
-- be structured so `convex-realtime` can be added later
+- support `base` in Phase 1
+- allow `convex-realtime` later
 - avoid one large `if/else` combinator for all architectures
 
-### Project Metadata Interpolation
+### Metadata Interpolation
 
 The system must substitute:
 
@@ -196,8 +196,8 @@ Phase 1 scaffold must include:
 - `apps/web`
 - `apps/site`
 - `apps/api`
-- empty reserved `packages/` directory for future shared workspaces
-- root `package.json` and package manifests for each app
+- empty reserved `packages/` directory
+- root `package.json` and app manifests
 - starter files for React + Vite + Tailwind CSS v4 + shadcn-ready wiring, Astro, and Node + Hono
 
 ### Generated Documentation
@@ -226,7 +226,7 @@ The system must:
 
 ### Package Release and Distribution
 
-The initializer delivery system must:
+The delivery system must:
 
 - publish `create-lv48-app` as public npm package
 - include correct registry-facing metadata, including `MIT`
@@ -299,8 +299,6 @@ Usage experience must be:
 
 ## Risks
 
-Main risks:
-
 - initializer becomes too universal and complex
 - presets start leaking into each other
 - template drift between README instructions and actual files
@@ -323,7 +321,7 @@ The product is successful if:
 - npm package publishes with correct tarball and working entrypoint
 - GitHub Actions publish never bypasses mandatory release checks
 
-## Recommended Implementation Guardrails
+## Implementation Guardrails
 
 1. One create-package.
 2. One strong `base` preset in first version.
@@ -338,13 +336,13 @@ The product is successful if:
 11. Generator must create a baseline, not attempt to generate everything.
 12. GitHub Actions publish must use same release gates as local release-check.
 
-## Suggested Next Implementation Step
+## Next Step
 
-The next practical step after these documents:
+The next practical step:
 
-- design the CLI repository structure itself
+- design the CLI repository structure
 - create the `base` template with workspace manifests and starter files for `web/site/api`
 - implement prompts, copy, transforms, and post-setup
 - verify the end-to-end `npm init ...` scenario
-- add release-check and GitHub Actions publish workflow for the public npm package
-- after stabilization, add the `convex-realtime` preset
+- add release-check and GitHub Actions publish workflow
+- after stabilization, add `convex-realtime`

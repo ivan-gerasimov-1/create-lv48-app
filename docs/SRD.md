@@ -1,10 +1,10 @@
 # SRD — System Requirements Document for npm Initializer / Scaffold CLI
 
-## System Overview
+## Overview
 
 `create-*` CLI package for generating new projects from pre-built templates.
 
-Primary invocation:
+Invocation:
 
 ```bash
 npm init lv48-app
@@ -22,17 +22,17 @@ The CLI must:
 - apply transformations
 - execute optional post-setup steps
 
-## System Goals
+## Goals
 
 The system must:
 
-- create a baseline SaaS monorepo based on npm workspaces with one command
+- create baseline SaaS monorepo based on npm workspaces with one command
 - support preset-based architecture
 - minimize manual setup
 - embed README instructions into generated project
 - serve as a foundation for OpenSpec implementation
 
-## High-Level Architecture
+## Architecture
 
 ### Package Type
 
@@ -52,9 +52,7 @@ Automation path:
 
 `conventional commits` → `release-please` release PR → npm trusted publishing via OIDC after release PR merge
 
-### Internal Architecture
-
-The system must consist of these logical layers:
+### Internal Layers
 
 - CLI entrypoint
 - prompt/input layer
@@ -65,7 +63,7 @@ The system must consist of these logical layers:
 - post-setup executor
 - output logger / summary layer
 
-## Package Structure Requirements
+## Package Structure
 
 Recommended structure:
 
@@ -96,14 +94,14 @@ create-lv48-app/
   README.md
 ```
 
-`src/presets` and `templates` may be merged if that simplifies implementation, but presets must remain an explicit entity.
+`src/presets` and `templates` may be merged if that simplifies implementation, but presets must remain explicit.
 
 Repository-level release assets must also exist:
 
 - `.github/workflows/` for publish workflow
 - documented release procedure
 
-## Preset Model
+## Presets
 
 ### Phase 1
 
@@ -117,7 +115,7 @@ Add preset:
 
 - `convex-realtime`
 
-### Preset Isolation
+### Isolation
 
 Each preset must:
 
@@ -126,11 +124,11 @@ Each preset must:
 - have its own README assets and instructions where needed
 - avoid a chaotic matrix of feature flags
 
-## Template Structure Requirements
+## Template Structure
 
 Each template must contain a complete starter monorepo.
 
-### Base Template Expected Structure
+### Base Template Structure
 
 ```txt
 templates/base/
@@ -172,9 +170,9 @@ templates/base/
   .env.example
 ```
 
-`packages/` must exist as an empty directory with no marker files. It is reserved for future shared workspaces.
+`packages/` must exist as empty directory with no marker files. It is reserved for future shared workspaces.
 
-### Template Metadata Requirements
+### Template Metadata
 
 `template.json` must describe at minimum:
 
@@ -188,11 +186,11 @@ templates/base/
 
 ### Invocation
 
-The CLI must support running:
+The CLI must support:
 
-- via `npm init ...`
-- via `npx create-...`
-- directly through the `bin` entrypoint
+- `npm init ...`
+- `npx create-...`
+- direct `bin` entrypoint
 
 ### Prompts
 
@@ -203,13 +201,13 @@ The CLI must be able to ask:
 - install dependencies? (`yes/no`)
 - initialize git? (`yes/no`)
 
-In Phase 1, `base` must be the default preset without a separate prompt. Some values may default and remain unasked during non-interactive runs, if supported.
+In Phase 1, `base` must be default preset without a separate prompt. Some values may default and remain unasked during non-interactive runs, if supported.
 
 ### Non-Interactive Support
 
 Non-interactive mode is desirable later, but not required for the first version.
 
-### Published Artifact Requirements
+### Published Artifact
 
 The published npm artifact must:
 
@@ -220,7 +218,7 @@ The published npm artifact must:
 - be published under `MIT`
 - be verified before publish with a smoke check that confirms CLI entrypoint runs and bundled templates are accessible
 
-### Release Trigger Requirements
+### Release Trigger
 
 Publishing via GitHub Actions must only be triggered from a merged release commit in `main` prepared by `release-please`:
 
@@ -229,7 +227,7 @@ Publishing via GitHub Actions must only be triggered from a merged release commi
 - final publish is triggered only after generated release PR is merged
 - rerunning publish workflow for same merged release commit must remain possible if a previous publish failed after release PR creation
 
-## File Generation Requirements
+## File Generation
 
 ### Copy Behavior
 
@@ -275,9 +273,9 @@ The system must be able to structurally modify:
 
 Avoid brittle string replace where parse/write is possible.
 
-## Generated Project Requirements
+## Generated Project
 
-### Baseline Output Structure
+### Baseline Output
 
 Generated project in Phase 1 must contain:
 
@@ -318,20 +316,20 @@ package.json
 README.md
 ```
 
-### Baseline Generated Documents
+### Generated Documents
 
 Generated README files must match generated structure and setup path.
 
-### Baseline Stack Verification
+### Stack Verification
 
 Smoke verification for Phase 1 must confirm not only starter files, but also that:
 
 - `apps/web` contains the expected Vite + React + Tailwind CSS v4 entry pattern (`index.html`, `src/main.tsx`, `src/App.tsx`, `src/index.css`, `vite.config.ts`) and shadcn-ready wiring (`components.json`, alias config, utility helper, starter UI component)
 - `apps/site` contains the expected Astro entry pattern (`astro.config.mjs`, `src/pages/index.astro`)
 - `apps/api` contains the expected minimal Hono entry pattern (`src/index.ts` with Hono app bootstrap)
-- `packages/` is created as an empty reserved directory with no additional files
+- `packages/` is created as empty reserved directory with no additional files
 
-### Package Manager Assumption
+### Package Manager
 
 Phase 1 package manager:
 
@@ -339,7 +337,7 @@ Phase 1 package manager:
 
 The CLI may run via npm/npx, and the output project must be designed for a monorepo based on npm workspaces.
 
-## Post-Setup Requirements
+## Post-Setup
 
 ### Dependency Installation
 
@@ -364,7 +362,7 @@ After generation, the CLI must print:
 - whether git was initialized
 - next commands to run
 
-## Validation Requirements
+## Validation
 
 ### Name Validation
 
@@ -382,7 +380,7 @@ The system must:
 - allow safely aborting the process
 - avoid silently overwriting files
 
-### Partial Generation Handling
+### Partial Generation
 
 If generation was interrupted, the CLI must:
 
@@ -391,7 +389,7 @@ If generation was interrupted, the CLI must:
 - not pretend everything succeeded
 - roll back partial output where feasible, otherwise honestly report partial state
 
-## Preset Extensibility Requirements
+## Extensibility
 
 The system must be structured so a new preset can be added via:
 
@@ -402,7 +400,7 @@ The system must be structured so a new preset can be added via:
 
 No full generator rewrite should be needed.
 
-## Documentation Generation Requirements
+## Documentation
 
 Generated project must contain:
 
@@ -456,7 +454,7 @@ For automated publishing, these are also required:
 - GitHub Actions runner
 - npm trusted publishing via OIDC between GitHub Actions and npm
 
-## Security and Trust Considerations
+## Security and Trust
 
 The initializer must not:
 
@@ -472,41 +470,18 @@ The GitHub Actions publish path must not:
 - store registry credentials in the repository or as a long-lived npm token for this workflow
 - execute publish from an unverified workflow path
 
-## Main Technical Risks
+## Risks
 
-### Template Drift
+- Template drift: README instructions and actual template structure may diverge.
+- Preset sprawl: as presets grow, the generator may become difficult to maintain.
+- Over-abstraction: premature generator architecture may make the code more complex than the task.
+- Coupling between CLI and templates: template evolution becomes hard if logic is too embedded.
+- Convex preset under-modeling: a superficial preset would be architecturally dishonest.
+- Release path drift: local release-check and GitHub Actions publish may diverge.
+- Demo-template appearance: generated project may look like a toy demo instead of a baseline.
+- Packaging drift on first release: packed artifact may miss runtime output or template assets, or misconfigure `bin`.
 
-README instructions and actual template structure may diverge.
-
-### Preset Sprawl
-
-As presets grow, the generator may become difficult to maintain.
-
-### Over-Abstraction
-
-Premature generator architecture may make the code more complex than the task.
-
-### Coupling Between CLI and Templates
-
-If template logic is too deeply embedded in generator code, template evolution becomes hard.
-
-### Convex Preset Under-Modeling
-
-If the Convex preset is made superficially, it will be architecturally dishonest.
-
-### Release Path Drift
-
-Local release-check and GitHub Actions publish may diverge in steps and produce different results.
-
-### Demo-Template Appearance
-
-Generated project may look like a toy demo instead of a production-ready baseline.
-
-### Packaging Drift on First Release
-
-First public npm publish may break if packed artifact misses required runtime output or template assets, or if the bin entrypoint is misconfigured.
-
-## Recommended Implementation Guardrails
+## Guardrails
 
 1. One create-package.
 2. One strong `base` preset in first version.
