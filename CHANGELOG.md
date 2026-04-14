@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.6.0](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.5.0...create-lv48-app-v0.6.0) (2026-04-14)
+
+
+### Features
+
+* colocate test files with tested code ([#15](https://github.com/ivan-gerasimov-1/create-lv48-app/issues/15)) ([739827f](https://github.com/ivan-gerasimov-1/create-lv48-app/commit/739827f002ede65541c715a61b97688718914c86))
+* migrate from node:test to Vitest and remove custom TS loader scripts ([c6bfe30](https://github.com/ivan-gerasimov-1/create-lv48-app/commit/c6bfe305349b2afeeb38c7e5addc127f04d09565))
+* remove openspec ([c7adf8a](https://github.com/ivan-gerasimov-1/create-lv48-app/commit/c7adf8a2d7744d5a464138e681452031f8a6b0fa))
+
 ## [0.5.0](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.4.0...create-lv48-app-v0.5.0) (2026-03-21)
 
 
