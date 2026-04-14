@@ -55,7 +55,7 @@
     "release:publish": "npm publish",
     "test": "vitest run",
     "test:watch": "vitest",
-    "deps:update": "ncu --interactive --enginesNode --format group --reject @types/node "
+    "deps:update": "ncu --upgrade --enginesNode --format group --reject @types/node"
   },
   "devDependencies": {
     "@types/node": "24.6.1",
