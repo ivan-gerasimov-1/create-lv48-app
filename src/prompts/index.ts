@@ -1,32 +1,51 @@
-import { createReadlinePromptIo } from './readlinePromptIo.js';
-import type { TPromptAnswers, TPromptController, TPromptIO } from './types.js';
+import { createReadlinePromptIo } from "./readlinePromptIo.js";
+import type {
+  TPromptAnswers,
+  TPromptController,
+  TPromptIO,
+  TWorkspaceLayout,
+} from "./types.js";
 import {
   validateProjectName,
   validateTargetDirectory,
-} from '../utils/validation.js';
+} from "../utils/validation.js";
 
-export function createPromptController(promptIo: TPromptIO = createReadlinePromptIo()): TPromptController {
+export function createPromptController(
+  promptIo: TPromptIO = createReadlinePromptIo(),
+): TPromptController {
   return {
-    async collectAnswers(defaultProjectName = 'lv48-app') {
+    async collectAnswers(defaultProjectName = "lv48-app") {
       try {
         let projectName = await askValidText(
           promptIo,
-          'Project name',
+          "Project name",
           defaultProjectName,
           validateProjectName,
         );
         let targetDirectory = await askValidText(
           promptIo,
-          'Target directory',
+          "Target directory",
           projectName,
           validateTargetDirectory,
         );
+        let workspaceLayout = await askWorkspaceLayout(promptIo);
+        let appProjectName: string | undefined;
+
+        if (workspaceLayout === "multi") {
+          appProjectName = await askValidText(
+            promptIo,
+            "First app project name",
+            "project-1",
+            validateProjectName,
+          );
+        }
+
         let installDependencies = await promptIo.askConfirm(
-          'Install npm dependencies after generation?',
+          "Install npm dependencies after generation?",
           true,
         );
         let initializeGit = await promptIo.askConfirm(
-          'Initialize a git repository?',
+          "Initialize a git repository?",
           true,
         );
 
@@ -35,10 +54,12 @@ export function createPromptController(promptIo: TPromptIO = createReadlinePromp
           packageName: projectName,
           displayName: createDisplayName(projectName),
           targetDirectory,
-          packageManager: 'npm',
-          presetId: 'base',
+          packageManager: "npm",
+          presetId: "base",
           installDependencies,
           initializeGit,
+          workspaceLayout,
+          appProjectName,
         };
       } finally {
         await promptIo.close();
@@ -47,11 +68,28 @@ export function createPromptController(promptIo: TPromptIO = createReadlinePromp
   };
 }
 
+async function askWorkspaceLayout(
+  promptIo: TPromptIO,
+): Promise<TWorkspaceLayout> {
+  let answer = await promptIo.askText(
+    "Workspace layout (single or multi)",
+    "single",
+  );
+
+  if (answer === "multi") {
+    return "multi";
+  }
+
+  return "single";
+}
+
 async function askValidText(
   promptIo: TPromptIO,
   message: string,
   defaultValue: string,
-  validate: (input: string) => { ok: true; value: string } | { ok: false; reason: string },
+  validate: (
+    input: string,
+  ) => { ok: true; value: string } | { ok: false; reason: string },
 ) {
   for (;;) {
     let answer = await promptIo.askText(message, defaultValue);
@@ -67,10 +105,10 @@ async function askValidText(
 
 function createDisplayName(projectName: string): string {
   return projectName
-    .split('-')
+    .split("-")
     .filter((segment) => segment.length > 0)
     .map((segment) => `${segment.charAt(0).toUpperCase()}${segment.slice(1)}`)
-    .join(' ');
+    .join(" ");
 }
 
 export type { TPromptAnswers, TPromptController, TPromptIO };

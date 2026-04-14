@@ -3,7 +3,7 @@ import { expect } from "vitest";
 import type { TPromptIO } from "../src/prompts/types.js";
 
 export function createPromptIoMock(): TPromptIO {
-  let answers = ["demo-app", "demo-directory"];
+  let answers = ["demo-app", "demo-directory", "single"];
   let confirmations = [true, false];
 
   return {

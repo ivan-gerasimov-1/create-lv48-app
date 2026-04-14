@@ -1,4 +1,6 @@
-export type TPackageManager = 'npm';
+export type TPackageManager = "npm";
+
+export type TWorkspaceLayout = "single" | "multi";
 
 export type TPromptAnswers = {
   projectName: string;
@@ -6,9 +8,11 @@ export type TPromptAnswers = {
   displayName: string;
   targetDirectory: string;
   packageManager: TPackageManager;
-  presetId: 'base';
+  presetId: "base";
   installDependencies: boolean;
   initializeGit: boolean;
+  workspaceLayout: TWorkspaceLayout;
+  appProjectName?: string;
 };
 
 export type TPromptIO = {
