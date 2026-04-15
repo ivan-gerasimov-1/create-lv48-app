@@ -1,6 +1,6 @@
 {
   "name": "create-lv48-app",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "Opinionated monorepo scaffold for TS-first SaaS: React/Vite, Astro, Hono",
   "license": "MIT",
   "type": "module",
