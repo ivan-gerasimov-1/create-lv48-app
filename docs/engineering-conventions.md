@@ -22,7 +22,7 @@ This document describes the development conventions, code style guardrails, and 
 - Use `let` by default for variables.
 - Use `const` only for true constants.
   ```typescript
-  const FOO = 'bar';
+  const FOO = "bar";
   ```
 
 ## Type and File Placement
@@ -47,3 +47,7 @@ This document describes the development conventions, code style guardrails, and 
 - Prefix enum and constant object names with `E`.
 - Use PascalCase for enums and constant objects.
 - Use objects with `as const` + `typeof` for union types.
+
+## Architecture
+
+Architecture decisions are tracked in [docs/ADL.md](./ADL.md).
