@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.0](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.11.0...create-lv48-app-v0.12.0) (2026-04-15)
+
+
+### Features
+
+* rename index files to descriptive names and move type definitions ([dd8f403](https://github.com/ivan-gerasimov-1/create-lv48-app/commit/dd8f403a42f4a13b1f25909225781206e7d08e8a))
+
 ## [0.11.0](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.10.0...create-lv48-app-v0.11.0) (2026-04-15)
 
 
