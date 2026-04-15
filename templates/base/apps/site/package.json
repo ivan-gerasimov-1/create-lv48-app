@@ -7,7 +7,8 @@
     "node": ">=24.0.0"
   },
   "dependencies": {
-    "astro": "5.13.5"
+    "astro": "6.1.6",
+    "vite": "npm:rolldown-vite@7.3.1"
   },
   "scripts": {
     "dev": "astro dev",
