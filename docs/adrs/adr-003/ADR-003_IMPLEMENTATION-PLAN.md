@@ -1,4 +1,4 @@
-# ADR-003 Plan: Support single and multi-project workspace layouts
+# ADR-003 Implementation Plan: Support single and multi-project workspace layouts
 
 ## Goal
 

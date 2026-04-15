@@ -1,4 +1,4 @@
-# ADR-002 Plan: Colocate test files with tested code
+# ADR-002 Implementation Plan: Colocate test files with tested code
 
 ## Goal
 

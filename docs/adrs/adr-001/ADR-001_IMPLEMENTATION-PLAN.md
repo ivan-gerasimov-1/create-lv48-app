@@ -1,4 +1,4 @@
-# ADR-001 Plan: Use Vitest for tests
+# ADR-001 Implementation Plan: Use Vitest for tests
 
 ## Goal
 

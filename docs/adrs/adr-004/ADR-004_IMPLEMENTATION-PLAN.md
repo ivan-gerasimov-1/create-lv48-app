@@ -1,4 +1,4 @@
-# ADR-004 Plan: Use tsdown for CLI builds
+# ADR-004 Implementation Plan: Use tsdown for CLI builds
 
 ## Goal
 
