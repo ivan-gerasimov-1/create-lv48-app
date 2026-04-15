@@ -22,13 +22,13 @@ Use ADRs for durable decisions that affect architecture, repository structure, p
 
 ## Decisions
 
-| ADR                                  | Date       | Status      | Implementation Plan                                   | Related                              | Title                                              |
-| ------------------------------------ | ---------- | ----------- | ----------------------------------------------------- | ------------------------------------ | -------------------------------------------------- |
-| [ADR-001](./adrs/adr-001/ADR-001.md) | 2026-04-14 | Implemented | [Plan](./adrs/adr-001/ADR-001_IMPLEMENTATION-PLAN.md) | [ADR-002](./adrs/adr-002/ADR-002.md) | Use Vitest for tests                               |
-| [ADR-002](./adrs/adr-002/ADR-002.md) | 2026-04-14 | Implemented | [Plan](./adrs/adr-002/ADR-002_IMPLEMENTATION-PLAN.md) | [ADR-001](./adrs/adr-001/ADR-001.md) | Colocate test files with tested code               |
-| [ADR-003](./adrs/adr-003/ADR-003.md) | 2026-04-14 | Implemented | [Plan](./adrs/adr-003/ADR-003_IMPLEMENTATION-PLAN.md) | -                                    | Support single and multi-project workspace layouts |
-| [ADR-004](./adrs/adr-004/ADR-004.md) | 2026-04-15 | Implemented | [Plan](./adrs/adr-004/ADR-004_IMPLEMENTATION-PLAN.md) | -                                    | Use tsdown for CLI builds                          |
-| [ADR-005](./adrs/adr-005/ADR-005.md) | 2026-04-15 | Implemented | [Plan](./adrs/adr-005/ADR-005_IMPLEMENTATION-PLAN.md) | [ADR-004](./adrs/adr-004/ADR-004.md) | Validate package before publish                    |
-| [ADR-006](./adrs/adr-006/ADR-006.md) | 2026-04-15 | Implemented | [Plan](./adrs/adr-006/ADR-006_IMPLEMENTATION-PLAN.md) | -                                    | Avoid project-owned index files                    |
-| [ADR-007](./adrs/adr-007/ADR-007.md) | 2026-04-15 | Accepted    | [Plan](./adrs/adr-007/ADR-007_IMPLEMENTATION-PLAN.md) | -                                    | Migrate templates to Vite 8 and Rolldown-backed Astro |
-| [ADR-008](./adrs/adr-008/ADR-008.md) | 2026-04-15 | Accepted    | [Plan](./adrs/adr-008/ADR-008_IMPLEMENTATION-PLAN.md) | -                                    | Include shadcn v4 in base web template             |
+| ADR                                  | Date       | Status      | Implementation Plan                                   | Related                              | Title                                                 |
+| ------------------------------------ | ---------- | ----------- | ----------------------------------------------------- | ------------------------------------ | ----------------------------------------------------- |
+| [ADR-001](./adrs/adr-001/ADR-001.md) | 2026-04-14 | Implemented | [Plan](./adrs/adr-001/ADR-001_IMPLEMENTATION-PLAN.md) | [ADR-002](./adrs/adr-002/ADR-002.md) | Use Vitest for tests                                  |
+| [ADR-002](./adrs/adr-002/ADR-002.md) | 2026-04-14 | Implemented | [Plan](./adrs/adr-002/ADR-002_IMPLEMENTATION-PLAN.md) | [ADR-001](./adrs/adr-001/ADR-001.md) | Colocate test files with tested code                  |
+| [ADR-003](./adrs/adr-003/ADR-003.md) | 2026-04-14 | Implemented | [Plan](./adrs/adr-003/ADR-003_IMPLEMENTATION-PLAN.md) | -                                    | Support single and multi-project workspace layouts    |
+| [ADR-004](./adrs/adr-004/ADR-004.md) | 2026-04-15 | Implemented | [Plan](./adrs/adr-004/ADR-004_IMPLEMENTATION-PLAN.md) | -                                    | Use tsdown for CLI builds                             |
+| [ADR-005](./adrs/adr-005/ADR-005.md) | 2026-04-15 | Implemented | [Plan](./adrs/adr-005/ADR-005_IMPLEMENTATION-PLAN.md) | [ADR-004](./adrs/adr-004/ADR-004.md) | Validate package before publish                       |
+| [ADR-006](./adrs/adr-006/ADR-006.md) | 2026-04-15 | Implemented | [Plan](./adrs/adr-006/ADR-006_IMPLEMENTATION-PLAN.md) | -                                    | Avoid project-owned index files                       |
+| [ADR-007](./adrs/adr-007/ADR-007.md) | 2026-04-15 | Implemented | [Plan](./adrs/adr-007/ADR-007_IMPLEMENTATION-PLAN.md) | -                                    | Migrate templates to Vite 8 and Rolldown-backed Astro |
+| [ADR-008](./adrs/adr-008/ADR-008.md) | 2026-04-15 | Accepted    | [Plan](./adrs/adr-008/ADR-008_IMPLEMENTATION-PLAN.md) | -                                    | Include shadcn v4 in base web template                |
