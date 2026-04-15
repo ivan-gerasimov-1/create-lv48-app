@@ -96,7 +96,7 @@ Tests use Vitest.
 Run the full release gate locally:
 
 ```bash
-npm run release:check
+npm run release:prepare
 ```
 
 ### Release Intent
@@ -126,7 +126,7 @@ Flow:
 3. Merge generated release PR.
 4. Merged release commit on `main` triggers publish.
 5. GitHub Actions runs `npm ci`.
-6. GitHub Actions runs `npm run release:publish`, which starts with `npm run release:check`.
+6. GitHub Actions runs `npm run release:publish`, which runs `prepublishOnly` to execute `npm run release:prepare`.
 7. After all gates pass, GitHub Actions publishes with `npm publish --access public`.
 
 GitHub Actions setup:
