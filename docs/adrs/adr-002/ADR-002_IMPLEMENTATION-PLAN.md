@@ -1,5 +1,9 @@
 # ADR-002 Implementation Plan: Colocate test files with tested code
 
+| Decision                    |
+| --------------------------- |
+| [ADR-002](./ADR-002.md) |
+
 ## Goal
 
 Move runnable test files next to the production modules they validate while keeping shared test helpers and fixtures under `tests/`.

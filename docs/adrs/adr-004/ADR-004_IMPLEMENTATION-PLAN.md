@@ -1,5 +1,9 @@
 # ADR-004 Implementation Plan: Use tsdown for CLI builds
 
+| Decision                    |
+| --------------------------- |
+| [ADR-004](./ADR-004.md) |
+
 ## Goal
 
 Replace TypeScript compiler emit with tsdown for CLI build output while preserving explicit type checking and adding a development watch mode.

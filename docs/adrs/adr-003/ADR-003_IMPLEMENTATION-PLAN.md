@@ -1,5 +1,9 @@
 # ADR-003 Implementation Plan: Support single and multi-project workspace layouts
 
+| Decision                    |
+| --------------------------- |
+| [ADR-003](./ADR-003.md) |
+
 ## Goal
 
 Add an optional multi-project scaffold layout while preserving the current single-project layout as the default.

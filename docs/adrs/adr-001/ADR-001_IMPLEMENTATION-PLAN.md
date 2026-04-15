@@ -1,5 +1,9 @@
 # ADR-001 Implementation Plan: Use Vitest for tests
 
+| Decision                    |
+| --------------------------- |
+| [ADR-001](./ADR-001.md) |
+
 ## Goal
 
 Replace the current node:test-based TypeScript test setup with Vitest while preserving existing test behavior.
