@@ -11,7 +11,6 @@ This document describes the development conventions, code style guardrails, and 
 
 - Keep module boundaries aligned with bounded contexts. If logic grows into a distinct domain, move it into its own feature module instead of keeping it under an unrelated one.
 - Name feature module directories as plural domain nouns by default; deviate only when singular naming is intentionally justified by the domain language.
-- Do not introduce dependency injection without a real boundary or multiple implementations.
 
 ## Style Preferences
 
