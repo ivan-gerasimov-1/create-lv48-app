@@ -4,7 +4,7 @@ import path from "node:path";
 import { afterEach, describe, it, expect } from "vitest";
 
 import { runCli } from "./cli.js";
-import { createPromptController } from "./prompts/index.js";
+import { createPromptController } from "./prompts/promptController.js";
 import { listRelativeFiles, readUtf8File, removePaths } from "./utils/fs.js";
 import { createPromptIoMock } from "../tests/createPromptIoMock.js";
 

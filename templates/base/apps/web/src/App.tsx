@@ -28,7 +28,7 @@ export default function App() {
             <p className="text-sm font-medium text-foreground">Baseline included</p>
             <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
               <li className="rounded-2xl bg-secondary px-4 py-3">
-                `src/index.css` with Tailwind v4 theme tokens
+                `src/global.css` with Tailwind v4 theme tokens
               </li>
               <li className="rounded-2xl bg-secondary px-4 py-3">
                 `components.json` and `@/*` alias wiring

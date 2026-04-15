@@ -147,7 +147,7 @@ templates/base/
         components/
           ui/
             button.tsx
-        index.css
+        global.css
         lib/
           utils.ts
         main.tsx
@@ -162,7 +162,7 @@ templates/base/
       package.json
       README.md
       src/
-        index.ts
+        app.ts
   packages/
   README.md
   package.json.tpl
@@ -293,7 +293,7 @@ apps/
       components/
         ui/
           button.tsx
-      index.css
+      global.css
       lib/
         utils.ts
       main.tsx
@@ -308,7 +308,7 @@ apps/
     package.json
     README.md
     src/
-      index.ts
+      app.ts
 
 packages/
 
@@ -324,9 +324,9 @@ Generated README files MUST match generated structure and setup path.
 
 Smoke verification for Phase 1 MUST confirm not only starter files, but also that:
 
-- `apps/web` contains the expected Vite + React + Tailwind CSS v4 entry pattern (`index.html`, `src/main.tsx`, `src/App.tsx`, `src/index.css`, `vite.config.ts`) and shadcn-ready wiring (`components.json`, alias config, utility helper, starter UI component)
+- `apps/web` contains the expected Vite + React + Tailwind CSS v4 entry pattern (`index.html`, `src/main.tsx`, `src/App.tsx`, `src/global.css`, `vite.config.ts`) and shadcn-ready wiring (`components.json`, alias config, utility helper, starter UI component)
 - `apps/site` contains the expected Astro entry pattern (`astro.config.mjs`, `src/pages/index.astro`)
-- `apps/api` contains the expected minimal Hono entry pattern (`src/index.ts` with Hono app bootstrap)
+- `apps/api` contains the expected minimal Hono entry pattern (`src/app.ts` with Hono app bootstrap)
 - `packages/` is created as empty reserved directory with no additional files
 
 ### Package Manager

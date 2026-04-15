@@ -4,11 +4,11 @@ import { buildInitializationSummary, formatInitializationSummary } from './cli/s
 import { createPlaceholderValues } from './cli/placeholders.js';
 import { createPostSetupExecutor } from './cli/postSetup.js';
 import type { TCliDependencies } from './cli/types.js';
-import { createGenerationRunner } from './generate/index.js';
+import { createGenerationRunner } from './generate/generationRunner.js';
 import { PACKAGE_ROOT } from './packageRoot.js';
-import { createPresetRegistry } from './presets/index.js';
-import { createPromptController } from './prompts/index.js';
-import { createTransformPipeline } from './transforms/index.js';
+import { createPresetRegistry } from './presets/presetRegistry.js';
+import { createPromptController } from './prompts/promptController.js';
+import { createTransformPipeline } from './transforms/transformPipeline.js';
 import { readUtf8File } from './utils/fs.js';
 import { createLogger } from './utils/logging.js';
 

@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 
-import { createPromptController } from "./index.js";
+import { createPromptController } from "./promptController.js";
 import { createPromptIoMock } from "../../tests/createPromptIoMock.js";
 
 describe("prompts", () => {

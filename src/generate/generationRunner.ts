@@ -14,7 +14,7 @@ import {
   removePaths,
   writeUtf8File,
 } from "../utils/fs.js";
-import type { TTransformPipeline } from "../transforms/index.js";
+import type { TTransformPipeline } from "../transforms/types.js";
 
 export function createGenerationRunner(
   transformPipeline: TTransformPipeline,

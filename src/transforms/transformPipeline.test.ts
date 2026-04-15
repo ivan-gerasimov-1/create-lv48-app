@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 
-import { createTransformPipeline } from "./index.js";
+import { createTransformPipeline } from "./transformPipeline.js";
 import type { TGenerationContext } from "../generate/types.js";
 
 describe("transforms", () => {

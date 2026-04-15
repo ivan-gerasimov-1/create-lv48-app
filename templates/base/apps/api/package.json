@@ -10,7 +10,7 @@
     "hono": "4.9.8"
   },
   "scripts": {
-    "dev": "node --watch src/index.ts",
-    "start": "node src/index.ts"
+    "dev": "node --watch src/app.ts",
+    "start": "node src/app.ts"
   }
 }

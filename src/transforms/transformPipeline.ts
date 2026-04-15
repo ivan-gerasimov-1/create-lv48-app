@@ -2,15 +2,7 @@ import type { TGenerationContext } from "../generate/types.js";
 import { transformPackageJson } from "./packageJson.js";
 import { interpolatePlaceholders } from "./placeholders.js";
 import { renameSpecialTemplatePath } from "./renameSpecialFiles.js";
-
-export type TTransformPipeline = {
-  mapDestinationPath(relativePath: string, context: TGenerationContext): string;
-  transformTextFile(
-    relativePath: string,
-    fileContents: string,
-    context: TGenerationContext,
-  ): string;
-};
+import type { TTransformPipeline } from "./types.js";
 
 export function createTransformPipeline(): TTransformPipeline {
   return {
