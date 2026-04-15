@@ -5,4 +5,5 @@ export default defineConfig({
   platform: "node",
   fixedExtension: false,
   minify: true,
+  sourcemap: true,
 });
