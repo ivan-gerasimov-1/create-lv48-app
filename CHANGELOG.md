@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.7.1...create-lv48-app-v0.8.0) (2026-04-15)
+
+
+### Features
+
+* use tsdown for cli builds ([#19](https://github.com/ivan-gerasimov-1/create-lv48-app/issues/19)) ([c12f7a8](https://github.com/ivan-gerasimov-1/create-lv48-app/commit/c12f7a8024671cbee2d14e57120460989568a209))
+
 ## [0.7.1](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.7.0...create-lv48-app-v0.7.1) (2026-04-14)
 
 
