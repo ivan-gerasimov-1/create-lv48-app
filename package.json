@@ -59,6 +59,8 @@
     "start": "npm run start:dev",
     "start:dev": "node --watch bin/create-lv48-app.js",
     "start:prod": "node bin/create-lv48-app.js",
+    "release:prepare": "npm run test && npm run build -- --publint",
+    "prepublishOnly": "npm run release:prepare",
     "release:publish": "npm publish",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -68,6 +70,7 @@
     "@types/node": "24.6.1",
     "concurrently": "9.2.1",
     "npm-check-updates": "20.0.2",
+    "publint": "0.3.18",
     "tsdown": "0.21.8",
     "typescript": "6.0.2",
     "vitest": "4.1.4"
