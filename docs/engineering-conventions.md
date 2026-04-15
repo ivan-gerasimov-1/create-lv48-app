@@ -25,11 +25,6 @@ This document describes the development conventions, code style guardrails, and 
   const FOO = "bar";
   ```
 
-## Type and File Placement
-
-- By default, keep shared type declarations in a neighboring `types.ts` file instead of colocating them with implementation.
-  - Exception: local component/function `props`, `options`, and `params` types may stay next to the implementation.
-
 ## TypeScript
 
 - Do not use `any`.
@@ -39,8 +34,10 @@ This document describes the development conventions, code style guardrails, and 
 - Prefer inferred function return types.
   - Avoid explicit return type annotations unless there is a clear need (public API contract, overload, or inference issue).
 - Prefer explicit domain types over `unknown`; use `unknown` only at safe boundaries.
+- By default, keep shared type declarations in a neighboring `types.ts` file instead of colocating them with implementation.
+  - Exception: local component/function `props`, `options`, and `params` types may stay next to the implementation.
 
-## Naming Conventions
+### Naming Conventions
 
 - Prefix interface names with `I`.
 - Prefix type names with `T`.
