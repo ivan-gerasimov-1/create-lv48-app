@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.13.0](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.12.0...create-lv48-app-v0.13.0) (2026-04-15)
+
+
+### Features
+
+* upgrade Astro to 6.1.6 with rolldown-vite bridge and update web app to Vite 8 ([dbc824b](https://github.com/ivan-gerasimov-1/create-lv48-app/commit/dbc824b77d2aac8ecaa9ab9308ec8dc49e0c74e1))
+
 ## [0.12.0](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.11.0...create-lv48-app-v0.12.0) (2026-04-15)
 
 
