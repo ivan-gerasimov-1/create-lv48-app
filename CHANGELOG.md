@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.11.0](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.10.0...create-lv48-app-v0.11.0) (2026-04-15)
+
+
+### Features
+
+* enable minification in tsdown build configuration ([eaf9f07](https://github.com/ivan-gerasimov-1/create-lv48-app/commit/eaf9f0749c41daa60522fb4e5fe517ce57b35eb2))
+* enable source map generation in tsdown build configuration ([b7db7c6](https://github.com/ivan-gerasimov-1/create-lv48-app/commit/b7db7c69740622b38fad8b8f08c164feaea78520))
+* remove TypeScript declaration file generation from tsdown config ([fc61b08](https://github.com/ivan-gerasimov-1/create-lv48-app/commit/fc61b08fef06540fde7165f46ef36006323aefe5))
+
 ## [0.10.0](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.9.0...create-lv48-app-v0.10.0) (2026-04-15)
 
 
