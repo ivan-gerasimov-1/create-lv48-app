@@ -26,8 +26,6 @@ Update the base web template so generated apps include a working shadcn v4 basel
    - `dropdown-menu.tsx`
 7. Keep the `cn()` helper API in `templates/base/apps/web/src/lib/utils.ts`.
 8. Update `templates/base/apps/web/src/App.tsx` and README copy to show that shadcn v4 is included.
-9. Do not copy TanStack Router, React Query, Convex, route files, or generated files.
-10. Add ADR-008 to `docs/ADL.md`.
 
 ## Verification
 
