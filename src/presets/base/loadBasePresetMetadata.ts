@@ -1,13 +1,12 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 
+import { PACKAGE_ROOT } from '../../packageRoot.js';
 import type { TPresetMetadata } from '../types.js';
 
-const CURRENT_DIRECTORY = path.dirname(fileURLToPath(import.meta.url));
 const METADATA_PATH = path.resolve(
-  CURRENT_DIRECTORY,
-  '../templates/base/_meta/template.json',
+  PACKAGE_ROOT,
+  'templates/base/_meta/template.json',
 );
 
 export function loadBasePresetMetadata(): TPresetMetadata {
