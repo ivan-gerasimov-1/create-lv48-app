@@ -1,7 +1,6 @@
 import { describe, it, expect } from "vitest";
 
 import { createPostSetupExecutor } from "./postSetup.js";
-import { assertContains } from "../../tests/helpers.js";
 
 describe("post-setup", () => {
   it("initializes git repositories on the main branch when git supports the initial branch flag", async () => {

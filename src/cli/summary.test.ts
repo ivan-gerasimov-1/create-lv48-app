@@ -4,7 +4,6 @@ import {
   buildInitializationSummary,
   formatInitializationSummary,
 } from "./summary.js";
-import { assertContains } from "../../tests/helpers.js";
 
 describe("initialization summary", () => {
   it("builds a final summary with manual next steps when post-setup fails", () => {
@@ -29,8 +28,7 @@ describe("initialization summary", () => {
       "cd demo-app",
       "Review the failed optional steps above and rerun them manually if needed.",
     ]);
-    assertContains(
-      formatInitializationSummary(summary),
+    expect(formatInitializationSummary(summary)).contains(
       "installDependencies: FAILED",
     );
   });

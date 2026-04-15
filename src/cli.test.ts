@@ -5,12 +5,8 @@ import { afterEach, describe, it, expect } from "vitest";
 
 import { runCli } from "./cli.js";
 import { createPromptController } from "./prompts/index.js";
-import {
-  listRelativeFiles,
-  readUtf8File,
-  removePaths,
-} from "./utils/fs.js";
-import { assertContains, createPromptIoMock } from "../tests/helpers.js";
+import { listRelativeFiles, readUtf8File, removePaths } from "./utils/fs.js";
+import { createPromptIoMock } from "../tests/createPromptIoMock.js";
 
 let cleanupPaths: string[] = [];
 
@@ -76,9 +72,8 @@ describe("cli", () => {
         ),
       ),
     ).toBe(true);
-    assertContains(
+    expect(
       await listRelativeFiles(path.join(rootDirectory, "demo-directory")),
-      "apps/web/src/main.tsx",
-    );
+    ).contains("apps/web/src/main.tsx");
   });
 });
