@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.8.0...create-lv48-app-v0.9.0) (2026-04-15)
+
+
+### Features
+
+* enable TypeScript declaration file generation in tsdown config ([59876d4](https://github.com/ivan-gerasimov-1/create-lv48-app/commit/59876d4564280327b36b6c997bcc734fb3726386))
+
 ## [0.8.0](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.7.1...create-lv48-app-v0.8.0) (2026-04-15)
 
 
