@@ -1,5 +1,5 @@
 ---
-name: Implement ADR
+name: adr:implement
 description: Find first Proposed/Accepted ADR and implement it after confirmation
 ---
 

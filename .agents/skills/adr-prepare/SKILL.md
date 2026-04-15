@@ -1,5 +1,5 @@
 ---
-name: Prepare ADR
+name: adr:prepare
 description: Create a new ADR from user-provided plan/description
 ---
 
