@@ -11,6 +11,7 @@ This document describes the development conventions, code style guardrails, and 
 
 - Keep module boundaries aligned with bounded contexts. If logic grows into a distinct domain, move it into its own feature module instead of keeping it under an unrelated one.
 - Name feature module directories as plural domain nouns by default; deviate only when singular naming is intentionally justified by the domain language.
+- Architecture decisions are tracked in [docs/ADL.md](./ADL.md).
 
 ## Style Preferences
 
@@ -46,7 +47,3 @@ This document describes the development conventions, code style guardrails, and 
 - Prefix enum and constant object names with `E`.
 - Use PascalCase for enums and constant objects.
 - Use objects with `as const` + `typeof` for union types.
-
-## Architecture
-
-Architecture decisions are tracked in [docs/ADL.md](./ADL.md).
