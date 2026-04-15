@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.0](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.9.0...create-lv48-app-v0.10.0) (2026-04-15)
+
+
+### Features
+
+* validate package before publish ([#22](https://github.com/ivan-gerasimov-1/create-lv48-app/issues/22)) ([6af6259](https://github.com/ivan-gerasimov-1/create-lv48-app/commit/6af6259354e266d406430e723666f53e5c832a55))
+
 ## [0.9.0](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.8.0...create-lv48-app-v0.9.0) (2026-04-15)
 
 
