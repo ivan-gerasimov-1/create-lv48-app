@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.15.0](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.14.0...create-lv48-app-v0.15.0) (2026-04-16)
+
+
+### Features
+
+* use typed portable template definitions ([#28](https://github.com/ivan-gerasimov-1/create-lv48-app/issues/28)) ([d87bf32](https://github.com/ivan-gerasimov-1/create-lv48-app/commit/d87bf320d3b8691a7d72be40497cbb4e2e423ec6))
+
 ## [0.14.0](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.13.0...create-lv48-app-v0.14.0) (2026-04-16)
 
 
