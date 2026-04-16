@@ -1,8 +1,8 @@
 # ADR-012 Implementation Plan: Use Clack for interactive CLI prompts
 
-| Decision                | Status   |
-| ----------------------- | -------- |
-| [ADR-012](./ADR-012.md) | Proposed |
+| Decision                | Status      |
+| ----------------------- | ----------- |
+| [ADR-012](./ADR-012.md) | Implemented |
 
 ## Goal
 
