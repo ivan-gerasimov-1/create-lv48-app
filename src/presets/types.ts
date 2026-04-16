@@ -1,21 +1,9 @@
-import type { TPackageManager } from '../prompts/types.js';
+import type { TTemplateMetadata } from "./templateDefinition.js";
 
-export type TPresetMetadata = {
-  id: 'base';
-  displayName: string;
-  description: string;
-  packageManagers: TPackageManager[];
-  templateDirectory: string;
-  reservedDirectories?: string[];
-  placeholderKeys: string[];
-  postGeneration: {
-    installDependencies: boolean;
-    initializeGit: boolean;
-  };
-};
+export type TPresetMetadata = TTemplateMetadata;
 
 export type TPresetRegistry = {
-  defaultPresetId: 'base';
+  defaultPresetId: "base";
   getDefaultPreset(): TPresetMetadata;
   getPresetById(presetId: string): TPresetMetadata;
 };

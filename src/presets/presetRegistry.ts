@@ -1,16 +1,24 @@
-import { loadBasePresetMetadata } from './base/loadBasePresetMetadata.js';
-import type { TPresetMetadata, TPresetRegistry } from './types.js';
+import { baseTemplate } from "../../templates/base/template.js";
+import type { TPresetMetadata, TPresetRegistry } from "./types.js";
 
 export function createPresetRegistry(): TPresetRegistry {
-  let defaultPreset = loadBasePresetMetadata();
+  let defaultPreset: TPresetMetadata = {
+    id: baseTemplate.id,
+    displayName: baseTemplate.displayName,
+    description: baseTemplate.description,
+    packageManagers: baseTemplate.packageManagers,
+    reservedDirectories: baseTemplate.reservedDirectories,
+    placeholderKeys: baseTemplate.placeholderKeys,
+    postGeneration: baseTemplate.postGeneration,
+  };
 
   return {
-    defaultPresetId: 'base',
+    defaultPresetId: "base",
     getDefaultPreset() {
       return defaultPreset;
     },
     getPresetById(presetId) {
-      if (presetId !== 'base') {
+      if (presetId !== "base") {
         throw new Error(`Unknown preset: ${presetId}`);
       }
 
