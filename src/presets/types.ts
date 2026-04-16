@@ -3,7 +3,7 @@ import type { TTemplateMetadata } from "./templateDefinition.js";
 export type TPresetMetadata = TTemplateMetadata;
 
 export type TPresetRegistry = {
-  defaultPresetId: "base";
+  defaultPresetName: "base";
   getDefaultPreset(): TPresetMetadata;
-  getPresetById(presetId: string): TPresetMetadata;
+  getPresetByName(presetName: string): TPresetMetadata;
 };

@@ -1,7 +1,7 @@
 import { defineTemplate } from "../../src/presets/templateDefinition.js";
 
 export const baseTemplate = defineTemplate({
-  id: "base",
+  name: "base",
   displayName: "Base SaaS Monorepo",
   description: "Baseline npm-workspaces monorepo for TS-first SaaS projects.",
   packageManagers: ["npm"],

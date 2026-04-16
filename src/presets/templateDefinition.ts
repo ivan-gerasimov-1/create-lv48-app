@@ -4,7 +4,7 @@ import { PACKAGE_ROOT } from "../packageRoot.js";
 import type { TPackageManager } from "../prompts/types.js";
 
 export type TTemplateMetadata = {
-  id: "base";
+  name: "base";
   displayName: string;
   description: string;
   packageManagers: TPackageManager[];
@@ -21,7 +21,7 @@ export type TTemplateDefinition = TTemplateMetadata & {
 };
 
 export function defineTemplate(config: TTemplateMetadata): TTemplateDefinition {
-  let filesRoot = path.resolve(PACKAGE_ROOT, "templates", config.id, "files");
+  let filesRoot = path.resolve(PACKAGE_ROOT, "templates", config.name, "files");
 
   return {
     ...config,

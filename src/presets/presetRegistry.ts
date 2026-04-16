@@ -3,7 +3,7 @@ import type { TPresetMetadata, TPresetRegistry } from "./types.js";
 
 export function createPresetRegistry(): TPresetRegistry {
   let defaultPreset: TPresetMetadata = {
-    id: baseTemplate.id,
+    name: baseTemplate.name,
     displayName: baseTemplate.displayName,
     description: baseTemplate.description,
     packageManagers: baseTemplate.packageManagers,
@@ -13,13 +13,13 @@ export function createPresetRegistry(): TPresetRegistry {
   };
 
   return {
-    defaultPresetId: "base",
+    defaultPresetName: "base",
     getDefaultPreset() {
       return defaultPreset;
     },
-    getPresetById(presetId) {
-      if (presetId !== "base") {
-        throw new Error(`Unknown preset: ${presetId}`);
+    getPresetByName(presetName) {
+      if (presetName !== "base") {
+        throw new Error(`Unknown preset: ${presetName}`);
       }
 
       return defaultPreset;

@@ -39,7 +39,7 @@ export async function runCli(dependencies: TCliDependencies = {}) {
   let placeholders = createPlaceholderValues(answers);
 
   logger.info(
-    `create-lv48-app will scaffold ${answers.projectName} with ${preset.id}.`,
+    `create-lv48-app will scaffold ${answers.projectName} with ${preset.name}.`,
   );
 
   await generation.prepare({
