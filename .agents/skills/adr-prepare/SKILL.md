@@ -5,6 +5,8 @@ description: Create a new Proposed ADR and implementation plan from user-provide
 
 Use the text after this skill invocation as the decision brief.
 
+Use this skill only to prepare ADR documentation. Inspect code as needed, but write only ADR docs and `docs/ADL.md`.
+
 ## Resources
 
 - Use `assets/ADR-TEMPLATE.md` as the ADR and implementation-plan template.
@@ -40,6 +42,7 @@ Use the text after this skill invocation as the decision brief.
 
 ## Guardrails
 
+- Do not change implementation code, templates, configs, or tests.
 - Do not overwrite existing ADR files.
 - Do not mark ADR as `Implemented`.
 - Do not treat numbers in input body as ADR numbers.
