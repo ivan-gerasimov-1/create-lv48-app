@@ -11,4 +11,5 @@ description: Create a new ADR from user-provided plan/description
 6. Add entry to `docs/ADL.md` decisions table
 7. Confirm with user before finalizing
 8. Update status from `Proposed` to `Accepted` in `ADR-NNN.md`, `ADR-NNN_IMPLEMENTATION-PLAN.md`, and `docs/ADL.md`
-9. Stop after docs changes, do not proceed to code changes
+9. propose a git branch name
+10. Stop after docs changes, do not proceed to code changes
