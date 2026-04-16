@@ -2,7 +2,7 @@
 
 | Decision                | Status   |
 | ----------------------- | -------- |
-| [ADR-013](./ADR-013.md) | Proposed |
+| [ADR-013](./ADR-013.md) | Accepted |
 
 ## Goal
 
