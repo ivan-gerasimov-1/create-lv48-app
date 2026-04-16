@@ -42,4 +42,4 @@ Use ADRs for durable decisions that affect architecture, repository structure, p
 | [ADR-012](./adrs/ADR-012.md)         | 2026-04-16 | Accepted | -                                    | Use Clack for interactive CLI prompts                 |
 | [ADR-013](./adrs/ADR-013.md)         | 2026-04-16 | Accepted | [ADR-012](./adrs/ADR-012.md)         | Restrict default parameters to simple literals        |
 | [ADR-014](./adrs/ADR-014.md)         | 2026-04-16 | Accepted | -                                    | Split decisions from changes                          |
-| [ADR-015](./adrs/ADR-015.md)         | 2026-04-16 | Proposed | -                                    | Use class-based post-setup orchestration              |
+| [ADR-015](./adrs/ADR-015.md)         | 2026-04-16 | Accepted | -                                    | Use class-based post-setup orchestration              |
