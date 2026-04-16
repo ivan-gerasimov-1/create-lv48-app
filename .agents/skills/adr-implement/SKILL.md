@@ -1,25 +1,27 @@
 ---
 name: ADR Implement
-description: Implement a specified or first Accepted ADR after confirmation
+description: Implement a CHANGE record linked to an Accepted ADR after confirmation
 ---
 
 ## Workflow
 
-1. Read `docs/ADL.md`.
-2. Select ADR:
-   - If input starts with `ADR-013`, `ADR 013`, `#13`, `#013`, `013`, or `13`, use that number.
-   - Normalize to three digits: `#13` -> `ADR-013`.
-   - Ignore numbers outside the input start.
-   - Otherwise select the lowest-numbered `Accepted` ADR from `docs/ADL.md`.
-3. Stop unless selected ADR status is `Accepted`.
-4. Read the ADR and linked implementation plan; stop if plan is missing.
-5. Summarize decision, scope, steps, verification, and rollback.
-6. Wait for user confirmation.
-7. Implement the plan and run its verification.
-8. If verification passes, update status to `Implemented` in the ADR, `docs/ADL.md`, and plan when it has a status field.
-9. If verification fails, leave status unchanged and report failures.
+1. Read `docs/ADL.md` and `docs/CHANGES.md`.
+2. Select work:
+   - If input starts with `CHANGE-014`, `CHANGE 014`, `C-014`, `#14`, `#014`, `014`, or `14`, prefer the matching CHANGE record when it exists.
+   - If input starts with `ADR-014` or `ADR 014`, select that ADR and then select the lowest-numbered non-`Done`, non-`Abandoned` CHANGE linked to it.
+   - Otherwise select the lowest-numbered non-`Done`, non-`Abandoned` CHANGE linked to an `Accepted` ADR.
+3. Stop unless the selected CHANGE exists.
+4. Stop unless every linked ADR exists and has status `Accepted`.
+5. Read the selected CHANGE and linked ADRs.
+6. Summarize decision context, change scope, implementation steps, verification, and rollback.
+7. Wait for user confirmation.
+8. Implement the CHANGE and run its verification.
+9. If verification passes, update the CHANGE file and `docs/CHANGES.md` status to `Done`.
+10. If verification fails, leave status unchanged and report failures.
 
 ## Guardrails
 
-- Do not infer missing implementation plans.
-- If implementation needs to change the ADR decision, stop and ask for a new or updated ADR.
+- Do not infer missing CHANGE records.
+- Do not update ADR status as part of implementation.
+- If implementation needs to change an ADR decision, stop and ask for a new or updated ADR.
+- If implementation needs a different scope than the CHANGE describes, stop and ask whether to update the CHANGE first.

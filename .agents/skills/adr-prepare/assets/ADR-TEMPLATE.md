@@ -1,8 +1,8 @@
 # ADR-NNN: Title
 
-| Status   | Date       | Implementation Plan                                           |
-| -------- | ---------- | ------------------------------------------------------------- |
-| Proposed | YYYY-MM-DD | [ADR-NNN_IMPLEMENTATION-PLAN.md](./ADR-NNN_IMPLEMENTATION-PLAN.md) |
+| Status   | Date       |
+| -------- | ---------- |
+| Proposed | YYYY-MM-DD |
 
 ## Context
 
@@ -30,39 +30,12 @@ Negative:
 
 Describe how to roll back or supersede this decision, including any compatibility constraints.
 
+## Implemented By
+
+Remove this section until a CHANGE record implements the decision.
+
+- CHANGE-NNN
+
 ## Related Decisions
 
 Remove this section when there are no related decisions.
-
----
-
-# ADR-NNN Implementation Plan: Title
-
-| Decision                    |
-| --------------------------- |
-| [ADR-NNN](./ADR-NNN.md) |
-
-## Goal
-
-Describe the implementation outcome in one or two sentences.
-
-## Implementation
-
-1. List concrete implementation steps.
-2. Keep decision rationale in the ADR, not here.
-
-## Verification
-
-Run:
-
-```bash
-npm run test
-```
-
-Expected result:
-
-- Required behavior passes.
-
-## Rollback
-
-Describe the smallest safe rollback path.
