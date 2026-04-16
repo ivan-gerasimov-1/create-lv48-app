@@ -51,10 +51,7 @@ async function scaffoldTemplate(
   context: TGenerationContext,
   transformPipeline: TTransformPipeline,
 ): Promise<TGenerationRecord> {
-  let templateRoot = path.resolve(
-    context.templateBaseDirectory,
-    context.preset.templateDirectory,
-  );
+  let templateRoot = context.filesRoot;
 
   if (!(await pathExists(templateRoot))) {
     throw new Error(`Template directory not found: ${templateRoot}`);

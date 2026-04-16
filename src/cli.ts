@@ -1,21 +1,27 @@
-import path from 'node:path';
+import path from "node:path";
 
-import { buildInitializationSummary, formatInitializationSummary } from './cli/summary.js';
-import { createPlaceholderValues } from './cli/placeholders.js';
-import { createPostSetupExecutor } from './cli/postSetup.js';
-import type { TCliDependencies } from './cli/types.js';
-import { createGenerationRunner } from './generate/generationRunner.js';
-import { PACKAGE_ROOT } from './packageRoot.js';
-import { createPresetRegistry } from './presets/presetRegistry.js';
-import { createPromptController } from './prompts/promptController.js';
-import { createTransformPipeline } from './transforms/transformPipeline.js';
-import { readUtf8File } from './utils/fs.js';
-import { createLogger } from './utils/logging.js';
+import {
+  buildInitializationSummary,
+  formatInitializationSummary,
+} from "./cli/summary.js";
+import { createPlaceholderValues } from "./cli/placeholders.js";
+import { createPostSetupExecutor } from "./cli/postSetup.js";
+import type { TCliDependencies } from "./cli/types.js";
+import { createGenerationRunner } from "./generate/generationRunner.js";
+import { PACKAGE_ROOT } from "./packageRoot.js";
+import { createPresetRegistry } from "./presets/presetRegistry.js";
+import { createPromptController } from "./prompts/promptController.js";
+import { createTransformPipeline } from "./transforms/transformPipeline.js";
+import { readUtf8File } from "./utils/fs.js";
+import { createLogger } from "./utils/logging.js";
+import { baseTemplate } from "../templates/base/template.js";
 
 export async function runCli(dependencies: TCliDependencies = {}) {
-  if (process.argv.includes('--version')) {
-    let raw = JSON.parse(await readUtf8File(path.join(PACKAGE_ROOT, 'package.json')));
-    let version = typeof raw?.version === 'string' ? raw.version : 'unknown';
+  if (process.argv.includes("--version")) {
+    let raw = JSON.parse(
+      await readUtf8File(path.join(PACKAGE_ROOT, "package.json")),
+    );
+    let version = typeof raw?.version === "string" ? raw.version : "unknown";
     console.log(version);
     return;
   }
@@ -32,11 +38,13 @@ export async function runCli(dependencies: TCliDependencies = {}) {
   let targetRoot = path.resolve(cwd, answers.targetDirectory);
   let placeholders = createPlaceholderValues(answers);
 
-  logger.info(`create-lv48-app will scaffold ${answers.projectName} with ${preset.id}.`);
+  logger.info(
+    `create-lv48-app will scaffold ${answers.projectName} with ${preset.id}.`,
+  );
 
   await generation.prepare({
     cwd,
-    templateBaseDirectory: PACKAGE_ROOT,
+    filesRoot: baseTemplate.filesRoot,
     targetRoot,
     answers,
     preset,
@@ -45,7 +53,7 @@ export async function runCli(dependencies: TCliDependencies = {}) {
 
   let record = await generation.scaffold({
     cwd,
-    templateBaseDirectory: PACKAGE_ROOT,
+    filesRoot: baseTemplate.filesRoot,
     targetRoot,
     answers,
     preset,

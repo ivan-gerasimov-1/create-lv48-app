@@ -6,4 +6,10 @@ export default defineConfig({
   fixedExtension: false,
   minify: true,
   sourcemap: true,
+  copy: [
+    {
+      from: "templates",
+      to: "dist/",
+    },
+  ],
 });

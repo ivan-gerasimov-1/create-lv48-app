@@ -132,55 +132,59 @@ Each template MUST contain a complete starter monorepo.
 
 ```txt
 templates/base/
-  _meta/
-    template.json
-  apps/
-    web/
-      components.json
-      package.json
-      README.md
-      index.html
-      tsconfig.json
-      vite.config.ts
-      src/
-        App.tsx
-        components/
-          ui/
-            button.tsx
-        global.css
-        lib/
-          utils.ts
-        main.tsx
-    site/
-      package.json
-      README.md
-      astro.config.mjs
-      src/
-        pages/
-          index.astro
-    api/
-      package.json
-      README.md
-      src/
-        app.ts
-  packages/
-  README.md
-  package.json.tpl
-  _gitignore
-  .env.example
+  template.ts
+  files/
+    apps/
+      web/
+        components.json
+        package.json
+        README.md
+        index.html
+        tsconfig.json
+        vite.config.ts
+        src/
+          App.tsx
+          components/
+            ui/
+              button.tsx
+          global.css
+          lib/
+            utils.ts
+          main.tsx
+      site/
+        package.json
+        README.md
+        astro.config.mjs
+        src/
+          pages/
+            index.astro
+      api/
+        package.json
+        README.md
+        src/
+          app.ts
+    packages/
+    README.md
+    package.json.tpl
+    _gitignore
+    .env.example
 ```
 
-`packages/` MUST exist as empty directory with no marker files. It is reserved for future shared workspaces.
+`templates/base/files/packages/` MUST exist as empty directory with no marker files. It is reserved for future shared workspaces.
 
 ### Template Metadata
 
-`template.json` MUST describe at minimum:
+`template.ts` MUST be the typed source of truth for template metadata and MUST describe at minimum:
 
 - preset id
 - preset display name
 - supported package managers
 - placeholder keys
 - optional post-generation rules
+
+`template.ts` MUST provide `rootDir: import.meta.url`. Generated template assets MUST live in the sibling `files` directory.
+
+Template metadata MUST NOT contain `templateDirectory` or `templateRoot`; the generator derives the copied asset root from the fixed `files` convention.
 
 ## CLI Requirements
 
@@ -394,7 +398,8 @@ If generation was interrupted, the CLI MUST:
 The system MUST be structured so a new preset can be added via:
 
 - a new template directory
-- a new preset metadata file
+- a typed `template.ts` metadata definition
+- generated assets in the template's `files` directory
 - optional preset-specific transforms
 - optional preset-specific README instructions
 
@@ -430,7 +435,7 @@ Where possible, the template MUST be self-contained. The generator MUST not asse
 Where possible, prefer:
 
 - JSON parse/write
-- metadata-driven replacement
+- typed metadata-driven replacement
 - explicit rules
 
 over brittle regexp hacks on large files.
