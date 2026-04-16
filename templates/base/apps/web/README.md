@@ -4,8 +4,12 @@ React + Vite + Tailwind CSS v4 app for {{displayName}}.
 
 ## Included baseline
 
-- Tailwind CSS v4 wired through Vite and `src/global.css`
-- shadcn-ready aliases via `@/*`
-- `components.json` configured for future shadcn/ui additions
+- Tailwind CSS v4 wired through Vite and `src/main.css`
+- shadcn v4 with full configuration in `components.json`
 - `src/lib/utils.ts` with `cn()`
-- starter `Button` component in `src/components/ui/button.tsx`
+- starter UI components in `src/components/ui/`:
+  - `button.tsx` with variants (default, outline, secondary, ghost, destructive, link)
+  - `input.tsx`
+  - `textarea.tsx`
+  - `dialog.tsx` with Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter
+  - `dropdown-menu.tsx` with DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, and more
