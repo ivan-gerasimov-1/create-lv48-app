@@ -31,8 +31,7 @@
   },
   "files": [
     "bin",
-    "dist",
-    "templates"
+    "dist"
   ],
   "publishConfig": {
     "access": "public"
