@@ -10,9 +10,7 @@ import {
   validateTargetDirectory,
 } from "../utils/validation.js";
 
-export function createPromptController(
-  promptIo: TPromptIO = createClackPromptIo(),
-): TPromptController {
+export function createPromptController(promptIo: TPromptIO): TPromptController {
   return {
     async collectAnswers(defaultProjectName = "lv48-app") {
       try {

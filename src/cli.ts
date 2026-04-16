@@ -5,11 +5,12 @@ import {
   formatInitializationSummary,
 } from "./cli/summary.js";
 import { createPlaceholderValues } from "./cli/placeholders.js";
-import { createPostSetupExecutor } from "./cli/postSetup.js";
+import { createPostSetupExecutor, executeCommand } from "./cli/postSetup.js";
 import type { TCliDependencies } from "./cli/types.js";
 import { createGenerationRunner } from "./generate/generationRunner.js";
 import { PACKAGE_ROOT } from "./packageRoot.js";
 import { createPresetRegistry } from "./presets/presetRegistry.js";
+import { createClackPromptIo } from "./prompts/clackPromptIo.js";
 import { createPromptController } from "./prompts/promptController.js";
 import { createTransformPipeline } from "./transforms/transformPipeline.js";
 import { readUtf8File } from "./utils/fs.js";
@@ -27,11 +28,15 @@ export async function runCli(dependencies: TCliDependencies = {}) {
   }
 
   let logger = dependencies.logger ?? createLogger();
-  let prompts = dependencies.promptController ?? createPromptController();
+  let prompts =
+    dependencies.promptController ??
+    createPromptController(createClackPromptIo());
   let presets = createPresetRegistry();
   let transforms = createTransformPipeline();
   let generation = createGenerationRunner(transforms);
-  let postSetupExecutor = createPostSetupExecutor(dependencies.commandExecutor);
+  let postSetupExecutor = createPostSetupExecutor(
+    dependencies.commandExecutor ?? executeCommand,
+  );
   let cwd = dependencies.cwd ?? process.cwd();
   let answers = await prompts.collectAnswers();
   let preset = presets.getDefaultPreset();
