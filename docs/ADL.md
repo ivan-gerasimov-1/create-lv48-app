@@ -6,7 +6,7 @@ Use ADRs for durable decisions that affect architecture, repository structure, p
 
 ## Process
 
-- Create a new ADR from [ADR-TEMPLATE.md](./adrs/ADR-TEMPLATE.md) when a decision is expected to outlive the immediate change.
+- Create a new ADR when a decision is expected to outlive the immediate change.
 - Keep accepted ADRs immutable except for typo, link, status, and implementation-plan updates.
 - If a decision changes, create a new ADR and mark the old ADR as `Superseded`.
 - Store each decision in `docs/adrs/adr-NNN/` with `ADR-NNN.md` and, when implementation details are useful, `ADR-NNN_IMPLEMENTATION-PLAN.md`.
