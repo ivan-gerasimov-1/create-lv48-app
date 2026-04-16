@@ -19,6 +19,7 @@ Use ADRs for durable decisions that affect architecture, repository structure, p
 - `Implemented`: chosen and reflected in the codebase or docs.
 - `Deprecated`: still historically valid, but no longer recommended for new work.
 - `Superseded`: replaced by a newer ADR.
+- `Rejected`: not chosen.
 
 ## Decisions
 
@@ -34,4 +35,4 @@ Use ADRs for durable decisions that affect architecture, repository structure, p
 | [ADR-008](./adrs/adr-008/ADR-008.md) | 2026-04-15 | Implemented | [Plan](./adrs/adr-008/ADR-008_IMPLEMENTATION-PLAN.md) | -                                    | Include shadcn v4 in base web template                |
 | [ADR-009](./adrs/adr-009/ADR-009.md) | 2026-04-16 | Implemented | [Plan](./adrs/adr-009/ADR-009_IMPLEMENTATION-PLAN.md) | -                                    | Use typed portable template definitions               |
 | [ADR-010](./adrs/adr-010/ADR-010.md) | 2026-04-16 | Implemented | [Plan](./adrs/adr-010/ADR-010_IMPLEMENTATION-PLAN.md) | [ADR-009](./adrs/adr-009/ADR-009.md) | Rename template identifier to name                    |
-| [ADR-011](./adrs/adr-011/ADR-011.md) | 2026-04-16 | Accepted    | [Plan](./adrs/adr-011/ADR-011_IMPLEMENTATION-PLAN.md) | [ADR-009](./adrs/adr-009/ADR-009.md) | Use template terminology consistently                 |
+| [ADR-011](./adrs/adr-011/ADR-011.md) | 2026-04-16 | Rejected    | -                                                     | [ADR-009](./adrs/adr-009/ADR-009.md) | Use template terminology consistently                 |
