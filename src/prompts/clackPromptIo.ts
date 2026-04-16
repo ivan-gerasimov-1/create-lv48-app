@@ -6,7 +6,7 @@ export function createClackPromptIo(): TPromptIO {
     async askText(message, defaultValue) {
       let answer = await text({
         message,
-        defaultValue,
+        initialValue: defaultValue,
       });
 
       if (isCancel(answer)) {
