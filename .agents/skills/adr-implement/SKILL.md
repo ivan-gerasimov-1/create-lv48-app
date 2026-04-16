@@ -1,13 +1,25 @@
 ---
 name: ADR Implement
-description: Find first Proposed/Accepted ADR and implement it after confirmation
+description: Implement a specified or first Accepted ADR after confirmation
 ---
 
-1. Search `docs/ADL.md` for ADR with status `Proposed` or `Accepted`
-2. Select the first matching ADR (lowest number)
-3. Read the ADR file and its linked implementation plan
-4. Present the implementation plan summary to the user and prepare your plan based on presented one
-5. Wait for user confirmation before proceeding
-6. Execute implementation steps from the plan
-7. Run verification
-8. Update ADR status everywhere from `Proposed`/`Accepted` to `Implemented` after verification passes
+## Workflow
+
+1. Read `docs/ADL.md`.
+2. Select ADR:
+   - If input starts with `ADR-013`, `ADR 013`, `#13`, `#013`, `013`, or `13`, use that number.
+   - Normalize to three digits: `#13` -> `ADR-013`.
+   - Ignore numbers outside the input start.
+   - Otherwise select the lowest-numbered `Accepted` ADR from `docs/ADL.md`.
+3. Stop unless selected ADR status is `Accepted`.
+4. Read the ADR and linked implementation plan; stop if plan is missing.
+5. Summarize decision, scope, steps, verification, and rollback.
+6. Wait for user confirmation.
+7. Implement the plan and run its verification.
+8. If verification passes, update status to `Implemented` in the ADR, `docs/ADL.md`, and plan when it has a status field.
+9. If verification fails, leave status unchanged and report failures.
+
+## Guardrails
+
+- Do not infer missing implementation plans.
+- If implementation needs to change the ADR decision, stop and ask for a new or updated ADR.
