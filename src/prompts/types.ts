@@ -18,6 +18,11 @@ export type TPromptAnswers = {
 export type TPromptIO = {
   askText(message: string, defaultValue: string): Promise<string>;
   askConfirm(message: string, defaultValue: boolean): Promise<boolean>;
+  askSelect(
+    message: string,
+    options: { value: string; label: string }[],
+    defaultValue: string,
+  ): Promise<string>;
   close(): Promise<void>;
 };
 

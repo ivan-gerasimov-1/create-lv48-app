@@ -74,5 +74,8 @@
     "tsdown": "0.21.8",
     "typescript": "6.0.2",
     "vitest": "4.1.4"
+  },
+  "dependencies": {
+    "@clack/prompts": "1.2.0"
   }
 }

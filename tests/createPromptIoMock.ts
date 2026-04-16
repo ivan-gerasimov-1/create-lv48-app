@@ -23,6 +23,15 @@ export function createPromptIoMock(): TPromptIO {
 
       return value;
     },
+    async askSelect(message, options, defaultValue) {
+      let value = answers.shift();
+
+      if (typeof value !== "string") {
+        throw new Error("Missing select answer");
+      }
+
+      return value;
+    },
     async close() {},
   };
 }

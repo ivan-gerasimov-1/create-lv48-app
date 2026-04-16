@@ -1,4 +1,4 @@
-import { createReadlinePromptIo } from "./readlinePromptIo.js";
+import { createClackPromptIo } from "./clackPromptIo.js";
 import type {
   TPromptAnswers,
   TPromptController,
@@ -11,7 +11,7 @@ import {
 } from "../utils/validation.js";
 
 export function createPromptController(
-  promptIo: TPromptIO = createReadlinePromptIo(),
+  promptIo: TPromptIO = createClackPromptIo(),
 ): TPromptController {
   return {
     async collectAnswers(defaultProjectName = "lv48-app") {
@@ -71,8 +71,12 @@ export function createPromptController(
 async function askWorkspaceLayout(
   promptIo: TPromptIO,
 ): Promise<TWorkspaceLayout> {
-  let answer = await promptIo.askText(
-    "Workspace layout (single or multi)",
+  let answer = await promptIo.askSelect(
+    "Workspace layout",
+    [
+      { value: "single", label: "Single project" },
+      { value: "multi", label: "Multi-project workspace" },
+    ],
     "single",
   );
 

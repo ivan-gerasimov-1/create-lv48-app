@@ -44,6 +44,19 @@ describe("prompts", () => {
 
         return value;
       },
+      async askSelect(
+        message: string,
+        options: { value: string; label: string }[],
+        defaultValue: string,
+      ) {
+        let value = answers.shift();
+
+        if (typeof value !== "string") {
+          throw new Error("Missing select answer");
+        }
+
+        return value;
+      },
       async close() {},
     };
 
@@ -60,6 +73,116 @@ describe("prompts", () => {
       initializeGit: false,
       workspaceLayout: "multi",
       appProjectName: "project-1",
+    });
+  });
+
+  it("retries on invalid project name", async () => {
+    let answers = ["invalid@name", "demo-app", "demo-directory", "single"];
+    let confirmations = [true, false];
+
+    let promptIo = {
+      async askText() {
+        let value = answers.shift();
+
+        if (typeof value !== "string") {
+          throw new Error("Missing text answer");
+        }
+
+        return value;
+      },
+      async askConfirm() {
+        let value = confirmations.shift();
+
+        if (typeof value !== "boolean") {
+          throw new Error("Missing confirm answer");
+        }
+
+        return value;
+      },
+      async askSelect(
+        message: string,
+        options: { value: string; label: string }[],
+        defaultValue: string,
+      ) {
+        let value = answers.shift();
+
+        if (typeof value !== "string") {
+          throw new Error("Missing select answer");
+        }
+
+        return value;
+      },
+      async close() {},
+    };
+
+    let controller = createPromptController(promptIo);
+
+    expect(await controller.collectAnswers("fallback-name")).toEqual({
+      projectName: "demo-app",
+      packageName: "demo-app",
+      displayName: "Demo App",
+      targetDirectory: "demo-directory",
+      packageManager: "npm",
+      presetId: "base",
+      installDependencies: true,
+      initializeGit: false,
+      workspaceLayout: "single",
+      appProjectName: undefined,
+    });
+  });
+
+  it("retries on invalid target directory", async () => {
+    let answers = ["demo-app", "../invalid-path", "demo-directory", "single"];
+    let confirmations = [true, false];
+
+    let promptIo = {
+      async askText() {
+        let value = answers.shift();
+
+        if (typeof value !== "string") {
+          throw new Error("Missing text answer");
+        }
+
+        return value;
+      },
+      async askConfirm() {
+        let value = confirmations.shift();
+
+        if (typeof value !== "boolean") {
+          throw new Error("Missing confirm answer");
+        }
+
+        return value;
+      },
+      async askSelect(
+        message: string,
+        options: { value: string; label: string }[],
+        defaultValue: string,
+      ) {
+        let value = answers.shift();
+
+        if (typeof value !== "string") {
+          throw new Error("Missing select answer");
+        }
+
+        return value;
+      },
+      async close() {},
+    };
+
+    let controller = createPromptController(promptIo);
+
+    expect(await controller.collectAnswers("fallback-name")).toEqual({
+      projectName: "demo-app",
+      packageName: "demo-app",
+      displayName: "Demo App",
+      targetDirectory: "demo-directory",
+      packageManager: "npm",
+      presetId: "base",
+      installDependencies: true,
+      initializeGit: false,
+      workspaceLayout: "single",
+      appProjectName: undefined,
     });
   });
 });
