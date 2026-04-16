@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.14.0](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.13.0...create-lv48-app-v0.14.0) (2026-04-16)
+
+
+### Features
+
+* integrate shadcn v4 with starter UI components in web template ([ea29a49](https://github.com/ivan-gerasimov-1/create-lv48-app/commit/ea29a49fbf6980009922e07c6748aa9e3861812c))
+
 ## [0.13.0](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.12.0...create-lv48-app-v0.13.0) (2026-04-15)
 
 
