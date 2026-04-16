@@ -36,3 +36,4 @@ Use ADRs for durable decisions that affect architecture, repository structure, p
 | [ADR-009](./adrs/adr-009/ADR-009.md) | 2026-04-16 | Implemented | [Plan](./adrs/adr-009/ADR-009_IMPLEMENTATION-PLAN.md) | -                                    | Use typed portable template definitions               |
 | [ADR-010](./adrs/adr-010/ADR-010.md) | 2026-04-16 | Implemented | [Plan](./adrs/adr-010/ADR-010_IMPLEMENTATION-PLAN.md) | [ADR-009](./adrs/adr-009/ADR-009.md) | Rename template identifier to name                    |
 | [ADR-011](./adrs/adr-011/ADR-011.md) | 2026-04-16 | Rejected    | -                                                     | [ADR-009](./adrs/adr-009/ADR-009.md) | Use template terminology consistently                 |
+| [ADR-012](./adrs/adr-012/ADR-012.md) | 2026-04-16 | Proposed    | [Plan](./adrs/adr-012/ADR-012_IMPLEMENTATION-PLAN.md) | -                                    | Use Clack for interactive CLI prompts                 |
