@@ -38,3 +38,4 @@ Use CHANGE records for ADR-backed implementation plans and for non-ADR task plan
 | [CHANGE-012](./changes/CHANGE-012.md)   | 2026-04-16 | Done      | [ADR-012](./adrs/ADR-012.md)         | Use Clack for interactive CLI prompts                 |
 | [CHANGE-013](./changes/CHANGE-013.md)   | 2026-04-16 | Done      | [ADR-013](./adrs/ADR-013.md)         | Restrict default parameters to simple literals        |
 | [CHANGE-014](./changes/CHANGE-014.md)   | 2026-04-16 | Done      | [ADR-014](./adrs/ADR-014.md)         | Split decisions from changes                          |
+| [CHANGE-015](./changes/CHANGE-015.md)   | 2026-04-16 | Proposed  | [ADR-015](./adrs/ADR-015.md)         | Use class-based post-setup orchestration              |
