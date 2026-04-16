@@ -32,4 +32,4 @@ Use ADRs for durable decisions that affect architecture, repository structure, p
 | [ADR-006](./adrs/adr-006/ADR-006.md) | 2026-04-15 | Implemented | [Plan](./adrs/adr-006/ADR-006_IMPLEMENTATION-PLAN.md) | -                                    | Avoid project-owned index files                       |
 | [ADR-007](./adrs/adr-007/ADR-007.md) | 2026-04-15 | Implemented | [Plan](./adrs/adr-007/ADR-007_IMPLEMENTATION-PLAN.md) | -                                    | Migrate templates to Vite 8 and Rolldown-backed Astro |
 | [ADR-008](./adrs/adr-008/ADR-008.md) | 2026-04-15 | Implemented | [Plan](./adrs/adr-008/ADR-008_IMPLEMENTATION-PLAN.md) | -                                    | Include shadcn v4 in base web template                |
-| [ADR-009](./adrs/adr-009/ADR-009.md) | 2026-04-16 | Accepted    | [Plan](./adrs/adr-009/ADR-009_IMPLEMENTATION-PLAN.md) | -                                    | Use typed portable template definitions               |
+| [ADR-009](./adrs/adr-009/ADR-009.md) | 2026-04-16 | Implemented | [Plan](./adrs/adr-009/ADR-009_IMPLEMENTATION-PLAN.md) | -                                    | Use typed portable template definitions               |
