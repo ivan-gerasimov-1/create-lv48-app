@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.16.0](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.15.0...create-lv48-app-v0.16.0) (2026-04-17)
+
+
+### Features
+
+* enable TypeScript declaration file generation in build config ([db5ee67](https://github.com/ivan-gerasimov-1/create-lv48-app/commit/db5ee676eb640233fe1f5892f1cef4233ce73ed1))
+* replace readline with Clack for interactive prompts ([4c8d1a2](https://github.com/ivan-gerasimov-1/create-lv48-app/commit/4c8d1a264d5fad0324d4177eabaafe6aad56d404))
+* update TypeScript config to ES2025 with bundler module resolution ([6c64886](https://github.com/ivan-gerasimov-1/create-lv48-app/commit/6c648866b44c74604fbb6d240e2cba2f7f500d37))
+
+
+### Bug Fixes
+
+* replace dot notation with bracket notation for dynamic property access ([fc60c73](https://github.com/ivan-gerasimov-1/create-lv48-app/commit/fc60c730758f4ed4f228292c6fc8b830b675f3ef))
+* use initialValue instead of defaultValue in Clack text prompt ([26e4766](https://github.com/ivan-gerasimov-1/create-lv48-app/commit/26e47668bf2b02e0ab924e964248ff7da5d2bea2))
+
 ## [0.15.0](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.14.0...create-lv48-app-v0.15.0) (2026-04-16)
 
 
