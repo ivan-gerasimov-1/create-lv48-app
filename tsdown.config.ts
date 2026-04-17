@@ -6,6 +6,7 @@ export default defineConfig({
   fixedExtension: false,
   minify: true,
   sourcemap: true,
+  dts: true,
   copy: [
     {
       from: "templates",
