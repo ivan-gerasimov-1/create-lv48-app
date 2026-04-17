@@ -17,121 +17,181 @@ const POST_SETUP_ACTION_MESSAGES: Record<TPostSetupActionName, string> = {
   initializeGit: "Post-setup: initializing a git repository on branch main...",
 };
 
+interface IPostSetupAction {
+  readonly name: TPostSetupActionName;
+  readonly detail: string;
+  readonly message: string;
+
+  createSkippedStatus(): TPostSetupActionStatus;
+  createCompletedStatus(): TPostSetupActionStatus;
+  createFailedStatus(error: unknown): TPostSetupActionStatus;
+  execute(commandExecutor: TCommandExecutor, targetRoot: string): Promise<void>;
+}
+
+class InstallDependenciesAction implements IPostSetupAction {
+  readonly name: TPostSetupActionName = "installDependencies";
+  readonly detail = "npm install";
+  readonly message = POST_SETUP_ACTION_MESSAGES.installDependencies;
+
+  public createSkippedStatus(): TPostSetupActionStatus {
+    return {
+      name: this.name,
+      selected: false,
+      ok: true,
+      detail: `${this.detail} skipped`,
+    };
+  }
+
+  public createCompletedStatus(): TPostSetupActionStatus {
+    return {
+      name: this.name,
+      selected: true,
+      ok: true,
+      detail: `${this.detail} completed`,
+    };
+  }
+
+  public createFailedStatus(error: unknown): TPostSetupActionStatus {
+    let message =
+      error instanceof Error ? error.message : "Unknown command failure";
+    return {
+      name: this.name,
+      selected: true,
+      ok: false,
+      detail: `${this.detail} failed: ${message}`,
+    };
+  }
+
+  public async execute(
+    commandExecutor: TCommandExecutor,
+    targetRoot: string,
+  ): Promise<void> {
+    return commandExecutor("npm", ["install"], targetRoot);
+  }
+}
+
+class InitializeGitAction implements IPostSetupAction {
+  readonly name: TPostSetupActionName = "initializeGit";
+  readonly detail = "git init";
+  readonly message = POST_SETUP_ACTION_MESSAGES.initializeGit;
+
+  public createSkippedStatus(): TPostSetupActionStatus {
+    return {
+      name: this.name,
+      selected: false,
+      ok: true,
+      detail: `${this.detail} skipped`,
+    };
+  }
+
+  public createCompletedStatus(): TPostSetupActionStatus {
+    return {
+      name: this.name,
+      selected: true,
+      ok: true,
+      detail: `${this.detail} completed`,
+    };
+  }
+
+  public createFailedStatus(error: unknown): TPostSetupActionStatus {
+    let message =
+      error instanceof Error ? error.message : "Unknown command failure";
+    return {
+      name: this.name,
+      selected: true,
+      ok: false,
+      detail: `${this.detail} failed: ${message}`,
+    };
+  }
+
+  public async execute(
+    commandExecutor: TCommandExecutor,
+    targetRoot: string,
+  ): Promise<void> {
+    try {
+      await commandExecutor("git", INITIALIZE_GIT_WITH_MAIN_ARGS, targetRoot);
+    } catch (error) {
+      if (!this.isUnsupportedInitialBranchError(error)) {
+        throw error;
+      }
+
+      await commandExecutor("git", INITIALIZE_GIT_FALLBACK_ARGS, targetRoot);
+      await commandExecutor("git", SET_GIT_HEAD_TO_MAIN_ARGS, targetRoot);
+    }
+  }
+
+  private isUnsupportedInitialBranchError(error: unknown): boolean {
+    if (!(error instanceof Error)) {
+      return false;
+    }
+
+    let message = error.message.toLowerCase();
+
+    // git < 2.28 uses various phrasings depending on version and platform
+    return (
+      message.includes("initial-branch") &&
+      (message.includes("unknown option") ||
+        message.includes("unknown switch") ||
+        message.includes("unrecognized option") ||
+        message.includes("invalid option"))
+    );
+  }
+}
+
+class PostSetupExecutor implements TPostSetupExecutor {
+  private readonly commandExecutor: TCommandExecutor;
+  private readonly actions: IPostSetupAction[];
+
+  constructor(commandExecutor: TCommandExecutor) {
+    this.commandExecutor = commandExecutor;
+    this.actions = [new InstallDependenciesAction(), new InitializeGitAction()];
+  }
+
+  async run({
+    targetRoot,
+    installDependencies,
+    initializeGit,
+    onActionStart,
+  }: {
+    targetRoot: string;
+    installDependencies: boolean;
+    initializeGit: boolean;
+    onActionStart?(action: TPostSetupActionStart): void;
+  }): Promise<TPostSetupActionStatus[]> {
+    let statuses: TPostSetupActionStatus[] = [];
+    let selectedActions: { action: IPostSetupAction; selected: boolean }[] = [
+      { action: this.actions[0], selected: installDependencies },
+      { action: this.actions[1], selected: initializeGit },
+    ];
+
+    for (let { action, selected } of selectedActions) {
+      if (!selected) {
+        statuses.push(action.createSkippedStatus());
+        continue;
+      }
+
+      onActionStart?.({
+        name: action.name,
+        detail: action.detail,
+        message: action.message,
+      });
+
+      try {
+        await action.execute(this.commandExecutor, targetRoot);
+        statuses.push(action.createCompletedStatus());
+      } catch (error) {
+        statuses.push(action.createFailedStatus(error));
+      }
+    }
+
+    return statuses;
+  }
+}
+
 export function createPostSetupExecutor(
   commandExecutor: TCommandExecutor,
 ): TPostSetupExecutor {
-  return {
-    async run({
-      targetRoot,
-      installDependencies,
-      initializeGit,
-      onActionStart,
-    }) {
-      let statuses: TPostSetupActionStatus[] = [];
-
-      statuses.push(
-        await runOptionalAction({
-          selected: installDependencies,
-          name: "installDependencies",
-          detail: "npm install",
-          onActionStart,
-          run() {
-            return commandExecutor("npm", ["install"], targetRoot);
-          },
-        }),
-      );
-
-      statuses.push(
-        await runOptionalAction({
-          selected: initializeGit,
-          name: "initializeGit",
-          detail: "git init",
-          onActionStart,
-          run() {
-            return initializeGitRepository(commandExecutor, targetRoot);
-          },
-        }),
-      );
-
-      return statuses;
-    },
-  };
-}
-
-async function runOptionalAction(options: {
-  selected: boolean;
-  name: TPostSetupActionName;
-  detail: string;
-  onActionStart?(action: TPostSetupActionStart): void;
-  run(): Promise<void>;
-}): Promise<TPostSetupActionStatus> {
-  if (!options.selected) {
-    return {
-      name: options.name,
-      selected: false,
-      ok: true,
-      detail: `${options.detail} skipped`,
-    };
-  }
-
-  try {
-    options.onActionStart?.({
-      name: options.name,
-      detail: options.detail,
-      message: POST_SETUP_ACTION_MESSAGES[options.name],
-    });
-    await options.run();
-
-    return {
-      name: options.name,
-      selected: true,
-      ok: true,
-      detail: `${options.detail} completed`,
-    };
-  } catch (error) {
-    let message =
-      error instanceof Error ? error.message : "Unknown command failure";
-
-    return {
-      name: options.name,
-      selected: true,
-      ok: false,
-      detail: `${options.detail} failed: ${message}`,
-    };
-  }
-}
-
-async function initializeGitRepository(
-  commandExecutor: TCommandExecutor,
-  cwd: string,
-): Promise<void> {
-  try {
-    await commandExecutor("git", INITIALIZE_GIT_WITH_MAIN_ARGS, cwd);
-  } catch (error) {
-    if (!isUnsupportedInitialBranchError(error)) {
-      throw error;
-    }
-
-    await commandExecutor("git", INITIALIZE_GIT_FALLBACK_ARGS, cwd);
-    await commandExecutor("git", SET_GIT_HEAD_TO_MAIN_ARGS, cwd);
-  }
-}
-
-function isUnsupportedInitialBranchError(error: unknown): boolean {
-  if (!(error instanceof Error)) {
-    return false;
-  }
-
-  let message = error.message.toLowerCase();
-
-  // git < 2.28 uses various phrasings depending on version and platform
-  return (
-    message.includes("initial-branch") &&
-    (message.includes("unknown option") ||
-      message.includes("unknown switch") ||
-      message.includes("unrecognized option") ||
-      message.includes("invalid option"))
-  );
+  return new PostSetupExecutor(commandExecutor);
 }
 
 export function executeCommand(
