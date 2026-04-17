@@ -159,10 +159,21 @@ class PostSetupExecutor implements TPostSetupExecutor {
     onActionStart?(action: TPostSetupActionStart): void;
   }): Promise<TPostSetupActionStatus[]> {
     let statuses: TPostSetupActionStatus[] = [];
-    let selectedActions: { action: IPostSetupAction; selected: boolean }[] = [
-      { action: this.actions[0], selected: installDependencies },
-      { action: this.actions[1], selected: initializeGit },
-    ];
+    let selectedActions: { action: IPostSetupAction; selected: boolean }[] = [];
+
+    if (this.actions[0]) {
+      selectedActions.push({
+        action: this.actions[0],
+        selected: installDependencies,
+      });
+    }
+
+    if (this.actions[1]) {
+      selectedActions.push({
+        action: this.actions[1],
+        selected: initializeGit,
+      });
+    }
 
     for (let { action, selected } of selectedActions) {
       if (!selected) {

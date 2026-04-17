@@ -10,7 +10,7 @@ export function createLogger(): TLogger {
       console.log(message);
     },
     debug(payload) {
-      if (process.env.DEBUG === '1') {
+      if (process.env["DEBUG"] === "1") {
         console.log(payload);
       }
     },

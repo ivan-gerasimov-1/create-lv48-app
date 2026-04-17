@@ -21,17 +21,21 @@ export function transformPackageJson(
     throw new Error(`Invalid package.json template at ${relativePath}`);
   }
 
+  /**
+   * @todo Add proper types for parsedValue/nextValue in order to
+   * use dot notation property access
+   */
   let nextValue = { ...parsedValue };
   let segments = relativePath.split(path.sep);
 
   if (relativePath === "package.json") {
-    nextValue.name = context.answers.packageName;
-    nextValue.packageManager = "npm";
+    nextValue["name"] = context.answers.packageName;
+    nextValue["packageManager"] = "npm";
 
     if (context.answers.workspaceLayout === "multi") {
-      nextValue.workspaces = ["apps/*/*", "packages/*"];
+      nextValue["workspaces"] = ["apps/*/*", "packages/*"];
     } else {
-      nextValue.workspaces = ["apps/*", "packages/*"];
+      nextValue["workspaces"] = ["apps/*", "packages/*"];
     }
   }
 
@@ -43,13 +47,14 @@ export function transformPackageJson(
       let workspaceName = segments[2];
 
       if (typeof workspaceName === "string" && workspaceName.length > 0) {
-        nextValue.name = `@${context.answers.appProjectName}/${workspaceName}`;
+        nextValue["name"] =
+          `@${context.answers.appProjectName}/${workspaceName}`;
       }
     } else {
       let workspaceName = segments[1];
 
       if (typeof workspaceName === "string" && workspaceName.length > 0) {
-        nextValue.name = `@${context.answers.packageName}/${workspaceName}`;
+        nextValue["name"] = `@${context.answers.packageName}/${workspaceName}`;
       }
     }
   }
@@ -58,7 +63,7 @@ export function transformPackageJson(
     let packageName = segments[1];
 
     if (typeof packageName === "string" && packageName.length > 0) {
-      nextValue.name = `@${context.answers.packageName}/${packageName}`;
+      nextValue["name"] = `@${context.answers.packageName}/${packageName}`;
     }
   }
 
