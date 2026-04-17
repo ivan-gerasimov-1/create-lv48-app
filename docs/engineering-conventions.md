@@ -17,7 +17,7 @@ This document describes the development conventions, code style guardrails, and 
 ## Style Preferences
 
 - In a module/file, prefer declaration order: types first, then constants, then the main exported function, then helper functions.
-- Prefer function declarations (`function name() {}`) for named functions by default.
+- Prefer function declarations (`function name() {}`) over function expressions (`const name = () => {}`) for named functions by default.
 - Prefer simple step-by-step expressions over dense nested conditionals or ternaries.
 - When handling object-shaped API responses, prefer early destructuring (`{ data, error }`) and concise domain names for locals.
 - Use `let` by default for variables.
