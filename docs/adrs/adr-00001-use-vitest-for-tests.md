@@ -43,8 +43,8 @@ This decision is reversible by restoring the node:test scripts, loader files, an
 
 ## Implemented By
 
-- [CHANGE-001](../changes/CHANGE-001.md)
+- [CHANGE-001](../changes/change-00001-use-vitest-for-tests.md)
 
 ## Related Decisions
 
-- [ADR-002: Colocate test files with tested code](./ADR-002.md) depends on this decision's Vitest test discovery contract.
+- [ADR-002: Colocate test files with tested code](./adr-00002-colocate-test-files-with-tested-code.md) depends on this decision's Vitest test discovery contract.

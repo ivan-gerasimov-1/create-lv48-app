@@ -6,7 +6,7 @@
 
 ## Context
 
-[ADR-009](./ADR-009.md) introduced typed template definitions as the source of truth for local template metadata.
+[ADR-009](./adr-00009-use-typed-portable-template-definitions.md) introduced typed template definitions as the source of truth for local template metadata.
 
 The current metadata uses `id: "base"` as the template identifier. That same value is exposed through preset metadata, used by the preset registry, appears in CLI output, and drives the derived `filesRoot` path.
 
@@ -47,8 +47,8 @@ Rollback by restoring `id` on template and preset metadata, restoring `defaultPr
 
 ## Implemented By
 
-- [CHANGE-010](../changes/CHANGE-010.md)
+- [CHANGE-010](../changes/change-00010-rename-template-identifier-to-name.md)
 
 ## Related Decisions
 
-- [ADR-009: Use typed portable template definitions](./ADR-009.md)
+- [ADR-009: Use typed portable template definitions](./adr-00009-use-typed-portable-template-definitions.md)

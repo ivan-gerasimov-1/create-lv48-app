@@ -46,8 +46,8 @@ This decision is reversible by moving `*.test.ts` files back under `tests/`, res
 
 ## Implemented By
 
-- [CHANGE-002](../changes/CHANGE-002.md)
+- [CHANGE-002](../changes/change-00002-colocate-test-files-with-tested-code.md)
 
 ## Related Decisions
 
-- [ADR-001: Use Vitest for tests](./ADR-001.md) establishes the Vitest runner and discovery behavior this decision updates.
+- [ADR-001: Use Vitest for tests](./adr-00001-use-vitest-for-tests.md) establishes the Vitest runner and discovery behavior this decision updates.

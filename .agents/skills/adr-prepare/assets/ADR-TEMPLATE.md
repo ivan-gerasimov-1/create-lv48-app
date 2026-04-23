@@ -34,7 +34,7 @@ Describe how to roll back or supersede this decision, including any compatibilit
 
 Remove this section until a CHANGE record implements the decision.
 
-- CHANGE-NNN
+- CHANGE-NNNNN
 
 ## Related Decisions
 

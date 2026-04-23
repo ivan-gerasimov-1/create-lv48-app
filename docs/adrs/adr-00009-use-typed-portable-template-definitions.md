@@ -57,4 +57,4 @@ Move generated assets back from `templates/<id>/files` to the previous template 
 
 ## Implemented By
 
-- [CHANGE-009](../changes/CHANGE-009.md)
+- [CHANGE-009](../changes/change-00009-use-typed-portable-template-definitions.md)

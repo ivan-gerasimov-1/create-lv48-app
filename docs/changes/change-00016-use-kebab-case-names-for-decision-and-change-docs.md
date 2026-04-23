@@ -1,8 +1,8 @@
 # CHANGE-016: Use kebab-case names for decision and change docs
 
-| Status   | Date       | ADRs                          |
-| -------- | ---------- | ----------------------------- |
-| Proposed | 2026-04-23 | [ADR-016](../adrs/ADR-016.md) |
+| Status | Date       | ADRs                                                                              |
+| ------ | ---------- | --------------------------------------------------------------------------------- |
+| Done   | 2026-04-23 | [ADR-016](../adrs/adr-00016-use-kebab-case-names-for-decision-and-change-docs.md) |
 
 ## Goal
 

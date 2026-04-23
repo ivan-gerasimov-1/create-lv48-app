@@ -48,4 +48,4 @@ If a later decision needs both concepts, supersede this ADR and introduce explic
 
 ## Related Decisions
 
-- [ADR-009](./ADR-009.md)
+- [ADR-009](./adr-00009-use-typed-portable-template-definitions.md)

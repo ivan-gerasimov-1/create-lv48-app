@@ -45,4 +45,4 @@ Rollback by restoring the previous shadcn-ready template, removing added shadcn 
 
 ## Implemented By
 
-- [CHANGE-008](../changes/CHANGE-008.md)
+- [CHANGE-008](../changes/change-00008-include-shadcn-v4-in-base-web-template.md)

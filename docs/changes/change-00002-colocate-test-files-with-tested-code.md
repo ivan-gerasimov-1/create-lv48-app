@@ -1,8 +1,8 @@
 # CHANGE-002: Colocate test files with tested code
 
-| Status | Date       | ADRs |
-| ------ | ---------- | ---- |
-| Done   | 2026-04-14 | [ADR-002](../adrs/ADR-002.md) |
+| Status | Date       | ADRs                                                                 |
+| ------ | ---------- | -------------------------------------------------------------------- |
+| Done   | 2026-04-14 | [ADR-002](../adrs/adr-00002-colocate-test-files-with-tested-code.md) |
 
 ## Goal
 
@@ -10,7 +10,7 @@ Move runnable test files next to the production modules they validate while keep
 
 ## Scope
 
-Implement [ADR-002](../adrs/ADR-002.md).
+Implement [ADR-002](../adrs/adr-00002-colocate-test-files-with-tested-code.md).
 
 ## Implementation
 

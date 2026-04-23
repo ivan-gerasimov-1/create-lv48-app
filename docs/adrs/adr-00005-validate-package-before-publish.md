@@ -10,7 +10,7 @@ The package publish flow already expects verification before `npm publish`.
 
 The current `release:publish` script runs plain `npm publish`, so the repository does not have a reusable package validation gate that protects both local and CI publishing.
 
-tsdown supports package validation through `publint` and `attw`. This package is currently CLI-only, and [ADR-004](./ADR-004.md) says not to add `exports`, `main`, or `types` as part of the tsdown build setup.
+tsdown supports package validation through `publint` and `attw`. This package is currently CLI-only, and [ADR-004](./adr-00004-use-tsdown-for-cli-builds.md) says not to add `exports`, `main`, or `types` as part of the tsdown build setup.
 
 ## Decision
 
@@ -66,8 +66,8 @@ The package surface stays unchanged during this decision.
 
 ## Implemented By
 
-- [CHANGE-005](../changes/CHANGE-005.md)
+- [CHANGE-005](../changes/change-00005-validate-package-before-publish.md)
 
 ## Related Decisions
 
-- [ADR-004: Use tsdown for CLI builds](./ADR-004.md)
+- [ADR-004: Use tsdown for CLI builds](./adr-00004-use-tsdown-for-cli-builds.md)

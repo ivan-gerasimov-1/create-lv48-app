@@ -1,8 +1,8 @@
 # CHANGE-012: Use Clack for interactive CLI prompts
 
-| Status | Date       | ADRs |
-| ------ | ---------- | ---- |
-| Done   | 2026-04-16 | [ADR-012](../adrs/ADR-012.md) |
+| Status | Date       | ADRs                                                                  |
+| ------ | ---------- | --------------------------------------------------------------------- |
+| Done   | 2026-04-16 | [ADR-012](../adrs/adr-00012-use-clack-for-interactive-cli-prompts.md) |
 
 ## Goal
 
@@ -10,7 +10,7 @@ Replace the readline-backed interactive prompt implementation with Clack while p
 
 ## Scope
 
-Implement [ADR-012](../adrs/ADR-012.md).
+Implement [ADR-012](../adrs/adr-00012-use-clack-for-interactive-cli-prompts.md).
 
 ## Implementation
 

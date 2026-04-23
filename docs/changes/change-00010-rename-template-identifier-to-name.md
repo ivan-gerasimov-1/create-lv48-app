@@ -1,8 +1,8 @@
 # CHANGE-010: Rename template identifier to name
 
-| Status | Date       | ADRs |
-| ------ | ---------- | ---- |
-| Done   | 2026-04-16 | [ADR-010](../adrs/ADR-010.md) |
+| Status | Date       | ADRs                                                               |
+| ------ | ---------- | ------------------------------------------------------------------ |
+| Done   | 2026-04-16 | [ADR-010](../adrs/adr-00010-rename-template-identifier-to-name.md) |
 
 ## Goal
 
@@ -10,7 +10,7 @@ Replace template and preset `id` terminology with `name` while keeping the exist
 
 ## Scope
 
-Implement [ADR-010](../adrs/ADR-010.md).
+Implement [ADR-010](../adrs/adr-00010-rename-template-identifier-to-name.md).
 
 ## Implementation
 

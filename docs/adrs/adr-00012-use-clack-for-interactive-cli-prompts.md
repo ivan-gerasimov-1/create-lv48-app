@@ -56,4 +56,4 @@ Rollback by restoring the readline-backed prompt implementation, removing `@clac
 
 ## Implemented By
 
-- [CHANGE-012](../changes/CHANGE-012.md)
+- [CHANGE-012](../changes/change-00012-use-clack-for-interactive-cli-prompts.md)

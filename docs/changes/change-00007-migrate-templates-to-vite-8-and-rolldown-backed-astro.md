@@ -1,8 +1,8 @@
 # CHANGE-007: Migrate templates to Vite 8 and Rolldown-backed Astro
 
-| Status | Date       | ADRs |
-| ------ | ---------- | ---- |
-| Done   | 2026-04-15 | [ADR-007](../adrs/ADR-007.md) |
+| Status | Date       | ADRs                                                                                  |
+| ------ | ---------- | ------------------------------------------------------------------------------------- |
+| Done   | 2026-04-15 | [ADR-007](../adrs/adr-00007-migrate-templates-to-vite-8-and-rolldown-backed-astro.md) |
 
 ## Goal
 
@@ -10,7 +10,7 @@ Update the base templates so generated web apps use Vite 8 directly and generate
 
 ## Scope
 
-Implement [ADR-007](../adrs/ADR-007.md).
+Implement [ADR-007](../adrs/adr-00007-migrate-templates-to-vite-8-and-rolldown-backed-astro.md).
 
 ## Implementation
 

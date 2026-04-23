@@ -53,4 +53,4 @@ Rollback by restoring previous filenames, imports, template references, and docu
 
 ## Implemented By
 
-- [CHANGE-006](../changes/CHANGE-006.md)
+- [CHANGE-006](../changes/change-00006-avoid-project-owned-index-files.md)

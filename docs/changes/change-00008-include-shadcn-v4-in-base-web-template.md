@@ -1,8 +1,8 @@
 # CHANGE-008: Include shadcn v4 in base web template
 
-| Status | Date       | ADRs |
-| ------ | ---------- | ---- |
-| Done   | 2026-04-15 | [ADR-008](../adrs/ADR-008.md) |
+| Status | Date       | ADRs                                                                   |
+| ------ | ---------- | ---------------------------------------------------------------------- |
+| Done   | 2026-04-15 | [ADR-008](../adrs/adr-00008-include-shadcn-v4-in-base-web-template.md) |
 
 ## Goal
 
@@ -10,7 +10,7 @@ Update the base web template so generated apps include a working shadcn v4 basel
 
 ## Scope
 
-Implement [ADR-008](../adrs/ADR-008.md).
+Implement [ADR-008](../adrs/adr-00008-include-shadcn-v4-in-base-web-template.md).
 
 ## Implementation
 
@@ -59,4 +59,4 @@ Expected result:
 
 ## Rollback
 
-Restore the previous web template files, remove added shadcn dependencies and UI components, restore `src/global.css`, and remove or supersede ADR-008 in `docs/ADL.md`.
+Restore the previous web template files, remove added shadcn dependencies and UI components, restore `src/global.css`, and remove or supersede ADR-008 in `docs/adl.md`.

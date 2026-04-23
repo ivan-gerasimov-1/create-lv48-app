@@ -1,8 +1,8 @@
 # CHANGE-001: Use Vitest for tests
 
-| Status | Date       | ADRs |
-| ------ | ---------- | ---- |
-| Done   | 2026-04-14 | [ADR-001](../adrs/ADR-001.md) |
+| Status | Date       | ADRs                                                 |
+| ------ | ---------- | ---------------------------------------------------- |
+| Done   | 2026-04-14 | [ADR-001](../adrs/adr-00001-use-vitest-for-tests.md) |
 
 ## Goal
 
@@ -10,7 +10,7 @@ Replace the current node:test-based TypeScript test setup with Vitest while pres
 
 ## Scope
 
-Implement [ADR-001](../adrs/ADR-001.md).
+Implement [ADR-001](../adrs/adr-00001-use-vitest-for-tests.md).
 
 ## Implementation
 
@@ -21,7 +21,7 @@ Implement [ADR-001](../adrs/ADR-001.md).
 3. Add vitest.config.ts with:
    - Node test environment
    - explicit imports, no globals
-   - include patterns for tests/**/*.test.ts and .github/scripts/**/*.test.ts
+   - include patterns for tests/**/\*.test.ts and .github/scripts/**/\*.test.ts
 4. Convert tests from node:test imports to Vitest imports.
 5. Convert assertions from node:assert/strict to expect.
 6. Update tests/helpers.ts to use Vitest assertions.

@@ -1,8 +1,8 @@
 # CHANGE-005: Validate package before publish
 
-| Status | Date       | ADRs |
-| ------ | ---------- | ---- |
-| Done   | 2026-04-15 | [ADR-005](../adrs/ADR-005.md) |
+| Status | Date       | ADRs                                                            |
+| ------ | ---------- | --------------------------------------------------------------- |
+| Done   | 2026-04-15 | [ADR-005](../adrs/adr-00005-validate-package-before-publish.md) |
 
 ## Goal
 
@@ -10,7 +10,7 @@ Make publish impossible unless tests, build/typecheck, and tsdown `publint` pass
 
 ## Scope
 
-Implement [ADR-005](../adrs/ADR-005.md).
+Implement [ADR-005](../adrs/adr-00005-validate-package-before-publish.md).
 
 ## Implementation
 
@@ -25,7 +25,7 @@ Implement [ADR-005](../adrs/ADR-005.md).
    - remove the separate `Build` step
    - keep `Publish package` as `npm run release:publish`
 6. Update README publish flow to name `release:prepare`.
-7. Add ADR-005 to `docs/ADL.md`.
+7. Add ADR-005 to `docs/adl.md`.
 
 ## Verification
 

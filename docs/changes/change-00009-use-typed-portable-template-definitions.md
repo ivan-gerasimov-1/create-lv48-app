@@ -1,8 +1,8 @@
 # CHANGE-009: Use typed portable template definitions
 
-| Status | Date       | ADRs |
-| ------ | ---------- | ---- |
-| Done   | 2026-04-16 | [ADR-009](../adrs/ADR-009.md) |
+| Status | Date       | ADRs                                                                    |
+| ------ | ---------- | ----------------------------------------------------------------------- |
+| Done   | 2026-04-16 | [ADR-009](../adrs/adr-00009-use-typed-portable-template-definitions.md) |
 
 ## Goal
 
@@ -10,7 +10,7 @@ Replace JSON-backed template metadata with typed template definitions and make c
 
 ## Scope
 
-Implement [ADR-009](../adrs/ADR-009.md).
+Implement [ADR-009](../adrs/adr-00009-use-typed-portable-template-definitions.md).
 
 ## Implementation
 

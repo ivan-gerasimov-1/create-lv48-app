@@ -8,14 +8,14 @@
 
 The project currently stores decision and change docs under mixed naming styles:
 
-- `docs/ADL.md`
-- `docs/CHANGES.md`
-- `docs/adrs/ADR-NNN.md`
-- `docs/changes/CHANGE-NNN.md`
+- `docs/adl.md`
+- `docs/changes.md`
+- `docs/adrs/adr-NNNNN-title-slug.md`
+- `docs/changes/change-NNNNN-title-slug.md`
 
 That layout is readable, but it does not follow the repository preference for lowercase, path-stable filenames. It also forces every new ADR and CHANGE workflow to preserve uppercase names without titles in filenames, which makes links less descriptive and file lists harder to scan.
 
-The project already split durable decisions from implementation plans in [ADR-014: Split decisions from changes](./ADR-014.md). This new decision should refine naming only. It should not change the ADR vs CHANGE model, runtime behavior, generated output, or public package contracts.
+The project already split durable decisions from implementation plans in [ADR-014: Split decisions from changes](./adr-00014-split-decisions-from-changes.md). This new decision should refine naming only. It should not change the ADR vs CHANGE model, runtime behavior, generated output, or public package contracts.
 
 ## Decision
 
@@ -77,4 +77,4 @@ Rollback does not require runtime or data migration because the decision affects
 
 ## Related Decisions
 
-- [ADR-014: Split decisions from changes](./ADR-014.md) remains accepted and defines the artifact split that this ADR keeps.
+- [ADR-014: Split decisions from changes](./adr-00014-split-decisions-from-changes.md) remains accepted and defines the artifact split that this ADR keeps.

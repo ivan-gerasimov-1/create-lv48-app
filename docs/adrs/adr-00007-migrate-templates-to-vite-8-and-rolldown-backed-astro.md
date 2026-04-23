@@ -66,4 +66,4 @@ Supersede this ADR when Astro supports Vite 8 natively and the local `rolldown-v
 
 ## Implemented By
 
-- [CHANGE-007](../changes/CHANGE-007.md)
+- [CHANGE-007](../changes/change-00007-migrate-templates-to-vite-8-and-rolldown-backed-astro.md)

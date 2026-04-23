@@ -136,4 +136,4 @@ This decision is reversible by removing the layout prompt and the multi-project 
 
 ## Implemented By
 
-- [CHANGE-003](../changes/CHANGE-003.md)
+- [CHANGE-003](../changes/change-00003-support-single-and-multi-project-workspace-layouts.md)

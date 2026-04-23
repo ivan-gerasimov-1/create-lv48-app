@@ -1,8 +1,8 @@
 # CHANGE-003: Support single and multi-project workspace layouts
 
-| Status | Date       | ADRs |
-| ------ | ---------- | ---- |
-| Done   | 2026-04-14 | [ADR-003](../adrs/ADR-003.md) |
+| Status | Date       | ADRs                                                                               |
+| ------ | ---------- | ---------------------------------------------------------------------------------- |
+| Done   | 2026-04-14 | [ADR-003](../adrs/adr-00003-support-single-and-multi-project-workspace-layouts.md) |
 
 ## Goal
 
@@ -10,7 +10,7 @@ Add an optional multi-project scaffold layout while preserving the current singl
 
 ## Scope
 
-Implement [ADR-003](../adrs/ADR-003.md).
+Implement [ADR-003](../adrs/adr-00003-support-single-and-multi-project-workspace-layouts.md).
 
 ## Implementation
 
@@ -47,17 +47,20 @@ Implement [ADR-003](../adrs/ADR-003.md).
 9. Update template metadata:
    - add any new placeholder keys to `templates/base/_meta/template.json`
 10. Update documentation:
-   - generated template README describes both layouts or uses layout-aware paths
-   - repository README documents the layout prompt and both generated shapes
+
+- generated template README describes both layouts or uses layout-aware paths
+- repository README documents the layout prompt and both generated shapes
+
 11. Update tests:
-   - prompt collection tests for default single layout
-   - prompt collection tests for multi layout and first app project name
-   - transform tests for single app package names
-   - transform tests for multi app package names
-   - transform tests for root workspaces in both layouts
-   - transform tests for shared package names under `packages/*`
-   - CLI flow test for current single scaffold path
-   - CLI flow test for multi scaffold path and generated root manifest
+
+- prompt collection tests for default single layout
+- prompt collection tests for multi layout and first app project name
+- transform tests for single app package names
+- transform tests for multi app package names
+- transform tests for root workspaces in both layouts
+- transform tests for shared package names under `packages/*`
+- CLI flow test for current single scaffold path
+- CLI flow test for multi scaffold path and generated root manifest
 
 ## Verification
 

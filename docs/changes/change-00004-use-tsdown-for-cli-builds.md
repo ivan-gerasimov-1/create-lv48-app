@@ -1,8 +1,8 @@
 # CHANGE-004: Use tsdown for CLI builds
 
-| Status | Date       | ADRs |
-| ------ | ---------- | ---- |
-| Done   | 2026-04-15 | [ADR-004](../adrs/ADR-004.md) |
+| Status | Date       | ADRs                                                      |
+| ------ | ---------- | --------------------------------------------------------- |
+| Done   | 2026-04-15 | [ADR-004](../adrs/adr-00004-use-tsdown-for-cli-builds.md) |
 
 ## Goal
 
@@ -10,7 +10,7 @@ Replace TypeScript compiler emit with tsdown for CLI build output while preservi
 
 ## Scope
 
-Implement [ADR-004](../adrs/ADR-004.md).
+Implement [ADR-004](../adrs/adr-00004-use-tsdown-for-cli-builds.md).
 
 ## Implementation
 

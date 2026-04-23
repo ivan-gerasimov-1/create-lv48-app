@@ -9,7 +9,7 @@ This document describes the development conventions, code style guardrails, and 
 
 ## Architecture and Module Boundaries
 
-- Architecture decisions are tracked in [docs/ADL.md](./ADL.md).
+- Architecture decisions are tracked in [docs/adl.md](docs/adl.md).
 - Keep module boundaries aligned with bounded contexts. If logic grows into a distinct domain, move it into its own feature module instead of keeping it under an unrelated one.
 - Name feature module directories as plural domain nouns by default; deviate only when singular naming is intentionally justified by the domain language.
 - Use functional filenames for project-owned modules and assets instead of `index` files. Do not add barrel-style `index` modules.

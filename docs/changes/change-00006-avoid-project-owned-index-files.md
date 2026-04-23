@@ -1,8 +1,8 @@
 # CHANGE-006: Avoid project-owned index files
 
-| Status | Date       | ADRs |
-| ------ | ---------- | ---- |
-| Done   | 2026-04-15 | [ADR-006](../adrs/ADR-006.md) |
+| Status | Date       | ADRs                                                            |
+| ------ | ---------- | --------------------------------------------------------------- |
+| Done   | 2026-04-15 | [ADR-006](../adrs/adr-00006-avoid-project-owned-index-files.md) |
 
 ## Goal
 
@@ -10,7 +10,7 @@ Replace project-owned `index` filenames with functional names while preserving f
 
 ## Scope
 
-Implement [ADR-006](../adrs/ADR-006.md).
+Implement [ADR-006](../adrs/adr-00006-avoid-project-owned-index-files.md).
 
 ## Implementation
 
@@ -40,7 +40,7 @@ Implement [ADR-006](../adrs/ADR-006.md).
 8. Do not rename:
    - `templates/base/apps/web/index.html`
    - `templates/base/apps/site/src/pages/index.astro`
-9. Add ADR-006 to `docs/ADL.md`.
+9. Add ADR-006 to `docs/adl.md`.
 
 ## Verification
 
@@ -60,4 +60,4 @@ Expected result:
 
 ## Rollback
 
-Restore previous filenames, imports, template references, docs, and remove ADR-006 from `docs/ADL.md`.
+Restore previous filenames, imports, template references, docs, and remove ADR-006 from `docs/adl.md`.

@@ -14,9 +14,9 @@ The project now needs a process that keeps ADRs stable while still giving LLM ag
 
 ## Decision
 
-Store durable architecture decisions as flat ADR files under `docs/adrs/ADR-NNN.md`.
+Store durable architecture decisions as flat ADR files under `docs/adrs/adr-NNNNN-title-slug.md`.
 
-Store implementation plans and delivery records as flat change files under `docs/changes/CHANGE-NNN.md`.
+Store implementation plans and delivery records as flat change files under `docs/changes/change-NNNNN-title-slug.md`.
 
 Keep decision status on ADRs and delivery status on changes. ADR statuses are:
 
@@ -34,7 +34,7 @@ Change statuses are:
 - `Blocked`
 - `Abandoned`
 
-Use `docs/ADL.md` as the decision log and `docs/CHANGES.md` as the change log.
+Use `docs/adl.md` as the decision log and `docs/changes.md` as the change log.
 
 Do not create ADR plan files. ADR-backed implementation work must use a CHANGE file linked to the relevant ADR. Non-ADR implementation plans may also use CHANGE files when task-level planning is useful.
 
@@ -65,4 +65,4 @@ This decision can be superseded by a later ADR that restores nested ADR director
 
 ## Implemented By
 
-- [CHANGE-014](../changes/CHANGE-014.md)
+- [CHANGE-014](../changes/change-00014-split-decisions-from-changes.md)

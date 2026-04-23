@@ -1,8 +1,8 @@
 # CHANGE-013: Restrict default parameters to simple literals
 
-| Status | Date       | ADRs |
-| ------ | ---------- | ---- |
-| Done   | 2026-04-16 | [ADR-013](../adrs/ADR-013.md) |
+| Status | Date       | ADRs                                                                           |
+| ------ | ---------- | ------------------------------------------------------------------------------ |
+| Done   | 2026-04-16 | [ADR-013](../adrs/adr-00013-restrict-default-parameters-to-simple-literals.md) |
 
 ## Goal
 
@@ -10,7 +10,7 @@ Make dependency-bearing factory signatures explicit while keeping harmless liter
 
 ## Scope
 
-Implement [ADR-013](../adrs/ADR-013.md).
+Implement [ADR-013](../adrs/adr-00013-restrict-default-parameters-to-simple-literals.md).
 
 ## Implementation
 

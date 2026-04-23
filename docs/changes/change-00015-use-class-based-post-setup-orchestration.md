@@ -1,8 +1,8 @@
 # CHANGE-015: Use class-based post-setup orchestration
 
-| Status | Date       | ADRs                          |
-| ------ | ---------- | ----------------------------- |
-| Done   | 2026-04-16 | [ADR-015](../adrs/ADR-015.md) |
+| Status | Date       | ADRs                                                                     |
+| ------ | ---------- | ------------------------------------------------------------------------ |
+| Done   | 2026-04-16 | [ADR-015](../adrs/adr-00015-use-class-based-post-setup-orchestration.md) |
 
 ## Goal
 

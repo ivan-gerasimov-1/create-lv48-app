@@ -10,8 +10,8 @@ Use ADRs for durable decisions that affect architecture, repository structure, p
 - Before creating an ADR, confirm that the decision constrains future work, changes a public contract or project structure, rejects a viable alternative, or has meaningful rollback cost.
 - Do not create ADRs for routine bug fixes, local refactors, test additions, implementation details of an existing ADR, copy changes, dependency patch updates, or choices that only matter inside one task.
 - Use a commit, issue, pull request note, or CHANGE record when the change needs context but does not establish a durable project rule.
-- Store each decision in `docs/adrs/ADR-NNN.md`.
-- Store implementation plans and delivery records in `docs/changes/CHANGE-NNN.md`.
+- Store each decision in `docs/adrs/adr-NNNNN-title-slug.md`.
+- Store implementation plans and delivery records in `docs/changes/change-NNNNN-title-slug.md`.
 - Keep accepted ADRs immutable except for typo, link, status, and change-log updates.
 - If a decision changes, create a new ADR and mark the old ADR as `Superseded`.
 - Use ISO dates in `YYYY-MM-DD` format.
@@ -26,21 +26,21 @@ Use ADRs for durable decisions that affect architecture, repository structure, p
 
 ## Decisions
 
-| ADR                                  | Date       | Status   | Related                              | Title                                                 |
-| ------------------------------------ | ---------- | -------- | ------------------------------------ | ----------------------------------------------------- |
-| [ADR-001](./adrs/ADR-001.md)         | 2026-04-14 | Accepted | [ADR-002](./adrs/ADR-002.md)         | Use Vitest for tests                                  |
-| [ADR-002](./adrs/ADR-002.md)         | 2026-04-14 | Accepted | [ADR-001](./adrs/ADR-001.md)         | Colocate test files with tested code                  |
-| [ADR-003](./adrs/ADR-003.md)         | 2026-04-14 | Accepted | -                                    | Support single and multi-project workspace layouts    |
-| [ADR-004](./adrs/ADR-004.md)         | 2026-04-15 | Accepted | -                                    | Use tsdown for CLI builds                             |
-| [ADR-005](./adrs/ADR-005.md)         | 2026-04-15 | Accepted | [ADR-004](./adrs/ADR-004.md)         | Validate package before publish                       |
-| [ADR-006](./adrs/ADR-006.md)         | 2026-04-15 | Accepted | -                                    | Avoid project-owned index files                       |
-| [ADR-007](./adrs/ADR-007.md)         | 2026-04-15 | Accepted | -                                    | Migrate templates to Vite 8 and Rolldown-backed Astro |
-| [ADR-008](./adrs/ADR-008.md)         | 2026-04-15 | Accepted | -                                    | Include shadcn v4 in base web template                |
-| [ADR-009](./adrs/ADR-009.md)         | 2026-04-16 | Accepted | -                                    | Use typed portable template definitions               |
-| [ADR-010](./adrs/ADR-010.md)         | 2026-04-16 | Accepted | [ADR-009](./adrs/ADR-009.md)         | Rename template identifier to name                    |
-| [ADR-011](./adrs/ADR-011.md)         | 2026-04-16 | Rejected | [ADR-009](./adrs/ADR-009.md)         | Use template terminology consistently                 |
-| [ADR-012](./adrs/ADR-012.md)         | 2026-04-16 | Accepted | -                                    | Use Clack for interactive CLI prompts                 |
-| [ADR-013](./adrs/ADR-013.md)         | 2026-04-16 | Accepted | [ADR-012](./adrs/ADR-012.md)         | Restrict default parameters to simple literals        |
-| [ADR-014](./adrs/ADR-014.md)         | 2026-04-16 | Accepted | -                                    | Split decisions from changes                          |
-| [ADR-015](./adrs/ADR-015.md)         | 2026-04-16 | Accepted | -                                    | Use class-based post-setup orchestration              |
-| [ADR-016](./adrs/ADR-016.md)         | 2026-04-23 | Accepted | [ADR-014](./adrs/ADR-014.md)         | Use kebab-case names for decision and change docs     |
+| ADR                                                                                  | Date       | Status   | Related                                                                | Title                                                 |
+| ------------------------------------------------------------------------------------ | ---------- | -------- | ---------------------------------------------------------------------- | ----------------------------------------------------- |
+| [ADR-001](./adrs/adr-00001-use-vitest-for-tests.md)                                  | 2026-04-14 | Accepted | [ADR-002](./adrs/adr-00002-colocate-test-files-with-tested-code.md)    | Use Vitest for tests                                  |
+| [ADR-002](./adrs/adr-00002-colocate-test-files-with-tested-code.md)                  | 2026-04-14 | Accepted | [ADR-001](./adrs/adr-00001-use-vitest-for-tests.md)                    | Colocate test files with tested code                  |
+| [ADR-003](./adrs/adr-00003-support-single-and-multi-project-workspace-layouts.md)    | 2026-04-14 | Accepted | -                                                                      | Support single and multi-project workspace layouts    |
+| [ADR-004](./adrs/adr-00004-use-tsdown-for-cli-builds.md)                             | 2026-04-15 | Accepted | -                                                                      | Use tsdown for CLI builds                             |
+| [ADR-005](./adrs/adr-00005-validate-package-before-publish.md)                       | 2026-04-15 | Accepted | [ADR-004](./adrs/adr-00004-use-tsdown-for-cli-builds.md)               | Validate package before publish                       |
+| [ADR-006](./adrs/adr-00006-avoid-project-owned-index-files.md)                       | 2026-04-15 | Accepted | -                                                                      | Avoid project-owned index files                       |
+| [ADR-007](./adrs/adr-00007-migrate-templates-to-vite-8-and-rolldown-backed-astro.md) | 2026-04-15 | Accepted | -                                                                      | Migrate templates to Vite 8 and Rolldown-backed Astro |
+| [ADR-008](./adrs/adr-00008-include-shadcn-v4-in-base-web-template.md)                | 2026-04-15 | Accepted | -                                                                      | Include shadcn v4 in base web template                |
+| [ADR-009](./adrs/adr-00009-use-typed-portable-template-definitions.md)               | 2026-04-16 | Accepted | -                                                                      | Use typed portable template definitions               |
+| [ADR-010](./adrs/adr-00010-rename-template-identifier-to-name.md)                    | 2026-04-16 | Accepted | [ADR-009](./adrs/adr-00009-use-typed-portable-template-definitions.md) | Rename template identifier to name                    |
+| [ADR-011](./adrs/adr-00011-use-template-terminology-consistently.md)                 | 2026-04-16 | Rejected | [ADR-009](./adrs/adr-00009-use-typed-portable-template-definitions.md) | Use template terminology consistently                 |
+| [ADR-012](./adrs/adr-00012-use-clack-for-interactive-cli-prompts.md)                 | 2026-04-16 | Accepted | -                                                                      | Use Clack for interactive CLI prompts                 |
+| [ADR-013](./adrs/adr-00013-restrict-default-parameters-to-simple-literals.md)        | 2026-04-16 | Accepted | [ADR-012](./adrs/adr-00012-use-clack-for-interactive-cli-prompts.md)   | Restrict default parameters to simple literals        |
+| [ADR-014](./adrs/adr-00014-split-decisions-from-changes.md)                          | 2026-04-16 | Accepted | -                                                                      | Split decisions from changes                          |
+| [ADR-015](./adrs/adr-00015-use-class-based-post-setup-orchestration.md)              | 2026-04-16 | Accepted | -                                                                      | Use class-based post-setup orchestration              |
+| [ADR-016](./adrs/adr-00016-use-kebab-case-names-for-decision-and-change-docs.md)     | 2026-04-23 | Accepted | [ADR-014](./adrs/adr-00014-split-decisions-from-changes.md)            | Use kebab-case names for decision and change docs     |

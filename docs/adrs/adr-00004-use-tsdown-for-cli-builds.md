@@ -68,4 +68,4 @@ This decision is reversible by deleting `tsdown.config.ts`, restoring `build` to
 
 ## Implemented By
 
-- [CHANGE-004](../changes/CHANGE-004.md)
+- [CHANGE-004](../changes/change-00004-use-tsdown-for-cli-builds.md)

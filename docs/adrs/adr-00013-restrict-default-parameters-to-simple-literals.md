@@ -62,8 +62,8 @@ Rollback by removing the static guard test and restoring default dependency para
 
 ## Implemented By
 
-- [CHANGE-013](../changes/CHANGE-013.md)
+- [CHANGE-013](../changes/change-00013-restrict-default-parameters-to-simple-literals.md)
 
 ## Related Decisions
 
-- [ADR-012](./ADR-012.md)
+- [ADR-012](./adr-00012-use-clack-for-interactive-cli-prompts.md)
