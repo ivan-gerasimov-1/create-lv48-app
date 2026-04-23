@@ -32,7 +32,7 @@ Use this skill only to prepare ADR documentation. Inspect code as needed, but wr
    - risks/rollback
    - related ADRs, if any
 7. Ask clarifying questions only when the answer changes decision, scope, compatibility, verification, or rollback.
-8. Create `docs/adrs/adr-NNNNN-title-slug.md` from `assets/ADR-TEMPLATE.md`.
+8. Create `docs/adrs/adr-NNNNN-title-slug.md` from `assets/adr-template.md`.
 9. Save ADR and `docs/adl.md` entry with status `Proposed`.
 10. Ask whether to promote to `Accepted`.
     - Prefer Yes/No buttons when available.
