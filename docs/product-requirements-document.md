@@ -1,4 +1,4 @@
-# PRD — npm Template Initializer for TS-first SaaS
+# Product Requirements Document for npm Initializer / Scaffold CLI
 
 ## Overview
 

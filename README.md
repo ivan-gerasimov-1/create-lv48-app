@@ -83,5 +83,5 @@ App packages: `@<appProjectName>/web`, `@<appProjectName>/site`, `@<appProjectNa
 - [Development](./docs/development.md)
 - [Release](./docs/release.md)
 - [Engineering conventions](./docs/engineering-conventions.md)
-- [Product requirements](./docs/PRD.md)
-- [System requirements](./docs/SRD.md)
+- [Product requirements](./docs/product-requirements-document.md)
+- [System requirements](./docs/system-requirements-document.md)

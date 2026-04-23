@@ -1,4 +1,4 @@
-# SRD — System Requirements Document for npm Initializer / Scaffold CLI
+# System Requirements Document for npm Initializer / Scaffold CLI
 
 ## Overview
 

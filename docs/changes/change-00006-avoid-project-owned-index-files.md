@@ -34,7 +34,7 @@ Implement [ADR-006](../adrs/adr-00006-avoid-project-owned-index-files.md).
    - Web `main.tsx` imports `./global.css`
    - `components.json`, README, and App copy reference `src/global.css`
 7. Update docs:
-   - `docs/SRD.md`
+   - `docs/system-requirements-document.md`
    - `docs/engineering-conventions.md`
    - `AGENTS.md`
 8. Do not rename:
