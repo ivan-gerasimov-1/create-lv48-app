@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { defineTemplate } from "./templateDefinition.js";
-import { PACKAGE_ROOT } from "../packageRoot.js";
+import { defineTemplate } from "./templateDefinition";
+import { PACKAGE_ROOT } from "../packageRoot";
 import path from "node:path";
 
 describe("defineTemplate", () => {

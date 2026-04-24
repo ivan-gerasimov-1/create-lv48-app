@@ -1,8 +1,8 @@
-import type { TGenerationContext } from "../generate/types.js";
-import { transformPackageJson } from "./packageJson.js";
-import { interpolatePlaceholders } from "./placeholders.js";
-import { renameSpecialTemplatePath } from "./renameSpecialFiles.js";
-import type { TTransformPipeline } from "./types.js";
+import type { TGenerationContext } from "../generate/types";
+import { transformPackageJson } from "./packageJson";
+import { interpolatePlaceholders } from "./placeholders";
+import { renameSpecialTemplatePath } from "./renameSpecialFiles";
+import type { TTransformPipeline } from "./types";
 
 export function createTransformPipeline(): TTransformPipeline {
   return {

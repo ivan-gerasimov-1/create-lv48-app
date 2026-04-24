@@ -1,4 +1,4 @@
-import type { TPlaceholderValues } from '../generate/types.js';
+import type { TPlaceholderValues } from "../generate/types";
 
 const PLACEHOLDER_PATTERN = /\{\{([a-zA-Z0-9]+)\}\}/g;
 

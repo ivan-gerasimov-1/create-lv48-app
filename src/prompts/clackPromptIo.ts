@@ -1,5 +1,5 @@
 import { cancel, confirm, isCancel, select, text } from "@clack/prompts";
-import type { TPromptIO } from "./types.js";
+import type { TPromptIO } from "./types";
 
 export function createClackPromptIo(): TPromptIO {
   return {

@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 
-import { createPlaceholderValues } from "./placeholders.js";
-import type { TPromptAnswers } from "../prompts/types.js";
+import { createPlaceholderValues } from "./placeholders";
+import type { TPromptAnswers } from "../prompts/types";
 
 describe("placeholders", () => {
   it("creates placeholder values for single layout", () => {

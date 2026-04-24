@@ -1,4 +1,4 @@
-import type { TBuildSummaryOptions, TInitializationSummary } from './types.js';
+import type { TBuildSummaryOptions, TInitializationSummary } from "./types";
 
 export function buildInitializationSummary(
   options: TBuildSummaryOptions,

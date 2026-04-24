@@ -1,4 +1,4 @@
-import type { TPromptIO } from "../src/prompts/types.js";
+import type { TPromptIO } from "../src/prompts/types";
 
 export function createPromptIoMock(): TPromptIO {
   let answers = ["demo-app", "demo-directory", "single"];

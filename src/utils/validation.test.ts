@@ -4,7 +4,7 @@ import {
   validatePackageName,
   validateProjectName,
   validateTargetDirectory,
-} from "./validation.js";
+} from "./validation";
 
 describe("validation", () => {
   it("validates project, package, and target directory inputs", () => {

@@ -1,6 +1,6 @@
-import path from 'node:path';
+import path from "node:path";
 
-import type { TValidationResult } from './types.js';
+import type { TValidationResult } from "./types";
 
 const PROJECT_NAME_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 

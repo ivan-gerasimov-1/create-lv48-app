@@ -1,5 +1,5 @@
-import { baseTemplate } from "../../templates/base/template.js";
-import type { TPresetMetadata, TPresetRegistry } from "./types.js";
+import { baseTemplate } from "../../templates/base/template";
+import type { TPresetMetadata, TPresetRegistry } from "./types";
 
 export function createPresetRegistry(): TPresetRegistry {
   let defaultPreset: TPresetMetadata = {

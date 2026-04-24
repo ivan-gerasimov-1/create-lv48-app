@@ -6,7 +6,7 @@ import type {
   TPostSetupActionStatus,
   TPostSetupActionStart,
   TPostSetupExecutor,
-} from "./types.js";
+} from "./types";
 
 const INITIALIZE_GIT_WITH_MAIN_ARGS = ["init", "--initial-branch=main"];
 const INITIALIZE_GIT_FALLBACK_ARGS = ["init"];

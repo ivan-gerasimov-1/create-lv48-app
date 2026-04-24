@@ -3,7 +3,7 @@ import { describe, it, expect } from "vitest";
 import {
   buildInitializationSummary,
   formatInitializationSummary,
-} from "./summary.js";
+} from "./summary";
 
 describe("initialization summary", () => {
   it("builds a final summary with manual next steps when post-setup fails", () => {

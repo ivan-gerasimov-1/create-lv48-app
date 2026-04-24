@@ -3,19 +3,19 @@ import path from "node:path";
 import {
   buildInitializationSummary,
   formatInitializationSummary,
-} from "./cli/summary.js";
-import { createPlaceholderValues } from "./cli/placeholders.js";
-import { createPostSetupExecutor, executeCommand } from "./cli/postSetup.js";
-import type { TCliDependencies } from "./cli/types.js";
-import { createGenerationRunner } from "./generate/generationRunner.js";
-import { PACKAGE_ROOT } from "./packageRoot.js";
-import { createPresetRegistry } from "./presets/presetRegistry.js";
-import { createClackPromptIo } from "./prompts/clackPromptIo.js";
-import { createPromptController } from "./prompts/promptController.js";
-import { createTransformPipeline } from "./transforms/transformPipeline.js";
-import { readUtf8File } from "./utils/fs.js";
-import { createLogger } from "./utils/logging.js";
-import { baseTemplate } from "../templates/base/template.js";
+} from "./cli/summary";
+import { createPlaceholderValues } from "./cli/placeholders";
+import { createPostSetupExecutor, executeCommand } from "./cli/postSetup";
+import type { TCliDependencies } from "./cli/types";
+import { createGenerationRunner } from "./generate/generationRunner";
+import { PACKAGE_ROOT } from "./packageRoot";
+import { createPresetRegistry } from "./presets/presetRegistry";
+import { createClackPromptIo } from "./prompts/clackPromptIo";
+import { createPromptController } from "./prompts/promptController";
+import { createTransformPipeline } from "./transforms/transformPipeline";
+import { readUtf8File } from "./utils/fs";
+import { createLogger } from "./utils/logging";
+import { baseTemplate } from "../templates/base/template";
 
 export async function runCli(dependencies: TCliDependencies = {}) {
   if (process.argv.includes("--version")) {

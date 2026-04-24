@@ -1,4 +1,4 @@
-import type { TTemplateMetadata } from "./templateDefinition.js";
+import type { TTemplateMetadata } from "./templateDefinition";
 
 export type TPresetMetadata = TTemplateMetadata;
 

@@ -3,10 +3,10 @@ import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, it, expect } from "vitest";
 
-import { runCli } from "./cli.js";
-import { createPromptController } from "./prompts/promptController.js";
-import { listRelativeFiles, readUtf8File, removePaths } from "./utils/fs.js";
-import { createPromptIoMock } from "../tests/createPromptIoMock.js";
+import { runCli } from "./cli";
+import { createPromptController } from "./prompts/promptController";
+import { listRelativeFiles, readUtf8File, removePaths } from "./utils/fs";
+import { createPromptIoMock } from "../tests/createPromptIoMock";
 
 let cleanupPaths: string[] = [];
 

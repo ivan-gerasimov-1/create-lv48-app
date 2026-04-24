@@ -1,4 +1,4 @@
-import type { TGenerationContext } from "../generate/types.js";
+import type { TGenerationContext } from "../generate/types";
 
 export type TTransformPipeline = {
   mapDestinationPath(relativePath: string, context: TGenerationContext): string;

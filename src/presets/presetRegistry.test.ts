@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { createPresetRegistry } from "./presetRegistry.js";
+import { createPresetRegistry } from "./presetRegistry";
 
 describe("createPresetRegistry", () => {
   it("returns registry with defaultPresetName", () => {

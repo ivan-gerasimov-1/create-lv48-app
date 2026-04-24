@@ -5,7 +5,7 @@ import type {
   TGenerationContext,
   TGenerationRecord,
   TGenerationRunner,
-} from "./types.js";
+} from "./types";
 import {
   listRelativeDirectories,
   listRelativeFiles,
@@ -13,8 +13,8 @@ import {
   readUtf8File,
   removePaths,
   writeUtf8File,
-} from "../utils/fs.js";
-import type { TTransformPipeline } from "../transforms/types.js";
+} from "../utils/fs";
+import type { TTransformPipeline } from "../transforms/types";
 
 export function createGenerationRunner(
   transformPipeline: TTransformPipeline,
@@ -154,4 +154,4 @@ export type {
   TGenerationRecord,
   TGenerationRunner,
   TPlaceholderValues,
-} from "./types.js";
+} from "./types";

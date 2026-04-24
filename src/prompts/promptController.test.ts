@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 
-import { createPromptController } from "./promptController.js";
-import { createPromptIoMock } from "../../tests/createPromptIoMock.js";
+import { createPromptController } from "./promptController";
+import { createPromptIoMock } from "../../tests/createPromptIoMock";
 
 describe("prompts", () => {
   it("collects phase 1 prompt answers without package manager or preset prompts", async () => {
