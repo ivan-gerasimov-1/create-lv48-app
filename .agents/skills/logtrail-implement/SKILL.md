@@ -1,5 +1,5 @@
 ---
-name: ADR Implement
+name: Logtrail Implement
 description: Implement a CHANGE record linked to an Accepted ADR after confirmation
 ---
 
