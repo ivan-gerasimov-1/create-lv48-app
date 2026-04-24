@@ -1,8 +1,8 @@
 # CHANGE-017: Omit extensions in TypeScript imports
 
-| Status   | Date       | ADRs |
-| -------- | ---------- | ---- |
-| Proposed | 2026-04-24 | -    |
+| Status | Date       | ADRs |
+| ------ | ---------- | ---- |
+| Done   | 2026-04-24 | -    |
 
 ## Goal
 
