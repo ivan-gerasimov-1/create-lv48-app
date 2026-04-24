@@ -1,5 +1,5 @@
 ---
-name: Logtrail Prepare ADR
+name: Logtrail | Prepare ADR
 description: Create a new Proposed ADR from user-provided decision input
 ---
 
