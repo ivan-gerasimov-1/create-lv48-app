@@ -7,8 +7,8 @@ description: Implement a CHANGE record linked to an Accepted ADR after confirmat
 
 1. Read `docs/adl.md` and `docs/changes.md`.
 2. Select work:
-   - If input starts with `CHANGE-014`, `CHANGE 014`, `C-014`, `#14`, `#014`, `014`, or `14`, prefer the matching CHANGE record when it exists.
-   - If input starts with `ADR-014` or `ADR 014`, select that ADR and then select the lowest-numbered non-`Done`, non-`Abandoned` CHANGE linked to it.
+   - If input starts with `CHANGE-00014`, `CHANGE 00014`, `C-00014`, `#14`, `#014`, `014`, or `14`, prefer the matching CHANGE record when it exists.
+   - If input starts with `ADR-00014` or `ADR 00014`, select that ADR and then select the lowest-numbered non-`Done`, non-`Abandoned` CHANGE linked to it.
    - Otherwise select the lowest-numbered non-`Done`, non-`Abandoned` CHANGE linked to an `Accepted` ADR.
 3. Stop unless the selected CHANGE exists.
 4. Stop unless every linked ADR exists and has status `Accepted`.

@@ -1,4 +1,4 @@
-# ADR-NNN: Title
+# ADR-NNNNN: Title
 
 | Status   | Date       |
 | -------- | ---------- |
