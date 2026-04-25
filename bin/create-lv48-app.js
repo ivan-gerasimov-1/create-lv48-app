@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { runCli } from "../dist/cli.js";
+import { runCli } from "#/dist/cli";
 
 runCli().catch((error) => {
   const message = error instanceof Error ? error.message : "Unknown CLI error";

@@ -42,7 +42,8 @@
   "imports": {
     "#/*": "./src/*.ts",
     "#/templates/*": "./templates/*.ts",
-    "#/tests/*": "./tests/*.ts"
+    "#/tests/*": "./tests/*.ts",
+    "#/dist/*": "./dist/*.js"
   },
   "devEngines": {
     "runtime": {
