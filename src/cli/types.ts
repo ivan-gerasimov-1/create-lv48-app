@@ -1,8 +1,8 @@
 import type { TGenerationRecord } from "#/generate/types";
 import type { TPromptController } from "#/prompts/types";
-import type { TLogger } from "#/utils/logging";
+import type { ILogger } from "#/utils/logger/types";
 
-export type TPostSetupActionName = 'installDependencies' | 'initializeGit';
+export type TPostSetupActionName = "installDependencies" | "initializeGit";
 
 export type TPostSetupActionStatus = {
   name: TPostSetupActionName;
@@ -47,7 +47,7 @@ export type TCliDependencies = {
   commandExecutor?: TCommandExecutor;
   cwd?: string;
   promptController?: TPromptController;
-  logger?: TLogger;
+  logger?: ILogger;
 };
 
 export type TBuildSummaryOptions = {

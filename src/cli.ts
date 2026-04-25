@@ -7,7 +7,7 @@ import { createPresetRegistry } from "#/presets/presetRegistry";
 import { createClackPromptIo } from "#/prompts/clackPromptIo";
 import { createPromptController } from "#/prompts/promptController";
 import { createTransformPipeline } from "#/transforms/transformPipeline";
-import { createLogger } from "#/utils/logging";
+import { Logger } from "#/utils/logger/logger";
 
 import { createPlaceholderValues } from "#/cli/placeholders";
 import { createPostSetupExecutor, executeCommand } from "#/cli/postSetup";
@@ -15,7 +15,7 @@ import { InitializationSummary } from "#/cli/summary";
 import type { TCliDependencies } from "#/cli/types";
 
 export async function runCli(dependencies: TCliDependencies = {}) {
-  let logger = dependencies.logger ?? createLogger();
+  let logger = dependencies.logger ?? new Logger();
   let prompts =
     dependencies.promptController ??
     createPromptController(createClackPromptIo());
