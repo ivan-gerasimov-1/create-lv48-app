@@ -36,6 +36,7 @@ Use this skill only to prepare CHANGE documentation. Inspect code as needed, but
    - rollback
 7. Ask clarifying questions only when the answer changes scope, compatibility, verification, or rollback.
 8. Create `.logtrail/changes/change-NNNNN-title-slug.md` from `assets/change-template.md`.
+   - If you estimate that change takes more than 500 lines, create several subsequent CHANGE files, each one blocked by previous
 9. Save CHANGE and `.logtrail/changes.md` entry with status `Proposed`.
 10. Stop after docs/status changes. Do not implement code.
 
