@@ -18,15 +18,6 @@ import { createLogger } from "./utils/logging";
 import { baseTemplate } from "../templates/base/template";
 
 export async function runCli(dependencies: TCliDependencies = {}) {
-  if (process.argv.includes("--version")) {
-    let raw = JSON.parse(
-      await readUtf8File(path.join(PACKAGE_ROOT, "package.json")),
-    );
-    let version = typeof raw?.version === "string" ? raw.version : "unknown";
-    console.log(version);
-    return;
-  }
-
   let logger = dependencies.logger ?? createLogger();
   let prompts =
     dependencies.promptController ??

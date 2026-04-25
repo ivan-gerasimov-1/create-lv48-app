@@ -16,29 +16,6 @@ afterEach(async () => {
 });
 
 describe("cli", () => {
-  it("prints the package version with --version flag", async () => {
-    let logged: string[] = [];
-    let originalLog = console.log;
-    let originalArgv = [...process.argv];
-
-    process.argv.push("--version");
-    console.log = (...args: unknown[]) => {
-      logged.push(String(args[0]));
-    };
-
-    try {
-      await runCli();
-      let packageJson = JSON.parse(
-        await readUtf8File(path.join(process.cwd(), "package.json")),
-      );
-      expect(logged.length).toBe(1);
-      expect(logged[0]).toBe(packageJson.version);
-    } finally {
-      process.argv = originalArgv;
-      console.log = originalLog;
-    }
-  });
-
   it("runs the full CLI flow and prints a final summary", async () => {
     let rootDirectory = await mkdtemp(path.join(os.tmpdir(), "lv48-cli-run-"));
     let messages: string[] = [];
