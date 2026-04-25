@@ -28,7 +28,15 @@ Exclude:
 ## Implementation
 
 1. Raise `package.json` `engines.node` and `devEngines.runtime.version` from `>=24` to `>=24.14`.
-2. Add a private package `"imports"` mapping for `#/*` that resolves TypeScript source for local typechecking and emitted JavaScript for runtime/build output.
+2. Add a private package `"imports"` mapping that resolves project source, template definitions, and tests through TypeScript source files:
+
+   ```json
+   {
+     "#/*": "./src/*.ts",
+     "#/templates/*": "./templates/*.ts",
+     "#/tests/*": "./tests/*.ts"
+   }
+   ```
 3. Keep `tsconfig.json` on `moduleResolution: "bundler"` and do not disable package import resolution.
 4. Rewrite parent-directory imports across package source to `#/...` when they cross module roots, including imports between `src`, `tests`, and `templates/base/template.ts`.
 5. Keep generated app aliases and nearby relative imports unchanged.
