@@ -1,6 +1,6 @@
 import { baseTemplate } from "#/templates/base/template";
+import type { TPresetMetadata } from "#/presets/types";
 
-import type { TPresetMetadata } from "../types";
 import type { IPresetRegistry } from "./types";
 
 export class PresetRegistry implements IPresetRegistry {
