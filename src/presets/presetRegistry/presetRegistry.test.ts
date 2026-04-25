@@ -1,26 +1,21 @@
 import { describe, it, expect } from "vitest";
-import { createPresetRegistry } from "./presetRegistry";
+import { PresetRegistry } from "./presetRegistry";
 
-describe("createPresetRegistry", () => {
-  it("returns registry with defaultPresetName", () => {
-    let registry = createPresetRegistry();
-    expect(registry.defaultPresetName).toBe("base");
-  });
-
+describe("PresetRegistry", () => {
   it("getDefaultPreset returns preset with name field", () => {
-    let registry = createPresetRegistry();
+    let registry = new PresetRegistry();
     let preset = registry.getDefaultPreset();
     expect(preset).toHaveProperty("name", "base");
   });
 
   it("getPresetByName returns base preset for 'base'", () => {
-    let registry = createPresetRegistry();
+    let registry = new PresetRegistry();
     let preset = registry.getPresetByName("base");
     expect(preset).toHaveProperty("name", "base");
   });
 
   it("getPresetByName throws for unknown preset", () => {
-    let registry = createPresetRegistry();
+    let registry = new PresetRegistry();
     expect(() => registry.getPresetByName("unknown")).toThrow(
       "Unknown preset: unknown",
     );
