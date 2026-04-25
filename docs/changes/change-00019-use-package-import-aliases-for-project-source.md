@@ -1,8 +1,8 @@
 # CHANGE-019: Use package import aliases for project source
 
-| Status   | Date       | ADRs                                                                              |
-| -------- | ---------- | --------------------------------------------------------------------------------- |
-| Proposed | 2026-04-25 | [ADR-017](../adrs/adr-00017-use-package-import-aliases-for-project-source.md) |
+| Status | Date       | ADRs                                                                          |
+| ------ | ---------- | ----------------------------------------------------------------------------- |
+| Done   | 2026-04-25 | [ADR-017](../adrs/adr-00017-use-package-import-aliases-for-project-source.md) |
 
 ## Goal
 
@@ -38,7 +38,7 @@ Exclude:
    }
    ```
 3. Keep `tsconfig.json` on `moduleResolution: "bundler"` and do not disable package import resolution.
-4. Rewrite parent-directory imports across package source to `#/...` when they cross module roots, including imports between `src`, `tests`, and `templates/base/template.ts`.
+4. Rewrite parent-directory imports across package source to `#/...` when they cross module roots, including single-level `../` imports and deeper imports between `src`, `tests`, and `templates/base/template.ts`.
 5. Keep generated app aliases and nearby relative imports unchanged.
 6. Run verification and adjust only the minimum config/import surface required for the alias contract to work.
 
