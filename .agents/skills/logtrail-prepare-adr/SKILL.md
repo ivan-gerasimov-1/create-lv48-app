@@ -38,7 +38,10 @@ Use this skill only to prepare ADR documentation. Inspect code as needed, but wr
     - Prefer Yes/No buttons when available.
     - `Yes`: update status in ADR and ADL.
     - `No`: leave `Proposed`.
-11. Propose branch name: `adr-NNNNN-title-slug`.
+11. Ask to proceed with creating of CHANGE.
+    - Prefer Yes/No buttons when available.
+    - `Yes`: Use `Logtrail | Prepare Change` skill
+    - `No`: skip to the next step.
 12. Stop after docs/status changes. Do not implement code.
 
 ## Guardrails
