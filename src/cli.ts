@@ -26,8 +26,10 @@ export async function runCli(dependencies: TCliDependencies = {}) {
     dependencies.commandExecutor ?? executeCommand,
   );
   let cwd = dependencies.cwd ?? process.cwd();
+
   let answers = await prompts.collectAnswers();
-  let preset = presets.getDefaultPreset();
+
+  let preset = presets.get(answers.presetId);
   let targetRoot = path.resolve(cwd, answers.targetDirectory);
   let placeholders = createPlaceholderValues(answers);
 
@@ -54,6 +56,7 @@ export async function runCli(dependencies: TCliDependencies = {}) {
     preset,
     placeholders,
   });
+
   let postSetup = await postSetupExecutor.run({
     targetRoot,
     installDependencies: answers.installDependencies,

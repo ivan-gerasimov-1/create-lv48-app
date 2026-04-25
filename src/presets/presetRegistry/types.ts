@@ -1,6 +1,6 @@
-import type { TPresetMetadata } from "../types";
+import type { TPresetMetadata } from "#/presets/types";
 
 export interface IPresetRegistry {
-  getDefaultPreset(): TPresetMetadata;
-  getPresetByName(presetName: string): TPresetMetadata;
+  get(presetName?: string): TPresetMetadata;
+  register(preset: TPresetMetadata): void;
 }
