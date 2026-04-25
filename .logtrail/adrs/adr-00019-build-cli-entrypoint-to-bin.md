@@ -2,7 +2,7 @@
 
 | Status   | Date       |
 | -------- | ---------- |
-| Accepted | 2026-04-25 |
+| Superseded | 2026-04-25 |
 
 ## Context
 
