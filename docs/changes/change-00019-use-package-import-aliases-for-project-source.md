@@ -6,7 +6,7 @@
 
 ## Goal
 
-Adopt the private `#/...` package import alias from ADR-017 for project-owned TypeScript source so cross-module imports no longer depend on parent-directory relative paths.
+Adopt the private `#/...` package import alias from ADR-017 for project-owned TypeScript source so cross-module imports no longer depend on parent-directory relative paths, including single-level `../` imports.
 
 ## Scope
 
@@ -16,7 +16,7 @@ Include:
 
 - `package.json` Node engine floor and private `"imports"` contract.
 - TypeScript resolution compatibility for package imports.
-- Cross-directory imports in `src/**/*.ts`, `tests/**/*.ts`, and `templates/base/template.ts` that currently climb through parent directories.
+- Cross-directory imports in `src/**/*.ts`, `tests/**/*.ts`, and `templates/base/template.ts` that currently climb through parent directories, including `../` and deeper parent paths.
 - Verification for typecheck, build, and tests.
 
 Exclude:
