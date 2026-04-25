@@ -1,7 +1,10 @@
-import { describe, it, expect } from "vitest";
-import { defineTemplate } from "./templateDefinition";
-import { PACKAGE_ROOT } from "../packageRoot";
 import path from "node:path";
+
+import { describe, expect, it } from "vitest";
+
+import { PACKAGE_ROOT } from "#/packageRoot";
+
+import { defineTemplate } from "./templateDefinition";
 
 describe("defineTemplate", () => {
   it("derives filesRoot from config.name", () => {

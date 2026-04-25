@@ -1,7 +1,7 @@
 import path from "node:path";
 
-import { PACKAGE_ROOT } from "../packageRoot";
-import type { TPackageManager } from "../prompts/types";
+import { PACKAGE_ROOT } from "#/packageRoot";
+import type { TPackageManager } from "#/prompts/types";
 
 export type TTemplateMetadata = {
   name: "base";

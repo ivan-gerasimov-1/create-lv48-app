@@ -1,11 +1,7 @@
-import path from "node:path";
 import { mkdir, readdir } from "node:fs/promises";
+import path from "node:path";
 
-import type {
-  TGenerationContext,
-  TGenerationRecord,
-  TGenerationRunner,
-} from "./types";
+import type { TTransformPipeline } from "#/transforms/types";
 import {
   listRelativeDirectories,
   listRelativeFiles,
@@ -13,8 +9,13 @@ import {
   readUtf8File,
   removePaths,
   writeUtf8File,
-} from "../utils/fs";
-import type { TTransformPipeline } from "../transforms/types";
+} from "#/utils/fs";
+
+import type {
+  TGenerationContext,
+  TGenerationRecord,
+  TGenerationRunner,
+} from "./types";
 
 export function createGenerationRunner(
   transformPipeline: TTransformPipeline,

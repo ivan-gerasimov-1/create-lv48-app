@@ -1,5 +1,5 @@
-import type { TPromptAnswers } from "../prompts/types";
-import type { TPlaceholderValues } from "../generate/types";
+import type { TPromptAnswers } from "#/prompts/types";
+import type { TPlaceholderValues } from "#/generate/types";
 
 export function createPlaceholderValues(
   answers: TPromptAnswers,

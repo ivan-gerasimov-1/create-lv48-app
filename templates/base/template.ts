@@ -1,4 +1,4 @@
-import { defineTemplate } from "../../src/presets/templateDefinition";
+import { defineTemplate } from "#/presets/templateDefinition";
 
 export const baseTemplate = defineTemplate({
   name: "base",

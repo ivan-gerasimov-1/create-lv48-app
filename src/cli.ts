@@ -1,21 +1,21 @@
 import path from "node:path";
 
+import { baseTemplate } from "#/templates/base/template";
+
+import { createGenerationRunner } from "#/generate/generationRunner";
+import { createPresetRegistry } from "#/presets/presetRegistry";
+import { createClackPromptIo } from "#/prompts/clackPromptIo";
+import { createPromptController } from "#/prompts/promptController";
+import { createTransformPipeline } from "#/transforms/transformPipeline";
+import { createLogger } from "#/utils/logging";
+
+import { createPlaceholderValues } from "#/cli/placeholders";
+import { createPostSetupExecutor, executeCommand } from "#/cli/postSetup";
 import {
   buildInitializationSummary,
   formatInitializationSummary,
-} from "./cli/summary";
-import { createPlaceholderValues } from "./cli/placeholders";
-import { createPostSetupExecutor, executeCommand } from "./cli/postSetup";
-import type { TCliDependencies } from "./cli/types";
-import { createGenerationRunner } from "./generate/generationRunner";
-import { PACKAGE_ROOT } from "./packageRoot";
-import { createPresetRegistry } from "./presets/presetRegistry";
-import { createClackPromptIo } from "./prompts/clackPromptIo";
-import { createPromptController } from "./prompts/promptController";
-import { createTransformPipeline } from "./transforms/transformPipeline";
-import { readUtf8File } from "./utils/fs";
-import { createLogger } from "./utils/logging";
-import { baseTemplate } from "../templates/base/template";
+} from "#/cli/summary";
+import type { TCliDependencies } from "#/cli/types";
 
 export async function runCli(dependencies: TCliDependencies = {}) {
   let logger = dependencies.logger ?? createLogger();

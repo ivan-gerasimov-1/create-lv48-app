@@ -1,14 +1,14 @@
-import { createClackPromptIo } from "./clackPromptIo";
+import {
+  validateProjectName,
+  validateTargetDirectory,
+} from "#/utils/validation";
+
 import type {
   TPromptAnswers,
   TPromptController,
   TPromptIO,
   TWorkspaceLayout,
 } from "./types";
-import {
-  validateProjectName,
-  validateTargetDirectory,
-} from "../utils/validation";
 
 export function createPromptController(promptIo: TPromptIO): TPromptController {
   return {

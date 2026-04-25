@@ -37,12 +37,17 @@
     "access": "public"
   },
   "engines": {
-    "node": ">=24"
+    "node": ">=24.14"
+  },
+  "imports": {
+    "#/*": "./src/*.ts",
+    "#/templates/*": "./templates/*.ts",
+    "#/tests/*": "./tests/*.ts"
   },
   "devEngines": {
     "runtime": {
       "name": "node",
-      "version": ">=24"
+      "version": ">=24.14"
     },
     "packageManager": {
       "name": "npm",

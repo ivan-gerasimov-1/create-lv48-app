@@ -1,4 +1,5 @@
-import { baseTemplate } from "../../templates/base/template";
+import { baseTemplate } from "#/templates/base/template";
+
 import type { TPresetMetadata, TPresetRegistry } from "./types";
 
 export function createPresetRegistry(): TPresetRegistry {

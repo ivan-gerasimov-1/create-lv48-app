@@ -1,4 +1,3 @@
-import type { TGenerationContext } from "../generate/types";
 import { transformPackageJson } from "./packageJson";
 import { interpolatePlaceholders } from "./placeholders";
 import { renameSpecialTemplatePath } from "./renameSpecialFiles";

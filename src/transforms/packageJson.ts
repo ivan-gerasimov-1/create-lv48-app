@@ -1,6 +1,6 @@
 import path from "node:path";
 
-import type { TGenerationContext } from "../generate/types";
+import type { TGenerationContext } from "#/generate/types";
 
 export function transformPackageJson(
   relativePath: string,

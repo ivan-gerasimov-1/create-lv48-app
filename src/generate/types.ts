@@ -1,5 +1,5 @@
-import type { TPromptAnswers } from "../prompts/types";
-import type { TPresetMetadata } from "../presets/types";
+import type { TPromptAnswers } from "#/prompts/types";
+import type { TPresetMetadata } from "#/presets/types";
 
 export type TPlaceholderValues = Record<string, string>;
 

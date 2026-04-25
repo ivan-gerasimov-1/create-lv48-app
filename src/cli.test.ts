@@ -1,12 +1,14 @@
 import { mkdtemp } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { afterEach, describe, it, expect } from "vitest";
 
-import { runCli } from "./cli";
-import { createPromptController } from "./prompts/promptController";
-import { listRelativeFiles, readUtf8File, removePaths } from "./utils/fs";
-import { createPromptIoMock } from "../tests/createPromptIoMock";
+import { afterEach, describe, expect, it } from "vitest";
+
+import { createPromptIoMock } from "#/tests/createPromptIoMock";
+
+import { runCli } from "#/cli";
+import { createPromptController } from "#/prompts/promptController";
+import { listRelativeFiles, removePaths } from "#/utils/fs";
 
 let cleanupPaths: string[] = [];
 
