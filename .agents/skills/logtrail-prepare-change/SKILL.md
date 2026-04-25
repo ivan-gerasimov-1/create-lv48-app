@@ -15,10 +15,11 @@ Use this skill only to prepare CHANGE documentation. Inspect code as needed, but
 
 1. If the brief does not identify implementation work, ask for the change topic before creating files.
 2. Read `docs/changes.md`, `docs/adl.md`, relevant ADRs/docs/code, and inspect current state.
-3. Determine whether the change is ADR-backed or standalone:
-   - If the brief references ADRs, verify that each ADR exists.
-   - Prefer ADR-backed changes when implementation work follows an `Accepted` ADR.
-   - Use standalone changes for non-ADR task plans that need scope, steps, verification, and rollback.
+3. Apply the ADR-backed change gate before creating files:
+   - If the brief references ADRs, verify that each ADR exists and is `Accepted`.
+   - Use ADR-backed changes when implementation work follows an `Accepted` ADR.
+   - If the work introduces or changes a durable decision that constrains future work, architecture, repository structure, public contracts, generated output, build/test workflow, dependencies, or reversibility, stop and explain that ADR Prepare must run first.
+   - Use standalone changes only for concrete implementation work that does not need a new ADR: routine bug fixes, local refactors, test additions, implementation details of an existing ADR, copy changes, dependency patch updates, or choices that only matter inside one task.
 4. Determine CHANGE number:
    - Use an explicit number only when it appears at the start of input, after optional whitespace.
    - Supported prefixes: `CHANGE-014`, `CHANGE 014`, `C-014`, `#14`, `#014`, `014`, `14`.
@@ -44,4 +45,5 @@ Use this skill only to prepare CHANGE documentation. Inspect code as needed, but
 - Do not overwrite existing CHANGE files.
 - Do not mark CHANGE as `Done`.
 - Do not treat numbers in input body as CHANGE numbers.
+- Do not create standalone CHANGE records for work that needs a new ADR first. Stop and explain why ADR Prepare is required.
 - Linking to a `Rejected`, `Deprecated`, or `Superseded` ADR requires explicit user confirmation.
