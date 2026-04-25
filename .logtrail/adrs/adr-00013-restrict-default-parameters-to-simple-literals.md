@@ -1,0 +1,69 @@
+# ADR-013: Restrict default parameters to simple literals
+
+| Status   | Date       |
+| -------- | ---------- |
+| Accepted | 2026-04-16 |
+
+## Context
+
+The codebase uses factory functions and explicit dependency injection for CLI subsystems such as prompt handling and post-setup command execution.
+
+Default parameters that instantiate or choose dependencies hide composition decisions inside function signatures. This makes dependencies less visible, makes tests depend on implicit production wiring, and creates a second place where runtime composition can happen outside the CLI entrypoint.
+
+Simple value defaults are still useful for caller ergonomics when they represent domain values or options, such as a default project name. The risk is in default parameters that create or select entities.
+
+## Decision
+
+Restrict default parameters to simple literal values.
+
+Allowed default parameter values:
+
+- primitive literals: strings, numbers, booleans, `null`, and `undefined`
+- object literals and array literals when their nested values are also simple literals
+
+Disallowed default parameter values:
+
+- factory calls such as `createX()`
+- constructors such as `new X()`
+- function defaults such as `dependency = executeCommand`
+- imported dependency references
+- any other default that creates or selects an entity
+
+When a function depends on an entity, that entity MUST be passed explicitly. Production dependency wiring belongs in the composition root, such as `runCli()`, not in lower-level function parameter defaults.
+
+Existing default parameters that instantiate or select entities MUST be replaced with explicit parameters and composition-root wiring.
+
+## Consequences
+
+Positive:
+
+- Dependencies become visible at call sites.
+- Production wiring is centralized in composition roots.
+- Tests must provide collaborators explicitly instead of relying on hidden production defaults.
+- Static checks can enforce the rule consistently.
+
+Negative:
+
+- Some factory functions become less convenient to call in production code.
+- More call sites need explicit dependency construction or forwarding.
+- Simple defaults need a precise definition so guard tests do not block harmless values.
+
+## Alternatives Considered
+
+- Ban only `createX()` and `new X()` defaults: rejected because function reference defaults still hide dependency selection.
+- Ban all non-primitive defaults: rejected because object and array literal defaults are useful for simple options and do not instantiate entities.
+- Allow DI defaults when they point to stable production implementations: rejected because it keeps production wiring split across factory signatures.
+
+## Reversibility
+
+Supersede this ADR with a more permissive rule if explicit wiring creates more noise than value.
+
+Rollback by removing the static guard test and restoring default dependency parameters where they are intentionally accepted.
+
+## Implemented By
+
+- [CHANGE-013](./changes/change-00013-restrict-default-parameters-to-simple-literals.md)
+
+## Related Decisions
+
+- [ADR-012](./adr-00012-use-clack-for-interactive-cli-prompts.md)

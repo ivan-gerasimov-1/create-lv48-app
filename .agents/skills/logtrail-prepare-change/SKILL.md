@@ -5,7 +5,7 @@ description: Create a new Proposed CHANGE record for ADR-backed or standalone im
 
 Use the text after this skill invocation as the change brief.
 
-Use this skill only to prepare CHANGE documentation. Inspect code as needed, but write only CHANGE docs and `docs/changes.md`.
+Use this skill only to prepare CHANGE documentation. Inspect code as needed, but write only CHANGE docs and `.logtrail/changes.md`.
 
 ## Resources
 
@@ -14,7 +14,7 @@ Use this skill only to prepare CHANGE documentation. Inspect code as needed, but
 ## Workflow
 
 1. If the brief does not identify implementation work, ask for the change topic before creating files.
-2. Read `docs/changes.md`, `docs/adl.md`, relevant ADRs/docs/code, and inspect current state.
+2. Read `.logtrail/changes.md`, `.logtrail/adl.md`, relevant ADRs/docs/code, and inspect current state.
 3. Apply the ADR-backed change gate before creating files:
    - If the brief references ADRs, verify that each ADR exists and is `Accepted`.
    - Use ADR-backed changes when implementation work follows an `Accepted` ADR.
@@ -23,10 +23,10 @@ Use this skill only to prepare CHANGE documentation. Inspect code as needed, but
 4. Determine CHANGE number:
    - Use an explicit number only when it appears at the start of input, after optional whitespace.
    - Supported prefixes: `CHANGE-014`, `CHANGE 014`, `C-014`, `#14`, `#014`, `014`, `14`.
-   - Normalize to five digits: `#14 Split decisions` -> `CHANGE-00014`, `docs/changes/change-00014-split-decisions.md`.
+   - Normalize to five digits: `#14 Split decisions` -> `CHANGE-00014`, `.logtrail/changes/change-00014-split-decisions.md`.
    - Do not scan the input body for CHANGE numbers.
-   - If no starting number exists, use max `CHANGE-NNNNN` from `docs/changes.md` + 1.
-5. Stop if `docs/changes/change-NNNNN-title-slug.md` already exists.
+   - If no starting number exists, use max `CHANGE-NNNNN` from `.logtrail/changes.md` + 1.
+5. Stop if `.logtrail/changes/change-NNNNN-title-slug.md` already exists.
 6. Present a rough approach before writing:
    - goal
    - ADR links or standalone rationale
@@ -35,8 +35,8 @@ Use this skill only to prepare CHANGE documentation. Inspect code as needed, but
    - verification
    - rollback
 7. Ask clarifying questions only when the answer changes scope, compatibility, verification, or rollback.
-8. Create `docs/changes/change-NNNNN-title-slug.md` from `assets/change-template.md`.
-9. Save CHANGE and `docs/changes.md` entry with status `Proposed`.
+8. Create `.logtrail/changes/change-NNNNN-title-slug.md` from `assets/change-template.md`.
+9. Save CHANGE and `.logtrail/changes.md` entry with status `Proposed`.
 10. Stop after docs/status changes. Do not implement code.
 
 ## Guardrails

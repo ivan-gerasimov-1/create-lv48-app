@@ -5,7 +5,7 @@ description: Implement a CHANGE record linked to an Accepted ADR after confirmat
 
 ## Workflow
 
-1. Read `docs/adl.md` and `docs/changes.md`.
+1. Read `.logtrail/adl.md` and `.logtrail/changes.md`.
 2. Select work:
    - If input starts with `CHANGE-00014`, `CHANGE 00014`, `C-00014`, `#14`, `#014`, `014`, or `14`, prefer the matching CHANGE record when it exists.
    - If input starts with `ADR-00014` or `ADR 00014`, select that ADR and then select the lowest-numbered non-`Done`, non-`Abandoned` CHANGE linked to it.
@@ -16,7 +16,7 @@ description: Implement a CHANGE record linked to an Accepted ADR after confirmat
 6. Summarize decision context, change scope, implementation steps, verification, and rollback.
 7. Wait for user confirmation.
 8. Implement the CHANGE and run its verification.
-9. If verification passes, update the CHANGE file and `docs/changes.md` status to `Done`.
+9. If verification passes, update the CHANGE file and `.logtrail/changes.md` status to `Done`.
 10. If verification fails, leave status unchanged and report failures.
 
 ## Guardrails
