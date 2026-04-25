@@ -3,13 +3,12 @@ name: Logtrail | Implement
 description: Implement a CHANGE record linked to an Accepted ADR after confirmation
 ---
 
-## Workflow
+# Workflow
 
-1. Read `.logtrail/adl.md` and `.logtrail/changes.md`.
+1. Read `.logtrail/changes.md` and `.logtrail/adl.md`.
 2. Select work:
    - If input starts with `CHANGE-00014`, `CHANGE 00014`, `C-00014`, `#14`, `#014`, `014`, or `14`, prefer the matching CHANGE record when it exists.
-   - If input starts with `ADR-00014` or `ADR 00014`, select that ADR and then select the lowest-numbered non-`Done`, non-`Abandoned` CHANGE linked to it.
-   - Otherwise select the lowest-numbered non-`Done`, non-`Abandoned` CHANGE linked to an `Accepted` ADR.
+   - Otherwise select the lowest-numbered non-`Done`, non-`Abandoned` CHANGE
 3. Stop unless the selected CHANGE exists.
 4. Stop unless every linked ADR exists and has status `Accepted`.
 5. Read the selected CHANGE and linked ADRs.
@@ -19,9 +18,8 @@ description: Implement a CHANGE record linked to an Accepted ADR after confirmat
 9. If verification passes, update the CHANGE file and `.logtrail/changes.md` status to `Done`.
 10. If verification fails, leave status unchanged and report failures.
 
-## Guardrails
+# Guardrails
 
 - Do not infer missing CHANGE records.
-- Do not update ADR status as part of implementation.
 - If implementation needs to change an ADR decision, stop and ask for a new or updated ADR.
 - If implementation needs a different scope than the CHANGE describes, stop and ask whether to update the CHANGE first.
