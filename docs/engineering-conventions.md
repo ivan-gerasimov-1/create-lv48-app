@@ -37,6 +37,7 @@ This document describes the development conventions, code style guardrails, and 
 - Prefer explicit domain types over `unknown`; use `unknown` only at safe boundaries.
 - By default, keep shared type declarations in a neighboring `types.ts` file instead of colocating them with implementation.
   - Exception: local component/function `props`, `options`, and `params` types may stay next to the implementation.
+- Always use visibility modifiers (`public`, `private`, `protected`) for class methods and properties.
 
 ### Naming Conventions
 
