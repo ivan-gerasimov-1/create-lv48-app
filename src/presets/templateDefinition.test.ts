@@ -2,7 +2,7 @@ import path from "node:path";
 
 import { describe, expect, it } from "vitest";
 
-import { PACKAGE_ROOT } from "#/packageRoot";
+import { TEMPLATES_ROOT } from "#/packageRoot";
 
 import { defineTemplate } from "./templateDefinition";
 
@@ -22,7 +22,7 @@ describe("defineTemplate", () => {
 
     expect(template.name).toBe("base");
     expect(template.filesRoot).toBe(
-      path.resolve(PACKAGE_ROOT, "templates", "base", "files"),
+      path.resolve(TEMPLATES_ROOT, "base", "files"),
     );
   });
 

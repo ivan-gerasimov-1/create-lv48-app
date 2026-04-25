@@ -1,6 +1,6 @@
 import path from "node:path";
 
-import { PACKAGE_ROOT } from "#/packageRoot";
+import { TEMPLATES_ROOT } from "#/packageRoot";
 import type { TPackageManager } from "#/prompts/types";
 
 export type TTemplateMetadata = {
@@ -21,7 +21,7 @@ export type TTemplateDefinition = TTemplateMetadata & {
 };
 
 export function defineTemplate(config: TTemplateMetadata): TTemplateDefinition {
-  let filesRoot = path.resolve(PACKAGE_ROOT, "templates", config.name, "files");
+  let filesRoot = path.resolve(TEMPLATES_ROOT, config.name, "files");
 
   return {
     ...config,
