@@ -1,8 +1,8 @@
 # CHANGE-025: Use default dist CLI build output
 
-| Status   | Date       | ADRs |
-| -------- | ---------- | ---- |
-| Proposed | 2026-04-25 | [ADR-020](./adrs/adr-00020-use-default-dist-cli-build-output.md) |
+| Status | Date       | ADRs                                                             |
+| ------ | ---------- | ---------------------------------------------------------------- |
+| Done   | 2026-04-25 | [ADR-020](./adrs/adr-00020-use-default-dist-cli-build-output.md) |
 
 ## Goal
 
