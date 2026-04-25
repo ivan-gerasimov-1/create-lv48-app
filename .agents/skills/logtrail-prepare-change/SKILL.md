@@ -9,7 +9,7 @@ Use this skill only to prepare CHANGE documentation. Inspect code as needed, but
 
 ## Resources
 
-- Use `assets/CHANGE-TEMPLATE.md` as the CHANGE template.
+- Use `assets/change-template.md` as the CHANGE template.
 
 ## Workflow
 
@@ -34,7 +34,7 @@ Use this skill only to prepare CHANGE documentation. Inspect code as needed, but
    - verification
    - rollback
 7. Ask clarifying questions only when the answer changes scope, compatibility, verification, or rollback.
-8. Create `docs/changes/change-NNNNN-title-slug.md` from `assets/CHANGE-TEMPLATE.md`.
+8. Create `docs/changes/change-NNNNN-title-slug.md` from `assets/change-template.md`.
 9. Save CHANGE and `docs/changes.md` entry with status `Proposed`.
 10. Stop after docs/status changes. Do not implement code.
 
