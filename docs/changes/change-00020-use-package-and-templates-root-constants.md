@@ -1,8 +1,8 @@
 # CHANGE-020: Use package and templates root constants
 
-| Status   | Date       | ADRs |
-| -------- | ---------- | ---- |
-| Proposed | 2026-04-25 | -    |
+| Status | Date       | ADRs |
+| ------ | ---------- | ---- |
+| Done   | 2026-04-25 | -    |
 
 ## Goal
 
