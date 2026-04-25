@@ -1,8 +1,8 @@
 # CHANGE-021: Align Logtrail number placeholders with ADR naming
 
-| Status   | Date       | ADRs |
-| -------- | ---------- | ---- |
-| Proposed | 2026-04-25 | [ADR-016](../adrs/adr-00016-use-kebab-case-names-for-decision-and-change-docs.md) |
+| Status | Date       | ADRs                                                                              |
+| ------ | ---------- | --------------------------------------------------------------------------------- |
+| Done   | 2026-04-25 | [ADR-016](../adrs/adr-00016-use-kebab-case-names-for-decision-and-change-docs.md) |
 
 ## Goal
 
