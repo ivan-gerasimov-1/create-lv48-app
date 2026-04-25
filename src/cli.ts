@@ -11,10 +11,7 @@ import { createLogger } from "#/utils/logging";
 
 import { createPlaceholderValues } from "#/cli/placeholders";
 import { createPostSetupExecutor, executeCommand } from "#/cli/postSetup";
-import {
-  buildInitializationSummary,
-  formatInitializationSummary,
-} from "#/cli/summary";
+import { InitializationSummary } from "#/cli/summary";
 import type { TCliDependencies } from "#/cli/types";
 
 export async function runCli(dependencies: TCliDependencies = {}) {
@@ -33,6 +30,8 @@ export async function runCli(dependencies: TCliDependencies = {}) {
   let preset = presets.getDefaultPreset();
   let targetRoot = path.resolve(cwd, answers.targetDirectory);
   let placeholders = createPlaceholderValues(answers);
+
+  let initializationSummary = new InitializationSummary();
 
   logger.info(
     `create-lv48-app will scaffold ${answers.projectName} with ${preset.name}.`,
@@ -63,14 +62,16 @@ export async function runCli(dependencies: TCliDependencies = {}) {
       logger.info(action.message);
     },
   });
-  let summary = buildInitializationSummary({
+
+  let summary = initializationSummary.build({
     projectName: answers.projectName,
     targetDirectory: answers.targetDirectory,
     record,
     postSetup,
   });
 
-  logger.info(formatInitializationSummary(summary));
+  logger.info(initializationSummary.format(summary));
+
   logger.debug({
     answers,
     preset,

@@ -1,13 +1,11 @@
 import { describe, it, expect } from "vitest";
 
-import {
-  buildInitializationSummary,
-  formatInitializationSummary,
-} from "./summary";
+import { InitializationSummary } from "./summary";
 
 describe("initialization summary", () => {
   it("builds a final summary with manual next steps when post-setup fails", () => {
-    let summary = buildInitializationSummary({
+    let initializationSummary = new InitializationSummary();
+    let summary = initializationSummary.build({
       projectName: "demo-app",
       targetDirectory: "demo-app",
       record: {
@@ -28,7 +26,7 @@ describe("initialization summary", () => {
       "cd demo-app",
       "Review the failed optional steps above and rerun them manually if needed.",
     ]);
-    expect(formatInitializationSummary(summary)).contains(
+    expect(initializationSummary.format(summary)).contains(
       "installDependencies: FAILED",
     );
   });
