@@ -1,15 +1,12 @@
 import { defineConfig } from "tsdown";
 
 export default defineConfig({
-  entry: ["src/cli.ts"],
+  entry: {
+    "create-lv48-app": "src/main.ts",
+  },
   platform: "node",
   fixedExtension: false,
   minify: true,
   sourcemap: true,
-  copy: [
-    {
-      from: "templates",
-      to: "dist/",
-    },
-  ],
+  outDir: "bin",
 });

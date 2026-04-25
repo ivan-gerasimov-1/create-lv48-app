@@ -31,7 +31,7 @@
   },
   "files": [
     "bin",
-    "dist"
+    "templates"
   ],
   "publishConfig": {
     "access": "public"
@@ -42,8 +42,7 @@
   "imports": {
     "#/*": "./src/*.ts",
     "#/templates/*": "./templates/*.ts",
-    "#/tests/*": "./tests/*.ts",
-    "#/dist/*": "./dist/*.js"
+    "#/tests/*": "./tests/*.ts"
   },
   "devEngines": {
     "runtime": {

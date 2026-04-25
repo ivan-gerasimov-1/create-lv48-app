@@ -1,8 +1,8 @@
 # CHANGE-024: Build CLI entrypoint to bin
 
-| Status   | Date       | ADRs                                                      |
-| -------- | ---------- | --------------------------------------------------------- |
-| Proposed | 2026-04-25 | [ADR-019](./adrs/adr-00019-build-cli-entrypoint-to-bin.md) |
+| Status | Date       | ADRs                                                       |
+| ------ | ---------- | ---------------------------------------------------------- |
+| Done   | 2026-04-25 | [ADR-019](./adrs/adr-00019-build-cli-entrypoint-to-bin.md) |
 
 ## Goal
 
