@@ -46,7 +46,7 @@ Excluded:
    - development flow remains usable without treating generated `bin/create-lv48-app.js` as source
 5. Update references in docs and Logtrail records that describe current build output as `dist/cli.js`, except historical context where describing past state is useful.
 6. Keep generated output out of hand-authored source review unless the repository intentionally tracks the built bin file.
-7. Update this CHANGE status in `.logtrail/changes.md` after implementation and verification.
+7. Update this CHANGE status in `.backtrail/changes.md` after implementation and verification.
 
 ## Verification
 

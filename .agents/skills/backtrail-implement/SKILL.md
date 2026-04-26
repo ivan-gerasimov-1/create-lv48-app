@@ -1,11 +1,11 @@
 ---
-name: Logtrail | Implement
+name: Backtrail | Implement
 description: Implement a CHANGE record linked to an Accepted ADR after confirmation
 ---
 
 # Workflow
 
-1. Read `.logtrail/changes.md` and `.logtrail/adl.md`.
+1. Read `.backtrail/changes.md` and `.backtrail/adl.md`.
 2. Select work:
    - If input starts with `CHANGE-00014`, `CHANGE 00014`, `C-00014`, `#14`, `#014`, `014`, or `14`, prefer the matching CHANGE record when it exists.
    - Otherwise select the lowest-numbered non-`Done`, non-`Abandoned` CHANGE
@@ -15,7 +15,7 @@ description: Implement a CHANGE record linked to an Accepted ADR after confirmat
 6. Summarize decision context, change scope, implementation steps, verification, and rollback.
 7. Wait for user confirmation.
 8. Implement the CHANGE and run its verification.
-9. If verification passes, update the CHANGE file and `.logtrail/changes.md` status to `Done`.
+9. If verification passes, update the CHANGE file and `.backtrail/changes.md` status to `Done`.
 10. If verification fails, leave status unchanged and report failures.
 
 # Guardrails

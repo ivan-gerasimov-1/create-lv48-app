@@ -1,8 +1,8 @@
 # CHANGE-030: Rename Logtrail to Backtrail
 
-| Status   | Date       | ADRs                                                        |
-| -------- | ---------- | ----------------------------------------------------------- |
-| Proposed | 2026-04-26 | [ADR-021](./adrs/adr-00021-rename-logtrail-to-backtrail.md) |
+| Status | Date       | ADRs                                                        |
+| ------ | ---------- | ----------------------------------------------------------- |
+| Done   | 2026-04-26 | [ADR-021](./adrs/adr-00021-rename-logtrail-to-backtrail.md) |
 
 ## Goal
 

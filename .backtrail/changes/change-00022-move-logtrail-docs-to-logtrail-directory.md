@@ -33,7 +33,7 @@ Excluded:
 3. Update relative links inside moved ADR and CHANGE records so cross-links still resolve.
 4. Update root and project documentation references that point to the decision log or change log.
 5. Update Logtrail skill docs and templates to use `.logtrail/` as the canonical trail location.
-6. Update this CHANGE status in `.logtrail/changes.md` after implementation and verification.
+6. Update this CHANGE status in `.backtrail/changes.md` after implementation and verification.
 
 ## Verification
 
@@ -41,14 +41,14 @@ Run:
 
 ```bash
 rg -n "docs/(adl|changes)|docs/adrs|docs/changes" --hidden -g '!node_modules' -g '!dist' -g '!.git'
-rg -n "\\.logtrail/(adl|changes)|\\.logtrail/adrs|\\.logtrail/changes" --hidden -g '!node_modules' -g '!dist' -g '!.git'
+rg -n "\\.backtrail/(adl|changes)|\\.backtrail/adrs|\\.backtrail/changes" --hidden -g '!node_modules' -g '!dist' -g '!.git'
 npm run test
 ```
 
 Expected result:
 
 - No live workflow or project-doc references still point to Logtrail docs under `docs/`.
-- `.logtrail/` references point to the moved Logtrail docs.
+- `.backtrail/` references point to the moved Logtrail docs.
 - Tests pass.
 
 Historical ADR and CHANGE content may still mention old paths when describing past state or rollback options.
