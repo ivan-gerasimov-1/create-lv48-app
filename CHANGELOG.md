@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.0](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.16.0...create-lv48-app-v0.17.0) (2026-04-26)
+
+
+### Features
+
+* **utils:** add Either container for typed result values ([5a668e8](https://github.com/ivan-gerasimov-1/create-lv48-app/commit/5a668e8356eff380369add901a82d0119ab2cde4))
+
 ## [0.16.0](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.15.0...create-lv48-app-v0.16.0) (2026-04-17)
 
 
