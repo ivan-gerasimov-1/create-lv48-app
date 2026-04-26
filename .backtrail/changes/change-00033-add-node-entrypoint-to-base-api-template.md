@@ -1,8 +1,8 @@
 # CHANGE-00033: Add Node entrypoint to base API template
 
-| Status   | Date       | ADRs |
-| -------- | ---------- | ---- |
-| Proposed | 2026-04-26 | -    |
+| Status | Date       | ADRs |
+| ------ | ---------- | ---- |
+| Done   | 2026-04-26 | -    |
 
 ## Goal
 
