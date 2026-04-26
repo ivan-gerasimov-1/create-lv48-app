@@ -2,7 +2,7 @@
 
 | Status   | Date       | ADRs |
 | -------- | ---------- | ---- |
-| Proposed | 2026-04-26 | [ADR-023](../adrs/adr-00023-use-either-for-typed-result-values.md) |
+| Done     | 2026-04-26 | [ADR-023](../adrs/adr-00023-use-either-for-typed-result-values.md) |
 
 ## Goal
 
@@ -15,7 +15,7 @@ Includes a minimal project-owned `Either` container API and focused unit coverag
 ## Implementation
 
 1. Add the `Either` container with static construction methods matching the current `TValidationSuccess`, `TValidationFailure`, and `TValidationResult` shape.
-2. Name the static construction methods around `result` and `error` instead of `right` and `left` so validation call sites read in domain terms.
+2. Name the static construction methods around `success` and `failure` instead of `right` and `left` so validation call sites read in domain terms.
 3. Base validation result type aliases on the new `Either` types without changing current validation helper implementation.
 4. Add unit tests for `Either` success and failure construction.
 
