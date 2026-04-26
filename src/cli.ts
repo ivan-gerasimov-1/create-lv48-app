@@ -12,14 +12,14 @@ import { Logger } from "#/utils/logger/logger";
 import { createPlaceholderValues } from "#/cli/placeholders";
 import { createPostSetupExecutor, executeCommand } from "#/cli/postSetup";
 import { InitializationSummary } from "#/cli/summary";
-import type { TCliDependencies } from "#/cli/types";
 import { getPackageVersion } from "#/packageRoot";
 
-export async function runCli(dependencies: TCliDependencies = {}) {
-  let args = dependencies.args ?? process.argv.slice(2);
-  let logger = dependencies.logger ?? new Logger();
+export async function runCli() {
+  let logger = new Logger();
 
-  if (args.includes("--version")) {
+  let args = process.argv.slice(2);
+
+  if (args.includes("--version") || args.includes("-v")) {
     let version = await getPackageVersion();
 
     logger.info(version);
@@ -27,24 +27,19 @@ export async function runCli(dependencies: TCliDependencies = {}) {
     return;
   }
 
-  let prompts =
-    dependencies.promptController ??
-    createPromptController(createClackPromptIo());
+  let prompts = createPromptController(createClackPromptIo());
   let presets = new PresetRegistry();
   let transforms = createTransformPipeline();
   let generation = new GenerationRunner(transforms);
-  let postSetupExecutor = createPostSetupExecutor(
-    dependencies.commandExecutor ?? executeCommand,
-  );
-  let cwd = dependencies.cwd ?? process.cwd();
+  let postSetupExecutor = createPostSetupExecutor(executeCommand);
+  let initializationSummary = new InitializationSummary();
+  let cwd = process.cwd();
 
   let answers = await prompts.collectAnswers();
 
   let preset = presets.get(answers.presetId);
   let targetRoot = path.resolve(cwd, answers.targetDirectory);
   let placeholders = createPlaceholderValues(answers);
-
-  let initializationSummary = new InitializationSummary();
 
   logger.info(
     `create-lv48-app will scaffold ${answers.projectName} with ${preset.name}.`,

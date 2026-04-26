@@ -43,14 +43,6 @@ export type TPostSetupExecutor = {
   }): Promise<TPostSetupActionStatus[]>;
 };
 
-export type TCliDependencies = {
-  args?: string[];
-  commandExecutor?: TCommandExecutor;
-  cwd?: string;
-  promptController?: TPromptController;
-  logger?: ILogger;
-};
-
 export type TBuildSummaryOptions = {
   projectName: string;
   targetDirectory: string;
