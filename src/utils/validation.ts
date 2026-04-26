@@ -9,10 +9,10 @@ const GENERIC_VALIDATION_ERROR_MESSAGE = "Validation failed.";
 const nameSchema = z
   .string()
   .trim()
-  .min(1, "Name is required.")
+  .min(1, "Required")
   .regex(
     /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
-    "Name must use lowercase letters, numbers, and single hyphens only.",
+    "Use lowercase letters, numbers, and single hyphens",
   );
 
 const targetDirectorySchema = z
