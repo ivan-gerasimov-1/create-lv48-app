@@ -13,9 +13,20 @@ import { createPlaceholderValues } from "#/cli/placeholders";
 import { createPostSetupExecutor, executeCommand } from "#/cli/postSetup";
 import { InitializationSummary } from "#/cli/summary";
 import type { TCliDependencies } from "#/cli/types";
+import { getPackageVersion } from "#/packageRoot";
 
 export async function runCli(dependencies: TCliDependencies = {}) {
+  let args = dependencies.args ?? process.argv.slice(2);
   let logger = dependencies.logger ?? new Logger();
+
+  if (args.includes("--version")) {
+    let version = await getPackageVersion();
+
+    logger.info(version);
+
+    return;
+  }
+
   let prompts =
     dependencies.promptController ??
     createPromptController(createClackPromptIo());

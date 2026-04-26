@@ -44,6 +44,7 @@ export type TPostSetupExecutor = {
 };
 
 export type TCliDependencies = {
+  args?: string[];
   commandExecutor?: TCommandExecutor;
   cwd?: string;
   promptController?: TPromptController;
