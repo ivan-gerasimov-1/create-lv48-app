@@ -1,12 +1,11 @@
 import path from "node:path";
 
 import { Either } from "#/utils/either/either";
-
-import type { TValidationResult } from "./types";
+import type { TResult } from "#/utils/either/types";
 
 const PROJECT_NAME_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
-export function validateProjectName(input: string): TValidationResult<string> {
+export function validateProjectName(input: string): TResult<string> {
   let value = input.trim();
 
   if (value.length === 0) {
@@ -22,13 +21,11 @@ export function validateProjectName(input: string): TValidationResult<string> {
   return Either.success(value);
 }
 
-export function validatePackageName(input: string): TValidationResult<string> {
+export function validatePackageName(input: string): TResult<string> {
   return validateProjectName(input);
 }
 
-export function validateTargetDirectory(
-  input: string,
-): TValidationResult<string> {
+export function validateTargetDirectory(input: string): TResult<string> {
   let trimmedValue = input.trim();
 
   if (trimmedValue.length === 0) {
