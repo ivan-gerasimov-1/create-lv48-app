@@ -1,5 +1,5 @@
 ---
-name: Backtrail | Prepare Change
+name: Backtrail | Prepare CHANGE
 description: Create a new Proposed CHANGE record for ADR-backed or standalone implementation work
 ---
 
@@ -14,12 +14,13 @@ Use this skill only to prepare CHANGE documentation. Inspect code as needed, but
 ## Workflow
 
 1. If the brief does not identify implementation work, ask for the change topic before creating files.
-2. Read `.backtrail/changes.md`, `.backtrail/adl.md`, relevant ADRs/docs/code, and inspect current state.
+2. Read `.backtrail/changes.md`, `.backtrail/adl.md`, `.backtrail/features.md`, relevant FEATURE/ADR/CHANGE docs, and inspect current state.
 3. Apply the ADR-backed change gate before creating files:
    - If the brief references ADRs, verify that each ADR exists and is `Accepted`.
+   - If the brief references FEATUREs, verify they exist. Prefer an `Accepted` FEATURE before creating implementation CHANGE records.
    - Use ADR-backed changes when implementation work follows an `Accepted` ADR.
    - If the work introduces or changes a durable decision that constrains future work, architecture, repository structure, public contracts, generated output, build/test workflow, dependencies, or reversibility, stop and explain that ADR Prepare must run first.
-   - Use standalone changes only for concrete implementation work that does not need a new ADR: routine bug fixes, local refactors, test additions, implementation details of an existing ADR, copy changes, dependency patch updates, or choices that only matter inside one task.
+   - Use standalone cha§nges only for concrete implementation work that does not need a new ADR: routine bug fixes, local refactors, test additions, implementation details of an existing ADR, copy changes, dependency patch updates, or choices that only matter inside one task.
 4. Determine CHANGE number:
    - Use an explicit number only when it appears at the start of input, after optional whitespace.
    - Supported prefixes: `CHANGE-014`, `CHANGE 014`, `C-014`, `#14`, `#014`, `014`, `14`.
