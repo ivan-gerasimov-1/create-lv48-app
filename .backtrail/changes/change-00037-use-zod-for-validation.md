@@ -1,8 +1,8 @@
 # CHANGE-00037: Use Zod for Validation
 
-| Status   | Date       | ADRs |
-| -------- | ---------- | ---- |
-| Proposed | 2026-04-26 | [ADR-024](../adrs/adr-00024-use-zod-for-runtime-validation.md) |
+| Status | Date       | ADRs                                                           |
+| ------ | ---------- | -------------------------------------------------------------- |
+| Done   | 2026-04-26 | [ADR-024](../adrs/adr-00024-use-zod-for-runtime-validation.md) |
 
 ## Goal
 

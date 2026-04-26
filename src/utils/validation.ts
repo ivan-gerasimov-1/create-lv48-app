@@ -1,50 +1,62 @@
 import path from "node:path";
 
+import { z } from "zod";
+
 import { Either } from "#/utils/either/either";
-import type { TResult } from "#/utils/either/types";
 
-const PROJECT_NAME_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const GENERIC_VALIDATION_ERROR_MESSAGE = "Validation failed.";
 
-export function validateProjectName(input: string): TResult<string> {
-  let value = input.trim();
+const projectNameSchema = z
+  .string()
+  .trim()
+  .min(1, "Project name is required.")
+  .regex(
+    /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+    "Project name must use lowercase letters, numbers, and single hyphens only.",
+  );
 
-  if (value.length === 0) {
-    return Either.failure("Project name is required.");
+const targetDirectorySchema = z
+  .string()
+  .trim()
+  .min(1, "Target directory is required.")
+  .transform((value) => path.normalize(value))
+  .refine(
+    (value) => !path.isAbsolute(value),
+    "Target directory must be relative to the current working directory.",
+  )
+  .refine(
+    (value) => value !== ".." && !value.startsWith(`..${path.sep}`),
+    "Target directory must stay within the current working directory.",
+  );
+
+export function validateProjectName(input: string) {
+  let result = projectNameSchema.safeParse(input);
+
+  if (result.success) {
+    return Either.success(result.data);
   }
 
-  if (!PROJECT_NAME_PATTERN.test(value)) {
-    return Either.failure(
-      "Project name must use lowercase letters, numbers, and single hyphens only.",
-    );
-  }
+  let [issue] = result.error.issues;
 
-  return Either.success(value);
+  return Either.failure(
+    issue ? issue.message : GENERIC_VALIDATION_ERROR_MESSAGE,
+  );
 }
 
-export function validatePackageName(input: string): TResult<string> {
+export function validatePackageName(input: string) {
   return validateProjectName(input);
 }
 
-export function validateTargetDirectory(input: string): TResult<string> {
-  let trimmedValue = input.trim();
+export function validateTargetDirectory(input: string) {
+  let result = targetDirectorySchema.safeParse(input);
 
-  if (trimmedValue.length === 0) {
-    return Either.failure("Target directory is required.");
+  if (result.success) {
+    return Either.success(result.data);
   }
 
-  let normalizedValue = path.normalize(trimmedValue);
+  let [issue] = result.error.issues;
 
-  if (path.isAbsolute(normalizedValue)) {
-    return Either.failure(
-      "Target directory must be relative to the current working directory.",
-    );
-  }
-
-  if (normalizedValue === ".." || normalizedValue.startsWith(`..${path.sep}`)) {
-    return Either.failure(
-      "Target directory must stay within the current working directory.",
-    );
-  }
-
-  return Either.success(normalizedValue);
+  return Either.failure(
+    issue ? issue.message : GENERIC_VALIDATION_ERROR_MESSAGE,
+  );
 }
