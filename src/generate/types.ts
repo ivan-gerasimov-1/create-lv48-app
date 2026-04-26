@@ -17,7 +17,7 @@ export type TGenerationRecord = {
   createdFiles: string[];
 };
 
-export type TGenerationRunner = {
+export interface IGenerationRunner {
   prepare(context: TGenerationContext): Promise<void>;
   scaffold(context: TGenerationContext): Promise<TGenerationRecord>;
-};
+}

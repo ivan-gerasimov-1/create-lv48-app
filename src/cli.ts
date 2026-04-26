@@ -2,7 +2,7 @@ import path from "node:path";
 
 import { baseTemplate } from "#/templates/base/template";
 
-import { createGenerationRunner } from "#/generate/generationRunner";
+import { GenerationRunner } from "#/generate/generationRunner";
 import { PresetRegistry } from "#/presets/presetRegistry/presetRegistry";
 import { createClackPromptIo } from "#/prompts/clackPromptIo";
 import { createPromptController } from "#/prompts/promptController";
@@ -32,7 +32,7 @@ export async function runCli(dependencies: TCliDependencies = {}) {
     createPromptController(createClackPromptIo());
   let presets = new PresetRegistry();
   let transforms = createTransformPipeline();
-  let generation = createGenerationRunner(transforms);
+  let generation = new GenerationRunner(transforms);
   let postSetupExecutor = createPostSetupExecutor(
     dependencies.commandExecutor ?? executeCommand,
   );
