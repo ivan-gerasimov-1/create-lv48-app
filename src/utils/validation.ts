@@ -19,14 +19,14 @@ const targetDirectorySchema = z
   .string()
   .trim()
   .min(1, "Target directory is required.")
-  .transform((value) => path.normalize(value))
+  .transform(path.normalize)
   .refine(
     (value) => !path.isAbsolute(value),
-    "Target directory must be relative to the current working directory.",
+    "Should be relative to the current working directory",
   )
   .refine(
     (value) => value !== ".." && !value.startsWith(`..${path.sep}`),
-    "Target directory must stay within the current working directory.",
+    "Should be within the current working directory",
   );
 
 export function validateName(input: string) {
