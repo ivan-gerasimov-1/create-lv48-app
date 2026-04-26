@@ -1,7 +1,4 @@
-import {
-  validateProjectName,
-  validateTargetDirectory,
-} from "#/utils/validation";
+import { validateName, validateTargetDirectory } from "#/utils/validation";
 
 import type {
   TPromptAnswers,
@@ -18,7 +15,7 @@ export function createPromptController(promptIo: TPromptIO): TPromptController {
           promptIo,
           "Project name",
           defaultProjectName,
-          validateProjectName,
+          validateName,
         );
         let targetDirectory = await askValidText(
           promptIo,
@@ -34,7 +31,7 @@ export function createPromptController(promptIo: TPromptIO): TPromptController {
             promptIo,
             "First app project name",
             "project-1",
-            validateProjectName,
+            validateName,
           );
         }
 

@@ -1,18 +1,10 @@
 import { describe, it, expect } from "vitest";
 
-import {
-  validatePackageName,
-  validateProjectName,
-  validateTargetDirectory,
-} from "./validation";
+import { validateName, validateTargetDirectory } from "./validation";
 
 describe("validation", () => {
-  it("validates project, package, and target directory inputs", () => {
-    expect(validateProjectName("demo-app")).toEqual({
-      ok: true,
-      value: "demo-app",
-    });
-    expect(validatePackageName("demo-app")).toEqual({
+  it("validates name and target directory inputs", () => {
+    expect(validateName("demo-app")).toEqual({
       ok: true,
       value: "demo-app",
     });
@@ -20,7 +12,7 @@ describe("validation", () => {
       ok: true,
       value: "apps/demo",
     });
-    expect(validateProjectName("Demo App")).toEqual({
+    expect(validateName("Demo App")).toEqual({
       ok: false,
       reason:
         "Project name must use lowercase letters, numbers, and single hyphens only.",

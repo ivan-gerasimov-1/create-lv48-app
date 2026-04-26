@@ -6,13 +6,13 @@ import { Either } from "#/utils/either/either";
 
 const GENERIC_VALIDATION_ERROR_MESSAGE = "Validation failed.";
 
-const projectNameSchema = z
+const nameSchema = z
   .string()
   .trim()
-  .min(1, "Project name is required.")
+  .min(1, "Name is required.")
   .regex(
     /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
-    "Project name must use lowercase letters, numbers, and single hyphens only.",
+    "Name must use lowercase letters, numbers, and single hyphens only.",
   );
 
 const targetDirectorySchema = z
@@ -29,8 +29,8 @@ const targetDirectorySchema = z
     "Target directory must stay within the current working directory.",
   );
 
-export function validateProjectName(input: string) {
-  let result = projectNameSchema.safeParse(input);
+export function validateName(input: string) {
+  let result = nameSchema.safeParse(input);
 
   if (result.success) {
     return Either.success(result.data);
@@ -41,10 +41,6 @@ export function validateProjectName(input: string) {
   return Either.failure(
     issue ? issue.message : GENERIC_VALIDATION_ERROR_MESSAGE,
   );
-}
-
-export function validatePackageName(input: string) {
-  return validateProjectName(input);
 }
 
 export function validateTargetDirectory(input: string) {
