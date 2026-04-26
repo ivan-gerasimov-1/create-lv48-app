@@ -45,15 +45,23 @@ Use this skill only to create FEATURE documentation. Inspect code as needed, but
 8. Create `.backtrail/features/feature-NNNNN-title-slug.md` from `assets/feature-template.md`.
 9. Save FEATURE and `.backtrail/features.md` entry with status `Proposed`.
 10. Ask whether to promote to `Accepted` or `Rejected`.
-    - Prefer Yes/No buttons when available.
+    - Use three choices when `request_user_input` is available: `Accepted`, `Rejected`, `Leave Proposed`.
     - `Accepted`: update status in FEATURE and feature index.
     - `Rejected`: update status in FEATURE and feature index.
-    - No decision: leave `Proposed`.
+    - `Leave Proposed`: leave `Proposed`.
 11. Offer to proceed with creating a CHANGE after FEATURE creation.
-    - Prefer Yes/No buttons when available.
+    - Use Yes/No buttons when `request_user_input` is available.
     - `Yes`: use `Backtrail | Create CHANGE` skill.
     - `No`: skip to the next step.
 12. Stop after docs/status changes. Do not implement code.
+
+## Question UX
+
+- When asking the user to choose between two or three meaningful options, use `request_user_input` when available.
+- For yes/no decisions, present `Yes` and `No` choices.
+- For FEATURE status after creation, present `Accepted`, `Rejected`, and `Leave Proposed` choices.
+- If `request_user_input` is unavailable, ask one concise plain-text question with numbered choices.
+- Do not claim that a skill can switch modes or force button rendering.
 
 ## Guardrails
 

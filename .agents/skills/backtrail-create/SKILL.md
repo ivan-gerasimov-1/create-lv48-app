@@ -25,6 +25,13 @@ Use this skill only to select the proper Backtrail creation skill. Do not create
 5. If multiple skills could match, ask one clarifying question to choose between the matching skills before routing.
 6. If no skill matches, say that no matching Backtrail creation skill exists for the request and stop.
 
+## Question UX
+
+- When asking the user to choose between two or three meaningful options, use `request_user_input` when available.
+- For routing ambiguity, present only the matching artifact types as choices: `ADR`, `FEATURE`, and/or `CHANGE`.
+- If `request_user_input` is unavailable, ask one concise plain-text question with numbered choices.
+- Do not claim that a skill can switch modes or force button rendering.
+
 ## Guardrails
 
 - Do not create ADR, FEATURE, CHANGE, index, config, code, or test files directly.

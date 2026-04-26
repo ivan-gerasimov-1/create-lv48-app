@@ -13,10 +13,20 @@ description: Implement a CHANGE record linked to an Accepted ADR after confirmat
 4. Stop unless every linked ADR exists and has status `Accepted`.
 5. Read the selected CHANGE and linked ADRs.
 6. Summarize decision context, change scope, implementation steps, verification, and rollback.
-7. Wait for user confirmation.
+7. Ask whether to implement the selected CHANGE now.
+   - Use Yes/No buttons when `request_user_input` is available.
+   - `Yes`: continue to implementation.
+   - `No`: stop without changing files.
 8. Implement the CHANGE and run its verification.
 9. If verification passes, update the CHANGE file and `.backtrail/changes.md` status to `Done`.
 10. If verification fails, leave status unchanged and report failures.
+
+# Question UX
+
+- When asking the user to choose between two or three meaningful options, use `request_user_input` when available.
+- For yes/no decisions, present `Yes` and `No` choices.
+- If `request_user_input` is unavailable, ask one concise plain-text question with numbered choices.
+- Do not claim that a skill can switch modes or force button rendering.
 
 # Guardrails
 

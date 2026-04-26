@@ -35,14 +35,21 @@ Use this skill only to create ADR documentation. Inspect code as needed, but wri
 8. Create `.backtrail/adrs/adr-NNNNN-title-slug.md` from `assets/adr-template.md`.
 9. Save ADR and `.backtrail/adl.md` entry with status `Proposed`.
 10. Ask whether to promote to `Accepted`.
-    - Prefer Yes/No buttons when available.
+    - Use Yes/No buttons when `request_user_input` is available.
     - `Yes`: update status in ADR and ADL.
     - `No`: leave `Proposed`.
-11. Ask to proceed with creating of CHANGE.
-    - Prefer Yes/No buttons when available.
-    - `Yes`: Use `Backtrail | Create CHANGE` skill
+11. Ask whether to proceed with creating a CHANGE.
+    - Use Yes/No buttons when `request_user_input` is available.
+    - `Yes`: use `Backtrail | Create CHANGE` skill.
     - `No`: skip to the next step.
 12. Stop after docs/status changes. Do not implement code.
+
+## Question UX
+
+- When asking the user to choose between two or three meaningful options, use `request_user_input` when available.
+- For yes/no decisions, present `Yes` and `No` choices.
+- If `request_user_input` is unavailable, ask one concise plain-text question with numbered choices.
+- Do not claim that a skill can switch modes or force button rendering.
 
 ## Guardrails
 

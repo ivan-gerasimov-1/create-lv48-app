@@ -41,6 +41,13 @@ Use this skill only to create CHANGE documentation. Inspect code as needed, but 
 9. Save CHANGE and `.backtrail/changes.md` entry with status `Proposed`.
 10. Stop after docs/status changes. Do not implement code.
 
+## Question UX
+
+- When asking the user to choose between two or three meaningful options, use `request_user_input` when available.
+- For yes/no decisions, present `Yes` and `No` choices.
+- If `request_user_input` is unavailable, ask one concise plain-text question with numbered choices.
+- Do not claim that a skill can switch modes or force button rendering.
+
 ## Guardrails
 
 - Do not change implementation code, ADR files, configs, or tests.
