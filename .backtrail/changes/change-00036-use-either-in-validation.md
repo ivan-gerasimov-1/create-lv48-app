@@ -2,7 +2,7 @@
 
 | Status   | Date       | ADRs |
 | -------- | ---------- | ---- |
-| Proposed | 2026-04-26 | [ADR-023](../adrs/adr-00023-use-either-for-typed-result-values.md) |
+| Done | 2026-04-26 | [ADR-023](../adrs/adr-00023-use-either-for-typed-result-values.md) |
 
 ## Goal
 
