@@ -1,8 +1,8 @@
 # CHANGE-00038: Refactor transform pipeline as class
 
-| Status   | Date       | ADRs |
-| -------- | ---------- | ---- |
-| Proposed | 2026-04-27 | -    |
+| Status | Date       | ADRs |
+| ------ | ---------- | ---- |
+| Done   | 2026-04-27 | -    |
 
 ## Goal
 

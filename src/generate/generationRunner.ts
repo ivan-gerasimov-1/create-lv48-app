@@ -1,7 +1,7 @@
 import { mkdir, readdir } from "node:fs/promises";
 import path from "node:path";
 
-import type { TTransformPipeline } from "#/transforms/types";
+import type { ITransformPipeline } from "#/transforms/types";
 import {
   listRelativeDirectories,
   listRelativeFiles,
@@ -18,7 +18,7 @@ import type {
 } from "./types";
 
 export class GenerationRunner implements IGenerationRunner {
-  public constructor(private transformPipeline: TTransformPipeline) {}
+  public constructor(private transformPipeline: ITransformPipeline) {}
 
   public async prepare(context: TGenerationContext): Promise<void> {
     await this.ensureTargetDirectoryIsSafe(context);
@@ -80,7 +80,7 @@ export class GenerationRunner implements IGenerationRunner {
     try {
       for (let relativeDirectory of relativeDirectories) {
         let destinationRelativePath =
-          this.transformPipeline.mapDestinationPath(relativeDirectory, context);
+          this.transformPipeline.mapDestinationPath(relativeDirectory);
         let destinationPath = path.join(
           context.targetRoot,
           destinationRelativePath,
@@ -100,7 +100,7 @@ export class GenerationRunner implements IGenerationRunner {
       for (let relativeFile of relativeFiles) {
         let sourcePath = path.join(templateRoot, relativeFile);
         let destinationRelativePath =
-          this.transformPipeline.mapDestinationPath(relativeFile, context);
+          this.transformPipeline.mapDestinationPath(relativeFile);
         let destinationPath = path.join(
           context.targetRoot,
           destinationRelativePath,
@@ -120,7 +120,6 @@ export class GenerationRunner implements IGenerationRunner {
         let transformedContents = this.transformPipeline.transformTextFile(
           destinationRelativePath,
           fileContents,
-          context,
         );
 
         await writeUtf8File(destinationPath, transformedContents);
