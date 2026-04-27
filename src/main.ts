@@ -2,10 +2,19 @@
 
 import { runCli } from "#/cli";
 
-runCli().catch((error: unknown) => {
-  const message = error instanceof Error ? error.message : "Unknown CLI error";
+const UNKNOWN_ERROR_MESSAGE = "Unknown CLI error";
 
-  console.error(message);
+async function main() {
+  try {
+    await runCli();
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : UNKNOWN_ERROR_MESSAGE;
 
-  process.exitCode = 1;
-});
+    console.error(message);
+
+    process.exitCode = 1;
+  }
+}
+
+main();
