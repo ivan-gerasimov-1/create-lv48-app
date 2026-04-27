@@ -5,7 +5,7 @@ description: Implement a CHANGE record after user confirmation
 
 ## Purpose
 
-Use this skill to implement an existing CHANGE record after confirming the selected work with the user.
+Implement an existing CHANGE record after confirming selected work with the user.
 
 ## Input
 
@@ -14,12 +14,12 @@ Use the text after this skill invocation to select the CHANGE record.
 ## Workflow
 
 1. Read `.backtrail/changes.md`, `.backtrail/adl.md`, and `.backtrail/features.md` when they exist.
-2. Select work:
+2. Select work.
    - If input starts with `CHANGE-00014`, `CHANGE 00014`, `C-00014`, `#14`, `#014`, `014`, or `14`, prefer the matching CHANGE record when it exists.
-   - Otherwise, build a list of eligible CHANGE records: every CHANGE whose status is not `Done` and not `Abandoned`.
+   - Otherwise, list eligible CHANGE records: status neither `Done` nor `Abandoned`.
    - If no eligible CHANGE records exist, stop and report that no implementable CHANGE exists.
    - If exactly one eligible CHANGE record exists, select it automatically.
-   - If there are two or more eligible CHANGE records, ask the user to choose one. Use `request_user_input` when available.
+   - If two or more eligible CHANGE records exist, ask the user to choose one. Use `request_user_input` when available.
 3. Stop unless the selected CHANGE exists.
 4. If the selected CHANGE links ADRs, stop unless every linked ADR exists and has status `Accepted`.
 5. If the selected CHANGE links FEATUREs, stop unless every linked FEATURE exists and has status `Accepted`.
@@ -36,7 +36,7 @@ Use the text after this skill invocation to select the CHANGE record.
 
 ## Question UX
 
-- When asking the user to choose between two or three meaningful options, use `request_user_input` when available.
+- Use `request_user_input` when available for two or three meaningful choices.
 - For yes/no decisions, present `Yes` and `No` choices.
 - If `request_user_input` is unavailable, ask one concise plain-text question with numbered choices.
 - Do not claim that a skill can switch modes or force button rendering.

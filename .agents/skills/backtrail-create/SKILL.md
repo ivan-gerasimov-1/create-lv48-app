@@ -1,11 +1,11 @@
 ---
 name: Backtrail | Create
-description: Route Backtrail creation requests to the ADR, FEATURE, or CHANGE creation skill
+description: Route Backtrail creation requests to ADR, FEATURE, or CHANGE creation
 ---
 
 ## Purpose
 
-Use this skill to choose the correct Backtrail creation skill. Do not create or edit Backtrail artifacts directly.
+Choose the correct Backtrail creation skill. Do not create or edit Backtrail artifacts directly.
 
 ## Input
 
@@ -14,31 +14,31 @@ Use the text after this skill invocation as the routing brief.
 ## Prerequisites
 
 - Read `.backtrail/adl.md`, `.backtrail/changes.md`, and `.backtrail/features.md` before routing, when they exist.
-- Use the current ADR, CHANGE, and FEATURE indexes to recognize referenced records, existing direction, and likely artifact fit.
-- If an index is missing, continue routing from the brief and let the selected creation skill handle the missing index setup.
+- Use indexes to identify referenced records, current direction, and artifact fit.
+- If an index is missing, route from the brief; the selected skill handles setup.
 
 ## Workflow
 
 1. Check prerequisites.
-2. If the brief clearly describes a durable decision, route to `Backtrail | Create ADR`.
-   - Includes architecture, repository structure, public contracts, generated output, build/test workflow, dependencies, reversibility, or choices that constrain future work.
-3. If the brief clearly describes a user-visible capability or product behavior, route to `Backtrail | Create FEATURE`.
-   - Includes user workflows, acceptance criteria, product behavior, or durable capability specs.
-4. If the brief clearly describes concrete implementation work, route to `Backtrail | Create CHANGE`.
-   - Includes routine bug fixes, local refactors, test additions, implementation details of an existing ADR or FEATURE, copy changes, dependency patch updates, or task-scoped implementation plans.
-5. If multiple skills could match, ask one clarifying question before routing.
-6. If no skill matches, state that no matching Backtrail creation skill exists for the request, then stop.
+2. Durable decision -> `Backtrail | Create ADR`.
+   - Architecture, repository structure, public contracts, generated output, build/test workflow, dependencies, reversibility, or future-work constraints.
+3. User-visible capability/product behavior -> `Backtrail | Create FEATURE`.
+   - User workflows, acceptance criteria, product behavior, or durable capability specs.
+4. Concrete implementation work -> `Backtrail | Create CHANGE`.
+   - Bug fixes, local refactors, tests, existing ADR/FEATURE implementation details, copy changes, dependency patch updates, or task-scoped plans.
+5. If multiple skills match, ask one clarifying question before routing.
+6. If none match, state that no matching Backtrail creation skill exists, then stop.
 
 ## Question UX
 
-- When asking the user to choose between two or three meaningful options, use `request_user_input` when available.
+- Use `request_user_input` when available for two or three meaningful choices.
 - For routing ambiguity, present only the matching artifact types as choices: `ADR`, `FEATURE`, and/or `CHANGE`.
 - If `request_user_input` is unavailable, ask one concise plain-text question with numbered choices.
 - Do not claim that a skill can switch modes or force button rendering.
 
 ## Guardrails
 
-- Do not create ADR, FEATURE, CHANGE, index, config, code, or test files directly.
+- Do not create ADR, FEATURE, CHANGE, index, config, code, or test files.
 - Do not invent new Backtrail artifact types.
 - Do not route to implementation work.
 - Do not inspect the broader repository unless needed to classify the request.
