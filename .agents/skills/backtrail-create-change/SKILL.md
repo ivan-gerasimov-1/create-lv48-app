@@ -17,10 +17,16 @@ Use the text after this skill invocation as the change brief.
 
 - Use `assets/change-template.md` as the CHANGE template.
 
+## Statuses
+
+- Allowed statuses: `Proposed`, `Blocked`, `Done`, `Abandoned`.
+- Create step writes `Proposed` for implementable CHANGE records.
+- Use `Blocked` only when a CHANGE is waiting on another CHANGE listed in `Blocked By`.
+
 ## Workflow
 
 1. If the brief does not identify implementation work, ask for the change topic before creating files.
-2. Read `.backtrail/changes.md`, `.backtrail/adl.md`, `.backtrail/features.md`, relevant FEATURE, ADR, and CHANGE docs. If `.backtrail/changes.md` or `.backtrail/changes/` is missing, plan to create it.
+2. Read `.backtrail/changes.md`, `.backtrail/adl.md`, `.backtrail/features.md`, relevant FEATURE, ADR, and CHANGE docs. If `.backtrail/changes.md` or `.backtrail/changes/` is missing, plan to create it with columns for CHANGE, status, date, ADRs, blocked-by links, blocks links, and title/summary.
 3. Apply the CHANGE gate before creating files.
    - If the brief references ADRs, verify that each ADR exists and is `Accepted`.
    - If the brief references FEATUREs, verify they exist. Prefer an `Accepted` FEATURE before creating implementation CHANGE records.
@@ -45,7 +51,10 @@ Use the text after this skill invocation as the change brief.
 7. Ask only questions that change scope, compatibility, verification, or rollback.
 8. Create `.backtrail/changes/change-NNNNN-title-slug.md` from `assets/change-template.md`.
    - If the estimated implementation diff exceeds 500 lines, create several subsequent CHANGE files, each blocked by the previous record.
-9. Save the CHANGE and its `.backtrail/changes.md` entry with status `Proposed`.
+   - For split CHANGE records, save the first record as `Proposed` with `Blocks: CHANGE-NNNNN` for the next record.
+   - Save each later split CHANGE record as `Blocked` with `Blocked By: CHANGE-NNNNN` for the previous record.
+   - Keep dependency links bidirectional: if a CHANGE lists another CHANGE in `Blocked By`, the blocker lists it in `Blocks`.
+9. Save the CHANGE and its `.backtrail/changes.md` entry with status, ADR links, blocked-by links, blocks links, and title/summary. Use `Proposed` unless the CHANGE is blocked by another CHANGE.
 10. Stop after docs/status changes. Do not implement code.
 
 ## Question UX

@@ -1,8 +1,8 @@
 # CHANGE-NNNNN: Title
 
-| Status   | Date       | ADRs |
-| -------- | ---------- | ---- |
-| Proposed | YYYY-MM-DD | -    |
+| Status   | Date       | ADRs | Blocked By | Blocks |
+| -------- | ---------- | ---- | ---------- | ------ |
+| Proposed | YYYY-MM-DD | -    | -          | -      |
 
 ## Goal
 
