@@ -43,16 +43,6 @@
     "#/templates/*": "./templates/*.ts",
     "#/tests/*": "./tests/*.ts"
   },
-  "devEngines": {
-    "runtime": {
-      "name": "node",
-      "version": ">=24.14"
-    },
-    "packageManager": {
-      "name": "npm",
-      "version": ">=11"
-    }
-  },
   "scripts": {
     "prebuild": "npm run build:typecheck",
     "build": "tsdown",
