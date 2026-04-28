@@ -1,8 +1,8 @@
 # CHANGE-00039: Return Either from transform pipeline
 
-| Status   | Date       | ADRs |
-| -------- | ---------- | ---- |
-| Proposed | 2026-04-27 | [ADR-023](../adrs/adr-00023-use-either-for-typed-result-values.md) |
+| Status | Date       | ADRs                                                               |
+| ------ | ---------- | ------------------------------------------------------------------ |
+| Done   | 2026-04-27 | [ADR-023](../adrs/adr-00023-use-either-for-typed-result-values.md) |
 
 ## Goal
 
