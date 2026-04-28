@@ -1,6 +1,9 @@
-import type { TGenerationContext } from "#/generate/types";
+import type { TResult } from "#/utils/either/types";
 
 export interface ITransformPipeline {
   mapDestinationPath(relativePath: string): string;
-  transformTextFile(relativePath: string, fileContents: string): string;
+  transformTextFile(
+    relativePath: string,
+    fileContents: string,
+  ): TResult<string>;
 }

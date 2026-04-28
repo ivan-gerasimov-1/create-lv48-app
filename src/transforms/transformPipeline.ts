@@ -1,6 +1,8 @@
 import path from "node:path";
 
 import { isJsonObject } from "#/utils/json";
+import { Either } from "#/utils/either/either";
+import type { TResult } from "#/utils/either/types";
 import type { TGenerationContext, TPlaceholderValues } from "#/generate/types";
 import type { ITransformPipeline } from "./types";
 import {
@@ -35,17 +37,24 @@ export class TransformPipeline implements ITransformPipeline {
     return renamedPath;
   }
 
-  public transformTextFile(relativePath: string, fileContents: string): string {
-    let interpolatedContents = this.interpolatePlaceholders(
+  public transformTextFile(
+    relativePath: string,
+    fileContents: string,
+  ): TResult<string> {
+    let interpolation = this.interpolatePlaceholders(
       fileContents,
       this.context.placeholders,
     );
 
-    if (relativePath.endsWith(PACKAGE_JSON_FILE_NAME)) {
-      return this.transformPackageJson(relativePath, interpolatedContents);
+    if (!interpolation.ok) {
+      return Either.failure(interpolation.reason);
     }
 
-    return interpolatedContents;
+    if (relativePath.endsWith(PACKAGE_JSON_FILE_NAME)) {
+      return this.transformPackageJson(relativePath, interpolation.value);
+    }
+
+    return Either.success(interpolation.value);
   }
 
   private mapMultiProjectPath(
@@ -63,19 +72,19 @@ export class TransformPipeline implements ITransformPipeline {
   private transformPackageJson(
     relativePath: string,
     fileContents: string,
-  ): string {
+  ): TResult<string> {
     let parsedValue: unknown;
 
     try {
       parsedValue = JSON.parse(fileContents);
     } catch (error) {
-      throw new Error(
+      return Either.failure(
         `Failed to parse package.json template at ${relativePath}: ${error instanceof Error ? error.message : String(error)}`,
       );
     }
 
     if (!isJsonObject(parsedValue)) {
-      throw new Error(`Invalid package.json template at ${relativePath}`);
+      return Either.failure(`Invalid package.json template at ${relativePath}`);
     }
 
     /**
@@ -132,25 +141,33 @@ export class TransformPipeline implements ITransformPipeline {
       }
     }
 
-    return `${JSON.stringify(nextValue, null, 2)}\n`;
+    return Either.success(`${JSON.stringify(nextValue, null, 2)}\n`);
   }
 
   private interpolatePlaceholders(
     templateContents: string,
     placeholders: TPlaceholderValues,
-  ): string {
-    return templateContents.replace(
-      PLACEHOLDER_PATTERN,
-      (_match, rawKey: string) => {
-        let value = placeholders[rawKey];
+  ): TResult<string> {
+    try {
+      let result = templateContents.replace(
+        PLACEHOLDER_PATTERN,
+        (_match, rawKey: string) => {
+          let value = placeholders[rawKey];
 
-        if (value === undefined) {
-          throw new Error(`Unresolved placeholder: {{${rawKey}}}`);
-        }
+          if (value === undefined) {
+            throw new Error(`Unresolved placeholder: {{${rawKey}}}`);
+          }
 
-        return value;
-      },
-    );
+          return value;
+        },
+      );
+
+      return Either.success(result);
+    } catch (error) {
+      return Either.failure(
+        error instanceof Error ? error.message : String(error),
+      );
+    }
   }
 
   private renameSpecialTemplatePath(relativePath: string): string {

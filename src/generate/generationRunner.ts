@@ -117,12 +117,16 @@ export class GenerationRunner implements IGenerationRunner {
         }
 
         let fileContents = await readUtf8File(sourcePath);
-        let transformedContents = this.transformPipeline.transformTextFile(
+        let transformResult = this.transformPipeline.transformTextFile(
           destinationRelativePath,
           fileContents,
         );
 
-        await writeUtf8File(destinationPath, transformedContents);
+        if (!transformResult.ok) {
+          throw new Error(transformResult.reason);
+        }
+
+        await writeUtf8File(destinationPath, transformResult.value);
         createdFiles.push(destinationPath);
       }
     } catch (error) {
