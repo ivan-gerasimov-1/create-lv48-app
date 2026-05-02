@@ -14,13 +14,11 @@ describe("validation", () => {
     });
     expect(validateName("Demo App")).toEqual({
       ok: false,
-      reason:
-        "Project name must use lowercase letters, numbers, and single hyphens only.",
+      reason: "Use lowercase letters, numbers, and single hyphens",
     });
     expect(validateTargetDirectory("../demo")).toEqual({
       ok: false,
-      reason:
-        "Target directory must stay within the current working directory.",
+      reason: "Should be within the current working directory",
     });
   });
 });
