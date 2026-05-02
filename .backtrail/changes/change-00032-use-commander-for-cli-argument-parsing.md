@@ -1,8 +1,8 @@
 # CHANGE-032: Use Commander for CLI argument parsing
 
-| Status   | Date       | ADRs |
-| -------- | ---------- | ---- |
-| Proposed | 2026-04-26 | [ADR-022](./adrs/adr-00022-use-commander-for-cli-argument-parsing.md) |
+| Status   | Date       | ADRs                                                        | Blocked By | Blocks                                                                            |
+| -------- | ---------- | ----------------------------------------------------------- | ---------- | --------------------------------------------------------------------------------- |
+| Proposed | 2026-04-26 | [ADR-022](./adrs/adr-00022-use-commander-for-cli-argument-parsing.md) | -          | [CHANGE-043](./changes/change-00043-refactor-application-entrypoint.md) |
 
 ## Goal
 
