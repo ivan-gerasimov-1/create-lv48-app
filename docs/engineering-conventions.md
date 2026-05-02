@@ -37,7 +37,21 @@ This document describes the development conventions, code style guardrails, and 
 - Prefer explicit domain types over `unknown`; use `unknown` only at safe boundaries.
 - By default, keep shared type declarations in a neighboring `types.ts` file instead of colocating them with implementation.
   - Exception: local component/function `props`, `options`, and `params` types may stay next to the implementation.
-- Always use visibility modifiers (`public`, `private`, `protected`) for class methods and properties.
+  - Do not re-export types from implementation files; export them from `types.ts` or another dedicated type module instead.
+- Class fields/methods: `public` / `private` / `protected` required.
+  - Constructor declaration: no visibility modifier.
+- Use constructor parameter properties for fields created from constructor args.
+  - Do not declare field + assign in constructor body.
+
+  ```ts
+    // BAD
+    constructor(service: IService) {
+      this.service = service;
+    }
+
+    // GOOD
+    constructor(private readonly service: IService) {}
+  ```
 
 ### Naming Conventions
 
