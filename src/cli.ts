@@ -9,7 +9,7 @@ import { GenerationRunner } from "#/generate/generationRunner";
 import { getPackageVersion } from "#/packageRoot";
 import { PresetRegistry } from "#/presets/presetRegistry/presetRegistry";
 import { createClackPromptIo } from "#/prompts/clackPromptIo";
-import { createPromptController } from "#/prompts/promptController";
+import { PromptController } from "#/prompts/promptController";
 import { TransformPipeline } from "#/transforms/transformPipeline";
 import { Logger } from "#/utils/logger/logger";
 
@@ -26,7 +26,7 @@ export async function runCli() {
     return;
   }
 
-  let prompts = createPromptController(createClackPromptIo());
+  let prompts = new PromptController(createClackPromptIo());
   let presets = new PresetRegistry();
   let postSetupExecutor = createPostSetupExecutor(executeCommand);
   let initializationSummary = new InitializationSummary();

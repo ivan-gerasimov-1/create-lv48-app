@@ -26,6 +26,6 @@ export type TPromptIO = {
   close(): Promise<void>;
 };
 
-export type TPromptController = {
+export interface IPromptController {
   collectAnswers(defaultProjectName?: string): Promise<TPromptAnswers>;
-};
+}

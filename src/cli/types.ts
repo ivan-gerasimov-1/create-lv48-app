@@ -1,6 +1,4 @@
 import type { TGenerationRecord } from "#/generate/types";
-import type { TPromptController } from "#/prompts/types";
-import type { ILogger } from "#/utils/logger/types";
 
 export type TPostSetupActionName = "installDependencies" | "initializeGit";
 

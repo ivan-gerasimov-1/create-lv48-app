@@ -2,11 +2,11 @@ import { describe, expect, it } from "vitest";
 
 import { createPromptIoMock } from "#/tests/createPromptIoMock";
 
-import { createPromptController } from "./promptController";
+import { PromptController } from "./promptController";
 
 describe("prompts", () => {
   it("collects phase 1 prompt answers without package manager or preset prompts", async () => {
-    let controller = createPromptController(createPromptIoMock());
+    let controller = new PromptController(createPromptIoMock());
 
     expect(await controller.collectAnswers("fallback-name")).toEqual({
       projectName: "demo-app",
@@ -61,7 +61,7 @@ describe("prompts", () => {
       async close() {},
     };
 
-    let controller = createPromptController(promptIo);
+    let controller = new PromptController(promptIo);
 
     expect(await controller.collectAnswers("fallback-name")).toEqual({
       projectName: "demo-app",
@@ -116,7 +116,7 @@ describe("prompts", () => {
       async close() {},
     };
 
-    let controller = createPromptController(promptIo);
+    let controller = new PromptController(promptIo);
 
     expect(await controller.collectAnswers("fallback-name")).toEqual({
       projectName: "demo-app",
@@ -171,7 +171,7 @@ describe("prompts", () => {
       async close() {},
     };
 
-    let controller = createPromptController(promptIo);
+    let controller = new PromptController(promptIo);
 
     expect(await controller.collectAnswers("fallback-name")).toEqual({
       projectName: "demo-app",

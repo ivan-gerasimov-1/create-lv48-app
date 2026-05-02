@@ -1,104 +1,100 @@
 import { validateName, validateTargetDirectory } from "#/utils/validation";
 
 import type {
+  IPromptController,
   TPromptAnswers,
-  TPromptController,
   TPromptIO,
   TWorkspaceLayout,
 } from "./types";
 
-export function createPromptController(promptIo: TPromptIO): TPromptController {
-  return {
-    async collectAnswers(defaultProjectName = "lv48-app") {
-      try {
-        let projectName = await askValidText(
-          promptIo,
-          "Project name",
-          defaultProjectName,
+export class PromptController implements IPromptController {
+  public constructor(private readonly promptIo: TPromptIO) {}
+
+  public async collectAnswers(
+    defaultProjectName = "lv48-app",
+  ): Promise<TPromptAnswers> {
+    try {
+      let projectName = await this.askValidText(
+        "Project name",
+        defaultProjectName,
+        validateName,
+      );
+      let targetDirectory = await this.askValidText(
+        "Target directory",
+        projectName,
+        validateTargetDirectory,
+      );
+      let workspaceLayout = await this.askWorkspaceLayout();
+      let appProjectName: string | undefined;
+
+      if (workspaceLayout === "multi") {
+        appProjectName = await this.askValidText(
+          "First app project name",
+          "project-1",
           validateName,
         );
-        let targetDirectory = await askValidText(
-          promptIo,
-          "Target directory",
-          projectName,
-          validateTargetDirectory,
-        );
-        let workspaceLayout = await askWorkspaceLayout(promptIo);
-        let appProjectName: string | undefined;
-
-        if (workspaceLayout === "multi") {
-          appProjectName = await askValidText(
-            promptIo,
-            "First app project name",
-            "project-1",
-            validateName,
-          );
-        }
-
-        let installDependencies = await promptIo.askConfirm(
-          "Install npm dependencies after generation?",
-          true,
-        );
-        let initializeGit = await promptIo.askConfirm(
-          "Initialize a git repository?",
-          true,
-        );
-
-        return {
-          projectName,
-          packageName: projectName,
-          displayName: createDisplayName(projectName),
-          targetDirectory,
-          packageManager: "npm",
-          presetId: "base",
-          installDependencies,
-          initializeGit,
-          workspaceLayout,
-          appProjectName,
-        };
-      } finally {
-        await promptIo.close();
       }
-    },
-  };
-}
 
-async function askWorkspaceLayout(
-  promptIo: TPromptIO,
-): Promise<TWorkspaceLayout> {
-  let answer = await promptIo.askSelect(
-    "Workspace layout",
-    [
-      { value: "single", label: "Single project" },
-      { value: "multi", label: "Multi-project workspace" },
-    ],
-    "single",
-  );
+      let installDependencies = await this.promptIo.askConfirm(
+        "Install npm dependencies after generation?",
+        true,
+      );
+      let initializeGit = await this.promptIo.askConfirm(
+        "Initialize a git repository?",
+        true,
+      );
 
-  if (answer === "multi") {
-    return "multi";
+      return {
+        projectName,
+        packageName: projectName,
+        displayName: createDisplayName(projectName),
+        targetDirectory,
+        packageManager: "npm",
+        presetId: "base",
+        installDependencies,
+        initializeGit,
+        workspaceLayout,
+        appProjectName,
+      };
+    } finally {
+      await this.promptIo.close();
+    }
   }
 
-  return "single";
-}
+  private async askWorkspaceLayout(): Promise<TWorkspaceLayout> {
+    let answer = await this.promptIo.askSelect(
+      "Workspace layout",
+      [
+        { value: "single", label: "Single project" },
+        { value: "multi", label: "Multi-project workspace" },
+      ],
+      "single",
+    );
 
-async function askValidText(
-  promptIo: TPromptIO,
-  message: string,
-  defaultValue: string,
-  validate: (
-    input: string,
-  ) => { ok: true; value: string } | { ok: false; reason: string },
-) {
-  for (;;) {
-    let answer = await promptIo.askText(message, defaultValue);
-    let result = validate(answer);
-
-    if (result.ok) {
-      return result.value;
+    if (answer === "multi") {
+      return "multi";
     }
 
-    console.error(result.reason);
+    return "single";
+  }
+
+  private async askValidText(
+    message: string,
+    defaultValue: string,
+    validate: (
+      input: string,
+    ) => { ok: true; value: string } | { ok: false; reason: string },
+  ): Promise<string> {
+    for (;;) {
+      let answer = await this.promptIo.askText(message, defaultValue);
+      let result = validate(answer);
+
+      if (result.ok) {
+        return result.value;
+      }
+
+      console.error(result.reason);
+    }
   }
 }
 
@@ -110,4 +106,4 @@ function createDisplayName(projectName: string): string {
     .join(" ");
 }
 
-export type { TPromptAnswers, TPromptController, TPromptIO };
+export type { TPromptAnswers, TPromptIO };

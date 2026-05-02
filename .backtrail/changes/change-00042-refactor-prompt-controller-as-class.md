@@ -1,8 +1,8 @@
 # CHANGE-00042: Refactor prompt controller as class
 
-| Status   | Date       | ADRs | Blocked By | Blocks |
-| -------- | ---------- | ---- | ---------- | ------ |
-| Proposed | 2026-04-29 | -    | -          | -      |
+| Status | Date       | ADRs | Blocked By | Blocks |
+| ------ | ---------- | ---- | ---------- | ------ |
+| Done   | 2026-04-29 | -    | -          | -      |
 
 ## Goal
 
