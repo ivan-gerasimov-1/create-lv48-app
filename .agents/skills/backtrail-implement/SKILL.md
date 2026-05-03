@@ -35,18 +35,19 @@ Use the text after this skill invocation to select the CHANGE record.
 6. If the selected CHANGE links FEATUREs, stop unless every linked FEATURE exists and has status `Accepted`.
 7. Read the selected CHANGE and linked ADRs or FEATUREs, if any.
 8. Summarize decision context, change scope, implementation steps, verification, dependencies, and rollback. For standalone CHANGE records, state that no ADR or FEATURE gate applies.
-9. Ask whether to implement the selected CHANGE now.
-   - Use Yes/No buttons when `request_user_input` is available.
-   - `Yes`: continue to implementation.
-   - `No`: stop without changing files.
-10. Implement the CHANGE and run its verification.
-11. If verification passes, update the CHANGE file and `.backtrail/changes.md` status to `Done`.
-12. If verification passes, read each CHANGE listed in `Blocks`.
+9. Prepare step-by-step implementation plan
+10. Ask whether to implement the selected CHANGE now.
+    - Use Yes/No buttons when `request_user_input` is available.
+    - `Yes`: continue to implementation.
+    - `No`: stop without changing files.
+11. Implement the CHANGE and run its verification.
+12. If verification passes, update the CHANGE file and `.backtrail/changes.md` status to `Done`.
+13. If verification passes, read each CHANGE listed in `Blocks`.
     - If the blocked CHANGE is missing, report the missing link and continue without inventing a record.
     - If every CHANGE listed in that record's `Blocked By` field is `Done`, update that CHANGE file and `.backtrail/changes.md` status from `Blocked` to `Proposed`.
     - If any blocker is not `Done`, leave the dependent CHANGE as `Blocked` and report remaining blockers.
-13. If verification passes and the CHANGE implements linked FEATUREs, update those FEATURE files and `.backtrail/features.md` status to `Implemented`.
-14. If verification fails, leave status unchanged and report failures.
+14. If verification passes and the CHANGE implements linked FEATUREs, update those FEATURE files and `.backtrail/features.md` status to `Implemented`.
+15. If verification fails, leave status unchanged and report failures.
 
 ## Question UX
 
