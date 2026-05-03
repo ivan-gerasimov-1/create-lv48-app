@@ -1,5 +1,5 @@
 ---
-name: Backtrail | Create FEATURE
+name: backtrail-create-feature
 description: Create a Proposed FEATURE for user-visible capability or product behavior
 ---
 
@@ -28,8 +28,8 @@ Use the text after this skill invocation as the feature brief.
 2. Read `.backtrail/features.md`, related FEATURE, ADR, and CHANGE docs, and relevant code. If `.backtrail/features.md` or `.backtrail/features/` is missing, plan to create it.
 3. Apply the FEATURE gate before creating files.
    - Create FEATUREs only for user-visible capability, product behavior, workflow, or acceptance criteria needing a durable capability spec.
-   - Route durable architecture choices to `Backtrail | Create ADR` when brief constrains future work or changes architecture, repository structure, public contracts, generated output, build/test workflow, dependencies, or reversibility.
-   - Route concrete implementation work with no feature-spec need to `Backtrail | Create CHANGE`.
+   - Route durable architecture choices to `backtrail-create-adr` when brief constrains future work or changes architecture, repository structure, public contracts, generated output, build/test workflow, dependencies, or reversibility.
+   - Route concrete implementation work with no feature-spec need to `backtrail-create-change`.
    - If the gate fails, stop and explain which artifact fits better. Do not create FEATURE files.
 4. Determine the FEATURE number.
    - Use an explicit number only when it appears at the start of input, after optional whitespace.
@@ -57,7 +57,7 @@ Use the text after this skill invocation as the feature brief.
     - `Leave Proposed`: leave `Proposed`.
 11. Offer to proceed with creating a CHANGE after FEATURE creation.
     - Use Yes/No buttons when `request_user_input` is available.
-    - `Yes`: use `Backtrail | Create CHANGE` skill.
+    - `Yes`: use `backtrail-create-change`.
     - `No`: skip to the next step.
 12. Stop after docs/status changes. Do not implement code.
 

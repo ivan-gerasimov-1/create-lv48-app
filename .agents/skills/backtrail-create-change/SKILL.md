@@ -1,5 +1,5 @@
 ---
-name: Backtrail | Create CHANGE
+name: backtrail-create-change
 description: Create a Proposed CHANGE for ADR-backed, FEATURE-backed, or standalone work
 ---
 

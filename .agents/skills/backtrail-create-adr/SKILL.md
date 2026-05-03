@@ -1,5 +1,5 @@
 ---
-name: Backtrail | Create ADR
+name: backtrail-create-adr
 description: Create a Proposed ADR from decision input
 ---
 
@@ -47,7 +47,7 @@ Use the text after this skill invocation as the decision brief.
     - `No`: leave `Proposed`.
 11. Ask whether to proceed with creating a CHANGE record.
     - Use Yes/No buttons when `request_user_input` is available.
-    - `Yes`: use `Backtrail | Create CHANGE` skill.
+    - `Yes`: use `backtrail-create-change`.
     - `No`: skip to the next step.
 12. Stop after docs/status changes. Do not implement code.
 
@@ -62,6 +62,6 @@ Use the text after this skill invocation as the decision brief.
 
 - Do not change implementation code, non-ADR templates, configs, or tests.
 - Do not overwrite existing ADR files.
-- Do not create CHANGE records; use the `Backtrail | Create CHANGE` skill for implementation plans.
+- Do not create CHANGE records; use the `backtrail-create-change` skill for implementation plans.
 - Do not treat numbers in input body as ADR numbers.
 - Superseding another ADR requires explicit user confirmation.

@@ -1,5 +1,5 @@
 ---
-name: Backtrail | Implement
+name: backtrail-implement
 description: Implement a CHANGE record after user confirmation
 ---
 

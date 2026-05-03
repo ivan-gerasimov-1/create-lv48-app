@@ -1,5 +1,5 @@
 ---
-name: Backtrail | Create
+name: backtrail-create
 description: Route Backtrail creation requests to ADR, FEATURE, or CHANGE creation
 ---
 
@@ -20,11 +20,11 @@ Use the text after this skill invocation as the routing brief.
 ## Workflow
 
 1. Check prerequisites.
-2. Durable decision -> `Backtrail | Create ADR`.
+2. Durable decision -> `backtrail-create-adr`.
    - Architecture, repository structure, public contracts, generated output, build/test workflow, dependencies, reversibility, or future-work constraints.
-3. User-visible capability/product behavior -> `Backtrail | Create FEATURE`.
+3. User-visible capability/product behavior -> `backtrail-create-feature`.
    - User workflows, acceptance criteria, product behavior, or durable capability specs.
-4. Concrete implementation work -> `Backtrail | Create CHANGE`.
+4. Concrete implementation work -> `backtrail-create-change`.
    - Bug fixes, local refactors, tests, existing ADR/FEATURE implementation details, copy changes, dependency patch updates, or task-scoped plans.
 5. If multiple skills match, ask one clarifying question before routing.
 6. If none match, state that no matching Backtrail creation skill exists, then stop.
