@@ -8,3 +8,4 @@
 | [FEATURE-00004](features/feature-00004-non-interactive-config-file-support.md) | Proposed | 2026-05-02 | Non-interactive config file support |
 | [FEATURE-00005](features/feature-00005-localized-prompts.md)                   | Proposed | 2026-05-02 | Localized prompts                   |
 | [FEATURE-00006](features/feature-00006-project-bootstrap-status.md)            | Proposed | 2026-05-02 | Project bootstrap status            |
+| [FEATURE-00007](features/feature-00007-cli-tool-template.md)                   | Accepted | 2026-05-03 | CLI tool template                    |
