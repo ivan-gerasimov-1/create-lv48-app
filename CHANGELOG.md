@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.18.0](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.17.0...create-lv48-app-v0.18.0) (2026-05-03)
+
+
+### Features
+
+* **validation:** migrate validation functions to use Zod schemas ([c7a1920](https://github.com/ivan-gerasimov-1/create-lv48-app/commit/c7a1920b4c5383e1fc43f6f6a6cfe04ba7aa45a5))
+
 ## [0.17.0](https://github.com/ivan-gerasimov-1/create-lv48-app/compare/create-lv48-app-v0.16.0...create-lv48-app-v0.17.0) (2026-04-26)
 
 
