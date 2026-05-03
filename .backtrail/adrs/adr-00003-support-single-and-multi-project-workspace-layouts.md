@@ -2,7 +2,7 @@
 
 | Status   | Date       |
 | -------- | ---------- |
-| Accepted | 2026-04-14 |
+| Superseded | 2026-04-14 |
 
 ## Context
 
@@ -137,3 +137,7 @@ This decision is reversible by removing the layout prompt and the multi-project 
 ## Implemented By
 
 - [CHANGE-003](./changes/change-00003-support-single-and-multi-project-workspace-layouts.md)
+
+## Superseded By
+
+- [ADR-025](./adr-00025-split-initial-scaffolding-from-app-templates.md)
